@@ -26,13 +26,12 @@ public class WebResponseContext implements ResponseContext {
 
 	@Override
 	public void setTarget(String transferInfo) {
-		target=transferInfo;
+		target = "/WEB-INF/jsp/"+transferInfo+".jsp";
 	}
 
 	@Override
 	public void setResponse(Object obj) {
 		response = (HttpServletResponse)obj;
-
 	}
 
 	@Override
