@@ -13,7 +13,7 @@ public class CommandFactory {
 		Properties prop = new Properties();
 		
 		try {
-			prop.load(new FileInputStream("C:\\pleiades\\2022-12\\workspace\\patterun\\src\\properties\\commands.properties"));
+			prop.load(new FileInputStream("C:\\ThisLocal\\ThisCode\\src\\properties\\commands.properties"));
 			String name = prop.getProperty(rc.getCommandPath());
 			Class<?> c = Class.forName(name);
 			command = (AbstractCommand) c.newInstance();
