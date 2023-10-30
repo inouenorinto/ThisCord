@@ -1,0 +1,16 @@
+@charset "UTF-8";
+html, body {height: 100%;}
+
+.container-fluid, .row, .column {height: 100%;}
+
+.color-red {
+	color: red;
+	background-color: red;
+}
+
+.server-List {
+	overflow: scroll;
+}
+.server-List::-webkit-scrollbar {
+	display:none;
+}
