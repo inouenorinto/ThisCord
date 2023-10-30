@@ -1,0 +1,48 @@
+-- rootユーザーでの実行
+CREATE USER 'testuser1'@'localhost' IDENTIFIED BY 'password'
+COMMENT 'beginuser by noob';
+GRANT USAGE ON *.* TO 'testuser1'@'localhost';
+GRANT ALL ON *.* TO 'testuser1'@'localhost';
+
+-- 実行してもしなくても
+SELECT user, host FROM mysql.user;
+
+-- testuser1での実行が好ましい
+CREATE DATABASE thiscord;
+USE thiscord;
+
+
+CREATE TABLE user_data (
+    discord_user_id VARCHAR(20) PRIMARY KEY,
+    mailaddress VARCHAR(200),
+    password VARCHAR(24),
+    user_name VARCHAR(50),
+    user_icon VARCHAR(500)
+);
+
+
+--　主キー無しver
+CREATE TABLE server_data (
+    discord_server_id VARCHAR(20),
+    server_name VARCHAR(100),
+    host_id VARCHAR(20),
+    server_icon VARCHAR(500),
+    server_member_id VARCHAR(20),
+    FOREIGN KEY(server_member_id)
+    REFERENCES user_data(discord_user_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+--　複合主キーver
+CREATE TABLE server_data (
+    discord_server_id VARCHAR(20),
+    server_name VARCHAR(100),
+    host_id VARCHAR(20),
+    server_icon VARCHAR(500),
+    server_member_id VARCHAR(20),
+    PRIMARY KEY(discord_server_id, server_member_id)
+    FOREIGN KEY(server_member_id)
+    REFERENCES user_data(discord_user_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
