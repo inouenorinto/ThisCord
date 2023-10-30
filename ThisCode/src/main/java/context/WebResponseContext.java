@@ -38,5 +38,4 @@ public class WebResponseContext implements ResponseContext {
 	public Object getResponse() {
 		return response;
 	}
-
 }

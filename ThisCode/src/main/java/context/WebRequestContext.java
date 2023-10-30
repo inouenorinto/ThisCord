@@ -13,11 +13,10 @@ public class WebRequestContext implements RequestContext {
 	public WebRequestContext() {}
 	
 	@Override
-	public String getCommandPath() {
-		String path = request.getServletPath();
-
-		String commandPath= path.substring(1);
-		return commandPath;
+	public String getCommandPath() {		
+		String path = request.getRequestURI();
+		String target= path.replace("fn", "").replace("ThisCode", "").replace("/","");
+		return target;
 	}
 
 	@Override
@@ -42,8 +41,18 @@ public class WebRequestContext implements RequestContext {
 		this.session = (HttpSession) session;
 	}
 	
+	@Override
 	public void invalidateSession(){
 		session.invalidate();
 	}
-
+	
+	@Override
+	public void setAttributeInSession(Object obj) {
+		session.setAttribute("object", obj);
+	}
+	
+	@Override
+	public Object getAttributeInSession(String key) {
+		return session.getAttribute(key);
+	}
 }
