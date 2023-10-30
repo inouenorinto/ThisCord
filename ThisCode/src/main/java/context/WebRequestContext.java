@@ -15,7 +15,7 @@ public class WebRequestContext implements RequestContext {
 	@Override
 	public String getCommandPath() {		
 		String path = request.getRequestURI();
-		String target= path.replace("fn", "").replace("ThisCode", "").replace("/","");
+		String target= path.replace("fn", "").replace("ThisCord", "").replace("/","");
 		return target;
 	}
 
