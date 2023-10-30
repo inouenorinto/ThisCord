@@ -7,4 +7,6 @@ public interface RequestContext {
 	public void setRequest(Object request);
 	public void setSession(Object session);
 	public void invalidateSession();
+	public void setAttributeInSession(Object obj);
+	public Object getAttributeInSession(String key);
 }
