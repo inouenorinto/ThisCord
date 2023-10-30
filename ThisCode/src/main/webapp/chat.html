@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Chat</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h3>チャットルームを選択しろやぼけ:</h3>
+    <select id="roomSelect">
+        <option value="room1">Room 1</option>
+        <option value="room2">Room 2</option>
+        <option value="room3">Room 3</option>
+    </select>
+    <button onclick="joinRoom()">ルームに参加</button>
+    
+    <div id="chat" style="display:none;">
+        <input type="text" id="message" placeholder="メッセージを入力">
+        <button onclick="sendMessage()">送信</button><br>
+    </div>
+
+    <script>
+        let room = null;
+        const roomSelect = document.getElementById("roomSelect");
+        const chatDiv = document.getElementById("chat");
+        let chatSocket = null;
+        
+        function joinRoom() {
+            room = roomSelect.value;
+            roomSelect.disabled = true;
+            chatDiv.style.display = "block";
+            
+            chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${room}`);
+            
+            chatSocket.onopen = event => {
+                console.log("サーバーに接続しました");
+            };
+            
+            chatSocket.onmessage = event => {
+                const chat = document.getElementById("chat");
+                chat.innerHTML += event.data + "<br>";
+            };
+            
+            chatSocket.onclose = event => {
+                console.log("サーバーから切断しました");
+            };
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById("message");
+            const message = messageInput.value;
+            chatSocket.send(message);
+            messageInput.value = "";
+        }
+    </script>
+</body>
+</html>
