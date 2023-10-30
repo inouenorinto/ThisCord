@@ -19,13 +19,11 @@ public class FrontServlet extends HttpServlet {
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		ApplicationController app = new WebApplicationController();
-		
+		System.out.println("dopost");
 		RequestContext reqc = app.getRequest(req);
 		ResponseContext resc = app.handleRequest(reqc);
-		System.out.println("kokomade1");
+
 		resc.setResponse(res);
-		System.out.println("kokomade2");
 		app.handleResponse(reqc, resc);
-		System.out.println("kokomade3");
 	}
 }
