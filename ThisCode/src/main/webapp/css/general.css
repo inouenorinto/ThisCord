@@ -1,16 +1,62 @@
 @charset "UTF-8";
-html, body {height: 100%;}
+html, body {
+	width: 100%;
+	height: 100%;
+	color: #70737C;
+	background-color: #1E1F22;
+}
+form {
+	width: 100%;
+	height: 30px;
+}
+.container-fluid, .row, .column {
 
-.container-fluid, .row, .column {height: 100%;}
-
-.color-red {
-	color: red;
-	background-color: red;
+	height: 95%;
+}
+.text-color {
+	color: #FFFFFF;
 }
 
-.server-List {
+.scrollbar {
 	overflow: scroll;
 }
-.server-List::-webkit-scrollbar {
+.scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	width: 100%;
+	height: 50px;
+}
+.scroll::-webkit-scrollbar {
 	display:none;
+}
+.b-color1 {
+	background-color: #2B2D31;
+}
+.b-color2 {
+	background-color: #313338;
+}
+.server-img {
+	width: 6vw;
+	height: 6vw;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.chatposi {
+	height: auto;
+	position: relative;
+}
+.chatposic {
+	position: absolute;
+	bottom: 10px;
+}
+.radiusleftup {
+	border-radius: 15px 0px 0px 0px;
+}
+.formcss {
+	background-color: #40454B;
+	border-radius: 10px 10px 10px 10px;
+	outline: none;
+	border: none;
+	width: 95%;
+	height: 100%;
 }

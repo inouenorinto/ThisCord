@@ -17,30 +17,85 @@
 
 </head>
 <body>
-	<h1 class="color-red">hello</h1>
+	<h6>Thiscord</h1>
 	   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-
-	<div class="color-red">
-		じゃ；ｌｓｋｄｊｆｌ；じゃｌｓｄ
-	</div>
 	
-	<div class="h-100">
-					チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄
-				</div>
-	
-	<div class="container-fluid">
+	<div class="container-fluid b-color-gray1">
 		<div class="row h-100">
-			<div class="col-md-1 border border-dark">
-				<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
+			<div class="col-md-1">
+				<div class="scrroll">
+					<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				<div>
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle server-list-img server-img" alt="サーバーアイコン">
+				</div>
+				
+				</div>
 			</div>
-			<div class="col-md-2 border border-dark">チャンネル一覧</div>
-			<div class="col-md-7 border border-dark ">
-				チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄
+			<div class="col-md-2 border border-dark b-color1 radiusleftup">
+				チャンネル一覧
 			</div>
-			<div class="col-md-2 border border-dark">所属メンバー</div>
+			<div class="col-md-7 border border-dark text-color b-color2 chatposi">
+				<div class="">
+					チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄
+				
+				</div>
+				
+				<form action="" method="" class="chatposic">
+					<input type="text" name="" id="" placeholder="メッセージを送信" class="formcss">
+				</form>
 			
-<!--			
+			</div>
+			<div class="col-md-2 border border-dark b-color1">所属メンバー</div>
+			
+<!--
 			<div class="col-md">
 				スマホ用画面
 			</div>
