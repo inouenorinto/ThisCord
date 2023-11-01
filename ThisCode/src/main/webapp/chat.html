@@ -2,86 +2,113 @@
 <html>
 
 <head>
-	<title>WebSocket Chat</title>
-	<meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>Chat Application</title>
+    <script>
+        let room = null;
+        let rooms = null;
+        let chatDiv = null;
+        let chatSocket = null;
+        let username = null;
+        let userinfo = null;
+        
+        
+        async function getUserInfo() {
+			try {
+                const response = await fetch("/ThisCord/get-user-info");
+                if (response.ok) {
+                    userinfo = await response.json();
+					usernme = userinfo.username;
+					rooms = userinfo.rooms;
+                    createRoomButtons(rooms);
+                    console.log(userinfo);
+                } else {
+                    console.error("Failed to fetch room information");
+                }
+            } catch (error) {
+                console.error("Error: " + error);
+            }
+		}
+
+        function createRoomButtons(roomInfo) {
+            const roomListDiv = document.getElementById("room-list");
+            roomListDiv.innerHTML = "";
+
+            for (const room of roomInfo) {
+                const roomButton = document.createElement("button");
+                roomButton.textContent = room;
+                roomButton.onclick = () => joinRoom(room);
+                roomListDiv.appendChild(roomButton);
+            }
+        }
+
+        async function joinRoom(roomname) {
+            room = roomname;
+
+            try {
+                const response = await fetch("/ThisCord/get-username");
+                if (response.ok) {
+                    username = await response.text();
+                } else {
+                    console.error("Failed to fetch username");
+                }
+            } catch (error) {
+                console.error("Error: " + error);
+                return;
+            }
+
+            chatDiv = document.getElementById("chat");
+            chatDiv.style.display = "block";
+
+            chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${room}/${username}`);
+            
+            chatSocket.onopen = event => {
+                console.log("Connected to the server");                
+            };
+
+            chatSocket.onmessage = event => {
+                // メッセージを表示するロジックをここに追加
+                console.log("Received message: " + event.data);
+                const chat = document.getElementById("message-container");
+                chat.innerHTML+= username+": "+event.data+"<br>";
+            };
+
+            chatSocket.onclose = event => {
+                console.log("Disconnected from the server");
+            };
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById("message-input");
+            const message = messageInput.value;
+            chatSocket.send(message);
+            messageInput.value = "";
+        }
+
+		document.addEventListener("DOMContentLoaded", getUserInfo);
+        
+    </script>
 </head>
 
 <body>
-	<h3>チャットルーム選択しろ:</h3>
-	<select id="roomSelect">
-		<option value="room1">Room 1</option>
-		<option value="room2">Room 2</option>
-		<option value="room3">Room 3</option>
-	</select>
-
-	<button onclick="joinRoom()">ルームに参加</button>
-
-	<div id="chat" style="display:none;">
-		<input type="text" id="message" placeholder="メッセージを入力">
-		<button onclick="sendMessage()">送信</button><br>
-	</div>
-	<div id="res">
-		
-	</div>
-
-	<script>
-		let room = null;
-		const roomSelect = document.getElementById("roomSelect");
-		const chatDiv = document.getElementById("chat");
-		let chatSocket = null;
-		let username = null;
-
-		async function joinRoom() {
-			room = roomSelect.value;
-			//roomSelect.disabled = true;
-			chatDiv.style.display = "block";
-
-			try {
-				const response = await fetch("/ThisCord/get-username");
-				if (response.ok) {
-					username = await response.text();
-				} else {
-					console.error("ユーザー名を取得できねえ");
-				}
-			} catch (error) {
-				console.error("エラー: " + error);
-				return;
-			}
-
-			console.log("ユーザー名: " + username);
-
-			chatSocket = new WebSocket(`ws://172.19.2.130:8080/ThisCord/chat/${room}/${username}`);
-
-			chatSocket.onopen = event => {
-				console.log("サーバーに接続した");
-			};
-
-			chatSocket.onmessage = event => {
-				const chat = document.getElementById("res");
-				chat.innerHTML += event.data + "<br>";
-			};
-
-			chatSocket.onclose = event => {
-				console.log("サーバーから切断した");
-			};
-		}
-
-		// メッセージを送信する処理
-		function sendMessage() {
-			const messageInput = document.getElementById("message");
-			const message = messageInput.value;
-			chatSocket.send(message);
-			messageInput.value = "";
-		}
-
-		// Enterキーでの送信処理
-		chatDiv.addEventListener('keypress', test_ivent);
-		function test_ivent(e) {
-			if (e.keyCode === 13) {
-				sendMessage(); // sendMessageを呼び出してメッセージを送信
-			}
-		}
-
-	</script>
+    <div class="col-md-1">
+        <div class="scroll">
+            <div id="room-list">
+                <!-- ルームボタンがここに動的に生成されます -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-11">
+        <div id="chat" style="display: none;">
+            <div id="message-container">
+                <!-- チャットメッセージを表示するコンテナ -->
+            </div>
+            <div id="input-container">
+                <input type="text" id="message-input" placeholder="メッセージを入力">
+                <button onclick="sendMessage()">送信</button> <!-- sendMessage() を呼び出すように修正 -->
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

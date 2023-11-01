@@ -1,50 +1,48 @@
 package front;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/chat/{room}/{username}")
 public class ChatServer {
-    @OnOpen
-    public void onOpen(Session session, @PathParam("room") String room, @PathParam("username") String username) {
-    	System.out.println("接続開始");
-    	System.out.println("username" + username);
-        session.getUserProperties().put("room", room);
-        session.getUserProperties().put("username", username);
-        RoomSessionManager.addSession(room, session);
-    }
+    private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
 
-    @OnMessage
-    public void onMessage(String message, Session session) {
-        String room = (String) session.getUserProperties().get("room");
-        String username = (String) session.getUserProperties().get("username");
-        System.out.println(room+"."+ username + ": " + message);
-        
-        broadcast(room, username + ": " + message);
+    @OnOpen
+    public void onOpen(Session session) {
+        sessions.add(session);
     }
 
     @OnClose
     public void onClose(Session session) {
-    	System.out.println("接続破棄");
-        String room = (String) session.getUserProperties().get("room");
-        RoomSessionManager.removeSession(room, session);
+        sessions.remove(session);
     }
 
-    private void broadcast(String room, String message) {
-        Set<Session> sessions = RoomSessionManager.getSession(room);
-        for (Session session : sessions) {
-            try {
-                session.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                e.printStackTrace();
+    @OnError
+    public void onError(Throwable error) {
+        // エラーハンドリングを行う
+    }
+
+    @OnMessage
+    public void onMessage(String message, Session session) {
+        // メッセージを処理し、他のクライアントに送信する
+        for (Session s : sessions) {
+            if (s.isOpen()) {
+                try {
+                    s.getBasicRemote().sendText(message);
+                } catch (IOException e) {
+                    // エラーハンドリングを行う
+                }
             }
         }
     }
 }
+
 
