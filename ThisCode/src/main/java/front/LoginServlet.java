@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mysql.MySqlManager;
+
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -16,12 +18,19 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         
         if (isValidUser(username, password)) {
+        	UserBean bean = new UserBean();
+        	bean.setUsername(username);
+        	bean.setPassword(password);
+        	bean.addRooms("room1");
+        	bean.addRooms("room2");
+        	MySqlManager.getConnection();
+        	
             HttpSession session = request.getSession();
-            session.setAttribute("username", null); 
             session.setAttribute("username", username);
-            response.sendRedirect("/ThisCord/chat.html"); // チャット画面にリダイレクト
+            session.setAttribute("bean", bean);
+            response.sendRedirect("/ThisCord/chat.html");
         } else {
-            response.sendRedirect("/ThisCord/login.html"); // ログイン画面にリダイレクト
+            response.sendRedirect("/login.html");
         }
     }
 
@@ -31,3 +40,4 @@ public class LoginServlet extends HttpServlet {
     	return true;
     }
 }
+
