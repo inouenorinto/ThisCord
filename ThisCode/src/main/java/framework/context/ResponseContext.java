@@ -12,4 +12,5 @@ public interface ResponseContext {
 	public Object getResponse();
 	public PrintWriter getWriter();
 	public void setTargetJsp(String transferInfo);
+	public void setCharacterEncoding(String type);
 }

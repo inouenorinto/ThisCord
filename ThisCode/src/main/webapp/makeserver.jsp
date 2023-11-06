@@ -13,11 +13,11 @@
 	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
 	crossorigin="anonymous">
 
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/general.css">
-
 </head>
 <body>
-
+	<form action="fn/makeserver" method="post">
+		<input type="text" name="server_name" id="">
+		<input type="submit" value="作成" />
+	</form>
 </body>
 </html>

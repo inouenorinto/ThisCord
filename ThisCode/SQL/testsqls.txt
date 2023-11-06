@@ -11,9 +11,14 @@ SELECT user, host FROM mysql.user;
 CREATE DATABASE thiscord;
 USE thiscord;
 
+drop table server_data;
+drop table user_data;
+drop table message_data;
+drop table user_server_relationship;
+
 
 CREATE TABLE user_data (
-    discord_user_id VARCHAR(20) PRIMARY KEY,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
     mailaddress VARCHAR(200),
     password VARCHAR(24),
     user_name VARCHAR(50),
@@ -21,23 +26,77 @@ CREATE TABLE user_data (
 );
 
 CREATE TABLE message_data (
-	user_id VARCHAR(20),
+	user_id INT,
+	server_id INT,
 	send_date VARCHAR(50),
 	message VARCHAR(500)
 );
 
-
---　主キー無しver
 CREATE TABLE server_data (
-    discord_server_id VARCHAR(20),
+    server_id INT AUTO_INCREMENT PRIMARY KEY,
     server_name VARCHAR(100),
     host_id VARCHAR(20),
-    server_icon VARCHAR(500),
-    server_member_id VARCHAR(20),
-    FOREIGN KEY(server_member_id)
-    REFERENCES user_data(discord_user_id)
-    ON UPDATE CASCADE ON DELETE RESTRICT
+    server_icon VARCHAR(500)
 );
+
+CREATE TABLE user_server_relationship (
+    relationship_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    server_id INT,
+    FOREIGN KEY (user_id) REFERENCES user_data(user_id),
+    FOREIGN KEY (server_id) REFERENCES server_data(server_id)
+);
+
+
+
+--test_data
+
+INSERT INTO user_data (mailaddress, password, user_name, user_icon)
+VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'user_icon_url');
+
+INSERT INTO user_data (mailaddress, password, user_name, user_icon)
+VALUES ('ojiisann@gmail.com', 'ojiisan', 'ojiisann', 'user_icon_url');
+
+INSERT INTO user_data (mailaddress, password, user_name, user_icon)
+VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'user_icon_url');
+
+
+INSERT INTO server_data (server_name, host_id, server_icon)
+VALUES ('勉強サーバー', 1, 'user_icon_url');
+
+INSERT INTO server_data (server_name, host_id, server_icon)
+VALUES ('おじいさん', 1, 'user_icon_url');
+
+INSERT INTO server_data (server_name, host_id, server_icon)
+VALUES ('ゆるゲーム', 1, 'user_icon_url');
+
+INSERT INTO server_data (server_name, host_id, server_icon)
+VALUES ('APEX', 1, 'user_icon_url');
+
+INSERT INTO server_data (server_name, host_id, server_icon)
+VALUES ('valorant', 2, 'user_icon_url');
+
+
+INSERT INTO user_server_relationship (user_id, server_id) 
+VALUES (1, 1);
+
+INSERT INTO user_server_relationship (user_id, server_id) 
+VALUES (1, 2);
+
+INSERT INTO user_server_relationship (user_id, server_id) 
+VALUES (1, 3);
+
+INSERT INTO user_server_relationship (user_id, server_id) 
+VALUES (1, 4);
+
+INSERT INTO user_server_relationship (user_id, server_id) 
+VALUES (2, 5);
+
+INSERT INTO user_server_relationship (user_id, server_id) 
+VALUES (2, 1);
+
+
+
 
 
 --　複合主キーver

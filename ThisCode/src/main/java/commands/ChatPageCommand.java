@@ -11,22 +11,19 @@ import framework.context.RequestContext;
 import framework.context.ResponseContext;
 import util.mysql.MySqlManager;
 
-public class LoginCommand extends AbstractCommand {
+public class ChatPageCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		String email = req.getParameter("email")[0];
-		String password = req.getParameter("password")[0];
-		if(isLoginValid(email, password)) {
-			UserBean bean = getRecord(email);
-			
-        	req.setAttributeInSession("bean", bean);
-			res.setTarget("fn/chat");
-		} else {
-			res.setTarget("/login.html");
-		}
+		UserBean sessionBean = (UserBean)req.getAttributeInSession("bean");
+		UserBean bean = getRecord(sessionBean.getMailaddress());
 		
+    	req.setAttributeInSession("bean", bean);
+		
+		res.setTarget("/chat.html");
+
 	}
+	
 	private UserBean getRecord(String email) {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
@@ -59,6 +56,7 @@ public class LoginCommand extends AbstractCommand {
 		}
 	    return bean;
 	}
+	
 	private String getRoomName(int id) {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
@@ -79,31 +77,6 @@ public class LoginCommand extends AbstractCommand {
 			e.printStackTrace();
 		}
 		return result;
-	}
-	
-	private boolean isLoginValid(String email, String password) {
-		Connection cn = null;
-		PreparedStatement  pstmt = null;
-	    ResultSet rs = null;
-	    String SQL = "select user_name, mailaddress ,password from user_data where mailaddress = ?";
-	    boolean flag = false;
-		try {
-			cn = MySqlManager.getConnection();
-			pstmt = cn.prepareStatement(SQL);
-			pstmt.setString(1, email);
-			rs = pstmt.executeQuery();
-			
-			if(rs != null && rs.next()) {
-				rs.getString("user_name");
-				if(email.equals(rs.getString("mailaddress")) && password.equals(rs.getString("password"))) {
-					flag =true;
-				}
-			}
-            
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return flag;
 	}
 	
 	private Integer[] getRooms(int user_id) {

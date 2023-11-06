@@ -2,122 +2,150 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Chat Application</title>
-    <script>
-        let room = null;
-        let rooms = null;
-        let chatDiv = null;
-        let chatSocket = null;
-        let username = null;
-        let userinfo = null;
-        
-        
-        async function getUserInfo() {
+	<meta charset="UTF-8">
+	<title>Chat Application</title>
+	<script>
+		let room = null;
+		let rooms = null;
+		let roomsMap = null;
+		let chatDiv = null;
+		let chatSocket = null;
+		let username = null;
+		let userinfo = null;
+		
+		async function getUserInfo() {
 			try {
-                const response = await fetch("/ThisCord/fn/getuserinfo");
-                if (response.ok) {
-                    userinfo = await response.json();
-					usernme = userinfo.username;
+				const response = await fetch("/ThisCord/fn/getuserinfo");
+				if (response.ok) {
+					
+					userinfo = await response.json();
+					usernme = userinfo.user_name;
 					rooms = userinfo.rooms;
-                    createRoomButtons(rooms);
-                    console.log(userinfo);
-                } else {
-                    console.error("Failed to fetch room information");
-                }
-            } catch (error) {
-                console.error("Error: " + error);
-            }
+					roomsMap = new Map(Object.entries(rooms));
+					
+					createRoomB(roomsMap);
+					console.log(userinfo);
+				} else {
+					console.error("Failed to fetch room information");
+				}
+			} catch (error) {
+				console.error("Error: " + error);
+			}
+		}
+		function createRoomB(roomInfo) {
+			const roomListDiv = document.getElementById("room-list");
+			roomListDiv.innerHTML = "";
+			
+			for (const [roomId, roomName] of roomInfo) {
+				const roomButton = document.createElement("button");
+				roomButton.textContent = roomName;
+				roomButton.onclick = () => joinRoom(roomName);
+				roomListDiv.appendChild(roomButton);
+			}
+			
+		}
+
+		function createRoomButtons(roomInfo) {
+			const roomListDiv = document.getElementById("room-list");
+			roomListDiv.innerHTML = "";
+
+			for (const room of roomInfo) {
+				const roomButton = document.createElement("button");
+				roomButton.textContent = room;
+				roomButton.onclick = () => joinRoom(room);
+				roomListDiv.appendChild(roomButton);
+			}
+		}
+
+		async function joinRoom(roomname) {
+			if (chatSocket) {
+				chatSocket.close(); // 既存のWebSocket接続を閉じる
+			}
+			fieldClear();
+			room = roomname;
+
+			chatDiv = document.getElementById("chat");
+			chatDiv.style.display = "block";
+
+			chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${room}/${username}`);
+
+			chatSocket.onopen = event => {
+				console.log("Connected to the server");
+			};
+
+			chatSocket.onmessage = event => {
+				// メッセージを表示するロジックをここに追加
+				console.log("Received message: " + event.data);
+				const chat = document.getElementById("message-container");
+				const rep = JSON.parse(event.data);
+				chat.innerHTML += rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
+			};
+
+			chatSocket.onclose = event => {
+				console.log("Disconnected from the server");
+			};
+		}
+
+		function sendMessage() {
+			const messageInput = document.getElementById("message-input");
+			const message = messageInput.value;
+			let json =
+			{
+				room: room,
+				username: userinfo.user_name,
+				date: getDate(),
+				message: message
+			};
+
+			chatSocket.send(JSON.stringify(json));
+			messageInput.value = "";
 		}
 		
+		function fieldClear() {
+			const chat = document.getElementById("message-container");
+			chat.innerHTML = "";
+		}
 
-        function createRoomButtons(roomInfo) {
-            const roomListDiv = document.getElementById("room-list");
-            roomListDiv.innerHTML = "";
+		function getDate() {
+			var today = new Date();
+			var year = today.getFullYear();
+			var month = today.getMonth() + 1;
+			var day = today.getDate();
+			var hours = today.getHours();
+			var minutes = today.getMinutes();
 
-            for (const room of roomInfo) {
-                const roomButton = document.createElement("button");
-                roomButton.textContent = room;
-                roomButton.onclick = () => joinRoom(room);
-                roomListDiv.appendChild(roomButton);
-            }
-        }
-
-        async function joinRoom(roomname) {
-            room = roomname;
-
-            chatDiv = document.getElementById("chat");
-            chatDiv.style.display = "block";
-
-            chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${room}/${username}`);
-            
-            chatSocket.onopen = event => {
-                console.log("Connected to the server");                
-            };
-
-            chatSocket.onmessage = event => {
-                // メッセージを表示するロジックをここに追加
-                console.log("Received message: " + event.data);
-                const chat = document.getElementById("message-container");
-                const rep = JSON.parse(event.data);
-                chat.innerHTML+= rep.username+" "+rep.date+"<br>"+rep.message+"<br><br>";
-            };
-
-            chatSocket.onclose = event => {
-                console.log("Disconnected from the server");
-            };
-        }
-
-        function sendMessage() {
-            const messageInput = document.getElementById("message-input");
-            const message = messageInput.value;
-            let json = 
-            {
-				room:room,
-				username:userinfo.username,
-				date:getDate(),
-				message:message
-			};
-			
-            chatSocket.send(JSON.stringify(json));
-            messageInput.value = "";
-        }
-        
-        function getDate() {
-		    var today = new Date();
-		    var year = today.getFullYear();
-		    var month = today.getMonth() + 1;
-		    var day = today.getDate();
-		    var hours = today.getHours();
-		    var minutes = today.getMinutes();
-
-		    return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+			return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
 		}
 
 		document.addEventListener("DOMContentLoaded", getUserInfo);
-        
-    </script>
+
+	</script>
 </head>
 
 <body>
-    <div class="col-md-1">
-        <div class="scroll">
-            <div id="room-list">
-                <!-- ルームボタンがここに動的に生成されます -->
-            </div>
-        </div>
-    </div>
-    <div class="col-md-11">
-        <div id="chat" style="display: none;">
-            <div id="message-container">
-                <!-- チャットメッセージを表示するコンテナ -->
-            </div>
-            <div id="input-container">
-                <input type="text" id="message-input" placeholder="メッセージを入力">
-                <button onclick="sendMessage()">送信</button> <!-- sendMessage() を呼び出すように修正 -->
-            </div>
-        </div>
-    </div>
+	<div>
+		<a href="/ThisCord/makeserver.jsp">
+			<button>ルーム作成</button>
+		</a>
+	</div>
+	<div class="col-md-1">
+		<div class="scroll">
+			<div id="room-list">
+				<!-- ルームボタンがここに動的に生成されます -->
+			</div>
+		</div>
+	</div>
+	<div class="col-md-11">
+		<div id="chat" style="display: none;">
+			<div id="message-container">
+				<!-- チャットメッセージを表示するコンテナ -->
+			</div>
+			<div id="input-container">
+				<input type="text" id="message-input" placeholder="メッセージを入力">
+				<button onclick="sendMessage()">送信</button> <!-- sendMessage() を呼び出すように修正 -->
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

@@ -15,6 +15,7 @@ public class GetUaserInfoCommand extends AbstractCommand {
 		res.setContentType("application/json");
 		System.out.println("kokomade");
 		System.out.println("gson bean"+ new Gson().toJson(bean));
+		res.setCharacterEncoding("UTF-8");
 		res.getWriter().write(new Gson().toJson(bean));
 	}
 }

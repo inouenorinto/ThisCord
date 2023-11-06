@@ -15,11 +15,16 @@ import javaee.controller.WebApplicationController;
 
 public class FrontServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req,res);
+		doAction(req,res);
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doAction(req,res);
+	}
+	
+	public void doAction(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		ApplicationController app = new WebApplicationController();
-		System.out.println("dopost");
+		
+		req.setCharacterEncoding("UTF-8");
 		RequestContext reqc = app.getRequest(req);
 		ResponseContext resc = app.getResponse(res);
 		app.handleRequest(reqc, resc);
