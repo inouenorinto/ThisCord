@@ -1,4 +1,4 @@
-package front;
+package endpoint;
 
 import java.util.Collections;
 import java.util.HashMap;

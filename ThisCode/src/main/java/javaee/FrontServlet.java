@@ -1,4 +1,4 @@
-package front;
+package javaee;
 
 import java.io.IOException;
 
@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import context.RequestContext;
-import context.ResponseContext;
-import controller.ApplicationController;
-import controller.WebApplicationController;
+import framework.context.RequestContext;
+import framework.context.ResponseContext;
+import framework.controller.ApplicationController;
+import javaee.controller.WebApplicationController;
 
 
 public class FrontServlet extends HttpServlet {
@@ -21,7 +21,8 @@ public class FrontServlet extends HttpServlet {
 		ApplicationController app = new WebApplicationController();
 		System.out.println("dopost");
 		RequestContext reqc = app.getRequest(req);
-		ResponseContext resc = app.handleRequest(reqc);
+		ResponseContext resc = app.getResponse(res);
+		app.handleRequest(reqc, resc);
 
 		resc.setResponse(res);
 		app.handleResponse(reqc, resc);
