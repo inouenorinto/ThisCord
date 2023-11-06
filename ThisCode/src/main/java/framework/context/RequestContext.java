@@ -1,4 +1,4 @@
-package context;
+package framework.context;
 
 public interface RequestContext {
 	public String getCommandPath();
@@ -7,6 +7,6 @@ public interface RequestContext {
 	public void setRequest(Object request);
 	public void setSession(Object session);
 	public void invalidateSession();
-	public void setAttributeInSession(Object obj);
+	public void setAttributeInSession(String key, Object obj);
 	public Object getAttributeInSession(String key);
 }
