@@ -1,9 +1,11 @@
-package context;
+package javaee.context;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import framework.context.RequestContext;
 
 public class WebRequestContext implements RequestContext {
 	private Map<String, String[]> parameters;
@@ -34,6 +36,8 @@ public class WebRequestContext implements RequestContext {
 	@Override
 	public void setRequest(Object request) {
 		this.request = (HttpServletRequest) request;
+		parameters = this.request.getParameterMap();
+		session = this.request.getSession();
 	}
 	
 	@Override
@@ -47,8 +51,8 @@ public class WebRequestContext implements RequestContext {
 	}
 	
 	@Override
-	public void setAttributeInSession(Object obj) {
-		session.setAttribute("object", obj);
+	public void setAttributeInSession(String key, Object obj) {
+		session.setAttribute(key, obj);
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package front;
+package endpoint;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -33,6 +33,7 @@ public class ChatServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         // メッセージを処理し、他のクライアントに送信する
+    	System.out.println("server"+message);
         for (Session s : sessions) {
             if (s.isOpen()) {
                 try {

@@ -20,6 +20,12 @@ CREATE TABLE user_data (
     user_icon VARCHAR(500)
 );
 
+CREATE TABLE message_data (
+	user_id VARCHAR(20),
+	send_date VARCHAR(50),
+	message VARCHAR(500)
+);
+
 
 --　主キー無しver
 CREATE TABLE server_data (

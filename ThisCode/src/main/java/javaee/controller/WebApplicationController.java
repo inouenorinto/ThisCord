@@ -1,4 +1,4 @@
-package controller;
+package javaee.controller;
 
 import java.io.IOException;
 
@@ -7,12 +7,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import commands.AbstractCommand;
-import commands.CommandFactory;
-import context.RequestContext;
-import context.ResponseContext;
-import context.WebRequestContext;
-import context.WebResponseContext;
+import framework.command.AbstractCommand;
+import framework.command.CommandFactory;
+import framework.context.RequestContext;
+import framework.context.ResponseContext;
+import framework.controller.ApplicationController;
+import javaee.context.WebRequestContext;
+import javaee.context.WebResponseContext;
+
 
 public class WebApplicationController implements ApplicationController {
 	public RequestContext getRequest(Object request) {
@@ -21,21 +23,29 @@ public class WebApplicationController implements ApplicationController {
 		return reqc;
 	}
 	
-	public ResponseContext handleRequest(RequestContext req) {
-		AbstractCommand command = CommandFactory.getCommand(req);
-		command.init(req);
-		ResponseContext resc = command.execute(new WebResponseContext());
+	public ResponseContext getResponse(Object response) {
+		ResponseContext resc = new WebResponseContext();
+		resc.setResponse(response);
 		return resc;
+	}
+	
+	public void handleRequest(RequestContext req, ResponseContext res) {
+		AbstractCommand command = CommandFactory.getCommand(req);
+		command.execute(req, res);
+
 	}
 	
 	public void handleResponse(RequestContext reqc, ResponseContext resc) {
 		HttpServletRequest req = (HttpServletRequest)reqc.getRequest();
 		HttpServletResponse res = (HttpServletResponse)resc.getResponse();
 		req.setAttribute("result", resc.getResult());
-		RequestDispatcher rd = req.getRequestDispatcher(resc.getTarget());
 		
 		try {
-			rd.forward(req, res);
+			if(resc.getTarget() != null) {
+				RequestDispatcher rd = req.getRequestDispatcher(resc.getTarget());
+				rd.forward(req, res);
+			}
+			
 		} catch(ServletException e) {
 			
 		} catch(IOException e) {
