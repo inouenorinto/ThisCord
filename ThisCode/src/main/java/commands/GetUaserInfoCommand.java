@@ -13,8 +13,8 @@ public class GetUaserInfoCommand extends AbstractCommand {
 	public void execute(RequestContext req, ResponseContext res) {
 		UserBean bean = (UserBean)req.getAttributeInSession("bean");
 		res.setContentType("application/json");
-		System.out.println("kokomade");
 		System.out.println("gson bean"+ new Gson().toJson(bean));
+		res.setCharacterEncoding("UTF-8");
 		res.getWriter().write(new Gson().toJson(bean));
 	}
 }

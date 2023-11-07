@@ -19,8 +19,6 @@ public class MySqlManager {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(URL, USER, PASS);
-
-            System.out.println("データベースつながったよ");
             
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

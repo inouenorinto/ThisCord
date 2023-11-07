@@ -15,9 +15,10 @@
 
 </head>
 <body>
-	<form action="fn/makeserver" method="post">
-		<input type="text" name="server_name" id="">
-		<input type="submit" value="作成" />
+	<form action="fn/invite" method="post">
+		<span>user-id</span>
+		<input type="text" name="user_id" id=""/>
+		<input type="submit" value="招待" />
 	</form>
 </body>
 </html>

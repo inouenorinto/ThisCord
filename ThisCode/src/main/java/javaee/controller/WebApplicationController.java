@@ -31,8 +31,9 @@ public class WebApplicationController implements ApplicationController {
 	
 	public void handleRequest(RequestContext req, ResponseContext res) {
 		AbstractCommand command = CommandFactory.getCommand(req);
-		command.execute(req, res);
 
+		System.out.println(req.getCommandPath());
+		command.execute(req, res);
 	}
 	
 	public void handleResponse(RequestContext reqc, ResponseContext resc) {

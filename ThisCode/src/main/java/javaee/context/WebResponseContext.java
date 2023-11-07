@@ -16,6 +16,10 @@ public class WebResponseContext implements ResponseContext {
 	}
 	
 	@Override
+	public void setCharacterEncoding(String type) {
+		response.setCharacterEncoding(type);
+	}
+	@Override
 	public void setContentType(String type) {
 		response.setContentType(type);
 	}
