@@ -53,12 +53,17 @@ public class LoginCommand extends AbstractCommand {
 					bean.addRooms(num, getRoomName(num));
 				}
 			}
+			if (cn != null) {
+				cn.close();
+			}
+
             
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	    return bean;
 	}
+	
 	private String getRoomName(int id) {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
@@ -74,6 +79,10 @@ public class LoginCommand extends AbstractCommand {
 			if(rs != null && rs.next()) {
 				result = rs.getString("server_name");
 			}
+			if (cn != null) {
+				cn.close();
+			}
+
             
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -99,6 +108,10 @@ public class LoginCommand extends AbstractCommand {
 					flag =true;
 				}
 			}
+			if (cn != null) {
+				cn.close();
+			}
+
             
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -125,6 +138,10 @@ public class LoginCommand extends AbstractCommand {
 					result.add(rs.getInt("server_id"));
 				}
 			}
+			if (cn != null) {
+				cn.close();
+			}
+
             
 		} catch(Exception e) {
 			e.printStackTrace();

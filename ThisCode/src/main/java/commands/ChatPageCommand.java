@@ -50,6 +50,10 @@ public class ChatPageCommand extends AbstractCommand {
 					bean.addRooms(num, getRoomName(num));
 				}
 			}
+			if (cn != null) {
+				cn.close();
+			}
+
             
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -72,6 +76,10 @@ public class ChatPageCommand extends AbstractCommand {
 			if(rs != null && rs.next()) {
 				result = rs.getString("server_name");
 			}
+			if (cn != null) {
+				cn.close();
+			}
+
             
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -98,6 +106,10 @@ public class ChatPageCommand extends AbstractCommand {
 					result.add(rs.getInt("server_id"));
 				}
 			}
+			if (cn != null) {
+				cn.close();
+			}
+
             
 		} catch(Exception e) {
 			e.printStackTrace();

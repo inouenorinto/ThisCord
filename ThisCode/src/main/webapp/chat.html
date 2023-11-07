@@ -5,24 +5,24 @@
 	<meta charset="UTF-8">
 	<title>Chat Application</title>
 	<script>
-		let room = null;
+		let nowRoomId = null;
 		let rooms = null;
 		let roomsMap = null;
 		let chatDiv = null;
 		let chatSocket = null;
 		let username = null;
 		let userinfo = null;
-		
+
 		async function getUserInfo() {
 			try {
 				const response = await fetch("/ThisCord/fn/getuserinfo");
 				if (response.ok) {
-					
+
 					userinfo = await response.json();
 					usernme = userinfo.user_name;
 					rooms = userinfo.rooms;
 					roomsMap = new Map(Object.entries(rooms));
-					
+
 					createRoomB(roomsMap);
 					console.log(userinfo);
 				} else {
@@ -32,45 +32,45 @@
 				console.error("Error: " + error);
 			}
 		}
+
 		function createRoomB(roomInfo) {
 			const roomListDiv = document.getElementById("room-list");
 			roomListDiv.innerHTML = "";
-			
+
 			for (const [roomId, roomName] of roomInfo) {
 				const roomButton = document.createElement("button");
 				roomButton.textContent = roomName;
-				roomButton.onclick = () => joinRoom(roomName);
+				roomButton.onclick = () => joinRoom(roomId);
 				roomListDiv.appendChild(roomButton);
 			}
-			
+
 		}
 
-		function createRoomButtons(roomInfo) {
-			const roomListDiv = document.getElementById("room-list");
-			roomListDiv.innerHTML = "";
-
-			for (const room of roomInfo) {
-				const roomButton = document.createElement("button");
-				roomButton.textContent = room;
-				roomButton.onclick = () => joinRoom(room);
-				roomListDiv.appendChild(roomButton);
-			}
-		}
-
-		async function joinRoom(roomname) {
+		async function joinRoom(roomId) {
 			if (chatSocket) {
 				chatSocket.close(); // 既存のWebSocket接続を閉じる
 			}
 			fieldClear();
-			room = roomname;
+			nowRoomId = roomId;
+
+			getServerInfo(nowRoomId);
+
+			console.log("nowRoomId: " + nowRoomId);
+			console.log("roomName: " + roomsMap.get(roomId));
 
 			chatDiv = document.getElementById("chat");
 			chatDiv.style.display = "block";
-
-			chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${room}/${username}`);
+			
+			spaDiv = document.getElementById("spa");
+			spaDiv.style.display = "block";
+			
+			spaDiv = document.getElementById("spa1");
+			spaDiv.style.display = "block";
+			
+			chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${nowRoomId}/${username}`);
 
 			chatSocket.onopen = event => {
-				console.log("Connected to the server");
+				console.log("接続開始");
 			};
 
 			chatSocket.onmessage = event => {
@@ -82,16 +82,42 @@
 			};
 
 			chatSocket.onclose = event => {
-				console.log("Disconnected from the server");
+				console.log("切断");
 			};
 		}
+
+		async function getServerInfo(roomId) {
+			try {
+				const response = await fetch("/ThisCord/fn/getserverinfo?roomId=" + roomId);
+				if (response.ok) {
+
+					const roominfo = await response.json();
+					const members = roominfo.member;
+					membersMap = new Map(Object.entries(members));
+
+					for (const [user_id, user_name] of membersMap) {
+						const memberListDiv = document.getElementById("members-list");
+						memberListDiv.innerHTML += user_name + '<dir>';
+					}
+
+					createRoomB(roomsMap);
+					console.log(userinfo);
+				} else {
+					console.error("Failed to fetch room information");
+				}
+			} catch (error) {
+				console.error("Error: " + error);
+			}
+		}
+
 
 		function sendMessage() {
 			const messageInput = document.getElementById("message-input");
 			const message = messageInput.value;
 			let json =
 			{
-				room: room,
+				nowRoomId: nowRoomId,
+				nowRoomName: roomsMap.get(nowRoomId),
 				username: userinfo.user_name,
 				date: getDate(),
 				message: message
@@ -100,10 +126,12 @@
 			chatSocket.send(JSON.stringify(json));
 			messageInput.value = "";
 		}
-		
+
 		function fieldClear() {
 			const chat = document.getElementById("message-container");
+			const memberListDiv = document.getElementById("members-list");
 			chat.innerHTML = "";
+			memberListDiv.innerHTML = "";
 		}
 
 		function getDate() {
@@ -128,21 +156,35 @@
 			<button>ルーム作成</button>
 		</a>
 	</div>
+
 	<div class="col-md-1">
 		<div class="scroll">
 			<div id="room-list">
-				<!-- ルームボタンがここに動的に生成されます -->
+
 			</div>
 		</div>
 	</div>
+
+	<div class="col-md-2" id="spa" style="display: none;">
+		<p>メンバーリスト</p>
+		<div id="members-list">
+
+		</div>
+	</div>
+
 	<div class="col-md-11">
+		<div id="spa1" style="display: none;">
+			<a href="/ThisCord/invitation.jsp">
+				<button>メンバーを招待</button>
+			</a>
+		</div>
 		<div id="chat" style="display: none;">
 			<div id="message-container">
-				<!-- チャットメッセージを表示するコンテナ -->
+
 			</div>
 			<div id="input-container">
 				<input type="text" id="message-input" placeholder="メッセージを入力">
-				<button onclick="sendMessage()">送信</button> <!-- sendMessage() を呼び出すように修正 -->
+				<button onclick="sendMessage()">送信</button>
 			</div>
 		</div>
 	</div>
