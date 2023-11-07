@@ -33,10 +33,12 @@ h6 {
 .scrollbar {
 	overflow-x: hidden;
 	overflow-y: scroll;
+	height: 84%;
 }
 .scroll {
 	overflow-x: hidden;
 	overflow-y: scroll;
+	height: 100%;
 }
 .scroll::-webkit-scrollbar {
 	display:none;
@@ -94,6 +96,8 @@ h6 {
 .formcss {
 	position: absolute;
 	bottom: 10px;
+	display: flex;
+  	justify-content: center;
 }
 /*formのtext入力の体裁*/
 .formcss input{
@@ -118,6 +122,7 @@ h6 {
 	display: flex;
 	align-items: center;
 }
-.test {
-	max-height: 100%;
+.text-box {
+	padding-left: 20px;
+	text-align: left;
 }

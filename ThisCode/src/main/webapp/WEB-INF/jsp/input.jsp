@@ -36,17 +36,69 @@
 					<img src="${pageContext.request.contextPath}/img/ino.jpg"
 					class="rounded-circle" alt="サーバーアイコン">
 				</div>
+								<div class="server-img">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle" alt="サーバーアイコン">
+				</div>
+				<div class="server-img">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle" alt="サーバーアイコン">
+				</div>
+				<div class="server-img">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle" alt="サーバーアイコン">
+				</div>
+				<div class="server-img">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle" alt="サーバーアイコン">
+				</div>
+				<div class="server-img">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle" alt="サーバーアイコン">
+				</div>
+				<div class="server-img">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+					class="rounded-circle" alt="サーバーアイコン">
+				</div>
 			</div>
 			
 			
 			<!-- チャンネル一覧 -->
-			<div class="col-md-2 b-color-chat-side radiusleftup no-padding">
+			<div class="col-md-2 b-color-chat-side radiusleftup no-padding h-100">
 				<!-- メニューバー -->
 				<div class="radiusleftup menubar text-center">
 					チャンネル一覧
 				</div>
 				<!-- 一覧 -->
-				<div class="text-center scrollbar">
+				<div class="scrollbar text-box">
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
+					チャンネル<br>
 					チャンネル<br>
 					チャンネル<br>
 					チャンネル<br>
@@ -59,14 +111,14 @@
 			
 			
 			<!-- テキストチャット -->
-			<div class="col-md-7 b-color-chat no-padding test">
+			<div class="col-md-7 b-color-chat chatposi no-padding h-100">
 				<!-- メニューバー -->
 				<div class="menubar text-center">
 					一般チャット
 				</div>
 				<!-- チャット -->
-				<div class="text-color chatposi scrollbar test">
-					<div class="test">
+				<div class="text-color scrollbar text-box">
+					<div>
 						<div>
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
@@ -75,7 +127,6 @@
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-						
 						</div>
 						<div>
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
@@ -117,19 +168,66 @@
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
 						</div>
 					</div>
-					
-					<form action="" method="" class="formcss">
+				</div>
+				
+				<div class="b-color-chat">
+					<form action="" method="" class="formcss b-color-chat">
 						<input type="text" name="" id="" placeholder="メッセージを送信">
 					</form>
-					
 				</div>
 			
 			</div>
 			
 			
 			
-			<div class="col-md-2 b-color-chat-side no-padding">
-				
+			<div class="col-md-2 b-color-chat-side no-padding scrollbar h-100">
+				<div class="text-box">
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+					ユーザー<br>
+				</div>
 			</div>
 			
 			<!--
