@@ -59,14 +59,14 @@
 			
 			
 			<!-- テキストチャット -->
-			<div class="col-md-7 b-color-chat no-padding test">
+			<div class="col-md-7 b-color-chat chatposi no-padding h-100">
 				<!-- メニューバー -->
 				<div class="menubar text-center">
 					一般チャット
 				</div>
 				<!-- チャット -->
-				<div class="text-color chatposi scrollbar test">
-					<div class="test">
+				<div class="text-color scrollbar test">
+					<div>
 						<div>
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
@@ -117,11 +117,11 @@
 							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
 						</div>
 					</div>
-					
-					<form action="" method="" class="formcss">
+				</div>
+				<div class="menubar b-color-chat">
+					<form action="" method="" class="formcss b-color-chat">
 						<input type="text" name="" id="" placeholder="メッセージを送信">
 					</form>
-					
 				</div>
 			
 			</div>
