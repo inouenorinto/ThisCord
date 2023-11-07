@@ -2,18 +2,18 @@ package bean;
 import java.io.Serializable;
 
 public class UserDataBean implements Serializable{
-	String discord_user_id;
-	String mailaddress;
-	String password;
-	String user_name;
-	String user_icon;
+	private int user_id;
+	private String mailaddress;
+	private String password;
+	private String user_name;
+	private String user_icon;
 	
-	public String getDiscord_User_Id() {
-		return discord_user_id;
+	public int getUser_Id() {
+		return user_id;
 	}
 	
-	public void setDiscord_User_Id(String discord_user_id) {
-		this.discord_user_id = discord_user_id;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 	
 	public String getMailaddress() {
