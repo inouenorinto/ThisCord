@@ -1,9 +1,9 @@
 package bean;
 
 public class MessageBean {
-	String user_id = null;
-	String send_date = null;
-	String message = null;
+	private String user_id = null;
+	private String send_date = null;
+	private String message = null;
 
 	public String getUser_id() {
 		return user_id;
