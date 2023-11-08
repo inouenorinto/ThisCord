@@ -49,7 +49,6 @@ public class LoginCommand extends AbstractCommand {
 				bean.setUser_icon(rs.getString("user_icon"));
 				
 				for(int num : getRooms(bean.getUser_id())) {
-					System.out.println("getRecord: "+getRoomName(num));
 					bean.addRooms(num, getRoomName(num));
 				}
 			}
@@ -134,7 +133,6 @@ public class LoginCommand extends AbstractCommand {
 			
 			if(rs != null) {
 				while(rs.next()) {
-					System.out.println("getRooms: "+rs.getInt("server_id"));
 					result.add(rs.getInt("server_id"));
 				}
 			}

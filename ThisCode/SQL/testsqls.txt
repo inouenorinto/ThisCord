@@ -15,6 +15,7 @@ drop table server_data;
 drop table user_data;
 drop table message_data;
 drop table user_server_relationship;
+drop table text_channel_data;
 
 
 CREATE TABLE user_data (
@@ -28,6 +29,7 @@ CREATE TABLE user_data (
 CREATE TABLE message_data (
 	user_id INT,
 	server_id INT,
+	channel_id INT,
 	send_date VARCHAR(50),
 	message VARCHAR(500)
 );
@@ -47,9 +49,12 @@ CREATE TABLE user_server_relationship (
     FOREIGN KEY (server_id) REFERENCES server_data(server_id)
 );
 
-
-
---test_data
+CREATE TABLE text_channel_data (
+	channel_id INT AUTO_INCREMENT PRIMARY KEY,
+	channel_name VARCHAR(50),
+	server_id INT,
+	FOREIGN KEY (server_id) REFERENCES server_data(server_id)
+);
 
 INSERT INTO user_data (mailaddress, password, user_name, user_icon)
 VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'user_icon_url');
@@ -96,6 +101,14 @@ INSERT INTO user_server_relationship (user_id, server_id)
 VALUES (2, 1);
 
 
+INSERT INTO text_channel_data (user_id, server_id) 
+VALUES (2, 1);
+
+INSERT INTO text_channel_data (channel_name, server_id) 
+VALUES ('勉強', 1);
+
+INSERT INTO text_channel_data (channel_name, server_id) 
+VALUES ('ゲーム', 1);
 
 
 

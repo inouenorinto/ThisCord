@@ -20,7 +20,6 @@ public class InvitationCommand extends AbstractCommand {
 		
 		invaite(server_id, user_id);
 		
-		System.out.println("invaitation: "+ user_id);
 		res.setTarget("fn/chat");
 	}
 	
