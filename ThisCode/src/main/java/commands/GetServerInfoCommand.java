@@ -18,43 +18,56 @@ public class GetServerInfoCommand extends AbstractCommand {
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
 		int roomId = Integer.parseInt(req.getParameter("roomId")[0]);
-		System.out.println("roomId: " + roomId);
+
 		ServerInfoDTO dto = getBean(roomId);
+		
 		req.setAttributeInSession("serverInfo", dto);
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");
+		
 		System.out.println("json: "+ new Gson().toJson(dto));
 		res.getWriter().write(new Gson().toJson(dto));
 	}
 
-	private ServerInfoDTO getBean(int roomId) {
+	private ServerInfoDTO getBean(int server_id) {
 		ServerInfoDTO bean = new ServerInfoDTO();
+		
 		Connection cn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
 		String SQL = "select * from user_server_relationship where server_id= ?";
 		String selectSQL="select * from server_data where server_id= ?";
-
+		String select_channel_SQL="select * from text_channel_data where server_id= ?";
+		
 		try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
-			pstmt.setInt(1, roomId);
+			pstmt.setInt(1, server_id);
 			rs = pstmt.executeQuery();
 			if (rs !=null) {
 				while(rs.next()) {
-					System.out.println("user_id: "+rs.getInt("user_id"));
 					bean.addMember(rs.getInt("user_id"), getUserName(rs.getInt("user_id")));
 				}
 			}
 			
 			pstmt = cn.prepareStatement(selectSQL);
-			pstmt.setInt(1, roomId);
+			pstmt.setInt(1, server_id);
 			rs = pstmt.executeQuery();
 			if (rs != null && rs.next()) {
 				bean.setHost_id(rs.getInt("host_id"));
-				bean.setServer_id(roomId);
+				bean.setServer_id(server_id);
 				bean.setServer_name(rs.getString("server_name"));
 				bean.setServer_icon(rs.getString("server_icon"));
+			}
+			
+			pstmt = cn.prepareStatement(select_channel_SQL);
+			pstmt.setInt(1, server_id);
+			rs = pstmt.executeQuery();
+			if (rs !=null) {
+				while(rs.next()) {
+					bean.addChannel(rs.getInt("channel_id"), rs.getString("channel_name"));
+				}
 			}
 			
 			if (cn != null) {
@@ -109,7 +122,6 @@ public class GetServerInfoCommand extends AbstractCommand {
 			
 			if(rs != null) {
 				while(rs.next()) {
-					System.out.println("getUsers: "+rs.getInt("user_id"));
 					result.add(rs.getInt("user_id"));
 				}
 			}

@@ -5,10 +5,24 @@ import java.util.Map;
 
 public class ServerInfoDTO {
 	private Map<Integer, String> member = new HashMap<>();
+	private Map<Integer, String> channels = new HashMap<>();
 	private int server_id = 0;
 	private int host_id = 0;
 	private String server_name = null;
 	private String server_icon = null;
+	
+	
+	public void setChannels(Map<Integer, String> channels) {
+		this.channels = channels;
+	}
+	
+	public Map<Integer, String> getChannels() {
+		return channels;
+	}
+	
+	public void addChannel(int channel_id, String channel_name) {
+		channels.put(channel_id, channel_name);
+	}
 	
 	public void addMember(int host_id, String user_name) {
 		member.put(host_id, user_name);
