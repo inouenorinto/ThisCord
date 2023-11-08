@@ -11,11 +11,12 @@ SELECT user, host FROM mysql.user;
 CREATE DATABASE thiscord;
 USE thiscord;
 
-drop table server_data;
-drop table user_data;
-drop table message_data;
 drop table user_server_relationship;
 drop table text_channel_data;
+drop table user_data;
+drop table server_data;
+drop table message_data;
+
 
 
 CREATE TABLE user_data (
@@ -101,7 +102,7 @@ INSERT INTO user_server_relationship (user_id, server_id)
 VALUES (2, 1);
 
 
-INSERT INTO text_channel_data (user_id, server_id) 
+INSERT INTO text_channel_data (channel_id, server_id) 
 VALUES (2, 1);
 
 INSERT INTO text_channel_data (channel_name, server_id) 
