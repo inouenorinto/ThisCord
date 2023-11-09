@@ -10,29 +10,39 @@ import bean.ServerDataBean;
 import util.mysql.MySqlManager;
 
 public class ServerDataDAO {
-    private static final String DB_SELECT = "SELECT * FROM server_data WHERE discordServerId = ";
+    private static final String DB_SELECT = "SELECT * FROM server_data WHERE server_id = ?";
 
     private Connection cn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
-
-    public ServerDataDAO(Connection cn) {
+    
+    private static ServerDataDAO sddao = null;
+    
+    static {
+    	sddao = new ServerDataDAO();
+    }
+    
+    public static final ServerDataDAO getInstance() {
+    	return sddao;
+    }
+    
+    private ServerDataDAO() {
         this.cn = MySqlManager.getConnection();
     }
 
-    public ArrayList<ServerDataBean> findAll(String discordServerId) {
+    public ArrayList<ServerDataBean> findAll(int server_id) {
         ArrayList<ServerDataBean> result = new ArrayList<>();
         try {
             pstmt = cn.prepareStatement(DB_SELECT);
-            pstmt.setString(1, discordServerId);
+            pstmt.setInt(1, server_id);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 ServerDataBean serverDataBean = new ServerDataBean();
-                serverDataBean.setDiscordServerId(rs.getString("discordServerId"));
-                serverDataBean.setServerName(rs.getString("serverName"));
-                serverDataBean.setHostId(rs.getString("hostId"));
-                serverDataBean.setServerIcon(rs.getString("serverIcon"));
-                serverDataBean.setServerMemberId(rs.getString("serverMemberId"));
+                serverDataBean.setServer_id(rs.getInt("server_id"));
+                serverDataBean.setServer_name(rs.getString("server_name"));
+                serverDataBean.setHost_id(rs.getInt("host_id"));
+                serverDataBean.setServer_icon(rs.getString("server_icon"));
+                serverDataBean.setServer_member_id(rs.getString("server_member_id"));
                 result.add(serverDataBean);
             }
         } catch (SQLException e) {
@@ -55,4 +65,31 @@ public class ServerDataDAO {
         }
         return result;
     }
+    
+    public String getServerName(int id) {
+		Connection cn = null;
+		PreparedStatement  pstmt = null;
+	    ResultSet rs = null;
+	    String result = null;
+	    String SQL = "select server_name from server_data where server_id = ?";
+		try {
+			cn = MySqlManager.getConnection();
+			pstmt = cn.prepareStatement(SQL);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs != null && rs.next()) {
+				result = rs.getString("server_name");
+			}
+			if (cn != null) {
+				cn.close();
+			}
+
+            
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }
