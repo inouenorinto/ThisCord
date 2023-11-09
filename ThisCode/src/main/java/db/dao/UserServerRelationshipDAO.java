@@ -16,7 +16,17 @@ public class UserServerRelationshipDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public UserServerRelationshipDAO(Connection cn) { 
+	private static UserServerRelationshipDAO usrdao = null;
+    
+    static {
+    	usrdao = new UserServerRelationshipDAO();
+    }
+    
+    public static final UserServerRelationshipDAO getInstance() {
+    	return usrdao;
+    }
+	
+	private UserServerRelationshipDAO() { 
 		this.cn = MySqlManager.getConnection();
 	}
 	
@@ -56,4 +66,32 @@ public class UserServerRelationshipDAO {
         }
         return result;
     }
+	
+	public Integer[] getServers(int user_id) {
+		ArrayList<Integer> result = new ArrayList<>();
+
+	    String SQL = "select server_id from user_server_relationship where user_id = ?";
+	    try {
+			cn = MySqlManager.getConnection();
+			pstmt = cn.prepareStatement(SQL);
+			pstmt.setInt(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs != null) {
+				while(rs.next()) {
+					System.out.println("getServers: "+rs.getInt("server_id"));
+					result.add(rs.getInt("server_id"));
+				}
+			}
+			if (cn != null) {
+				cn.close();
+			}
+
+            
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	    
+	    return result.toArray(new Integer[result.size()]);
+	}
 }
