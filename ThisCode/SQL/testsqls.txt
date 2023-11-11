@@ -38,7 +38,7 @@ CREATE TABLE message_data (
 CREATE TABLE server_data (
     server_id INT AUTO_INCREMENT PRIMARY KEY,
     server_name VARCHAR(100),
-    host_id VARCHAR(20),
+    host_id INT,
     server_icon VARCHAR(500)
 );
 

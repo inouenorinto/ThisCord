@@ -45,6 +45,8 @@ public class WebApplicationController implements ApplicationController {
 			if(resc.getTarget() != null) {
 				RequestDispatcher rd = req.getRequestDispatcher(resc.getTarget());
 				rd.forward(req, res);
+			} else if (resc.getRedirect() != null) {
+				res.sendRedirect(req.getContextPath()+resc.getRedirect());
 			}
 			
 		} catch(ServletException e) {
