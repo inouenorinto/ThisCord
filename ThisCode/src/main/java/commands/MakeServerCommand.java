@@ -1,5 +1,8 @@
 package commands;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,16 +18,37 @@ public class MakeServerCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		System.out.println("kokomadekitoru");
+
 		String server_name = req.getParameter("server_name")[0];
+		String server_icon = req.getParameter("editedImage")[0];
 		System.out.println("server_name: "+server_name);
 		UserBean bean = (UserBean)req.getAttributeInSession("bean");
 		System.out.println("userid: "+bean.getUser_id());
-		makeServer(server_name,  bean.getUser_id());
+		
+        if (server_icon != null && !server_icon.isEmpty()) {
+            saveBase64Image(server_icon, server_name+".jpg");
+        } else {
+        	System.out.println("nullです");
+        }
+        
+		String path = "resource/server_icons/" + server_name+".jpg";
+		makeServer(server_name,  bean.getUser_id(), path);
 		
 		res.setTarget("fn/chat");
 	}
-	private boolean makeServer(String server_name, int user_id) {
+	
+	private void saveBase64Image(String base64Data, String fileName) {
+        String savePath = "C:\\ThisLocal\\ThisCode\\src\\main\\webapp\\resource\\server_icons\\" + fileName;
+        try (OutputStream out = new FileOutputStream(savePath)) {
+            byte[] imageBytes = java.util.Base64.getDecoder().decode(base64Data.split(",")[1]);
+            out.write(imageBytes);
+            System.out.println("せいこう");
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+    }
+	
+	private boolean makeServer(String server_name, int user_id,String path) {
 		boolean flag = false;
 		
 		Connection cn = null;
@@ -40,7 +64,7 @@ public class MakeServerCommand extends AbstractCommand {
 			pstmt = cn.prepareStatement(SQL);
 			pstmt.setString(1, server_name);
 			pstmt.setInt(2, user_id);
-			pstmt.setString(3, "icon_url");
+			pstmt.setString(3, path);
 			pstmt.executeUpdate();
 			
 			st = cn.createStatement();

@@ -20,7 +20,7 @@ public class ChatPageCommand extends AbstractCommand {
 		
     	req.setAttributeInSession("bean", bean);
 		
-		res.setTarget("/chat.html");
+		res.setRedirect("/chat.jsp");
 
 	}
 	
@@ -46,7 +46,8 @@ public class ChatPageCommand extends AbstractCommand {
 				bean.setUser_icon(rs.getString("user_icon"));
 				
 				for(int num : getRooms(bean.getUser_id())) {
-					bean.addRooms(num, getRoomName(num));
+					String server[] = getRoomName(num);
+					bean.addRooms(num, server[0], server[1]);
 				}
 			}
 			if (cn != null) {
@@ -60,12 +61,12 @@ public class ChatPageCommand extends AbstractCommand {
 	    return bean;
 	}
 	
-	private String getRoomName(int id) {
+	private String[] getRoomName(int id) {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
-	    String result = null;
-	    String SQL = "select server_name from server_data where server_id = ?";
+	    String result[] = new String [2];
+	    String SQL = "select server_name, server_icon from server_data where server_id = ?";
 		try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
@@ -73,7 +74,8 @@ public class ChatPageCommand extends AbstractCommand {
 			rs = pstmt.executeQuery();
 			
 			if(rs != null && rs.next()) {
-				result = rs.getString("server_name");
+				result[0] = rs.getString("server_name");
+				result[1] = rs.getString("server_icon");
 			}
 			if (cn != null) {
 				cn.close();

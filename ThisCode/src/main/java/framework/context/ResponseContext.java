@@ -8,6 +8,8 @@ public interface ResponseContext {
 	public String getTarget();
 	public void setResult(Object bean);
 	public void setTarget(String transferInfo);
+	public void setRedirect(String path);
+	public String getRedirect();
 	public void setResponse(Object obj);
 	public Object getResponse();
 	public PrintWriter getWriter();
