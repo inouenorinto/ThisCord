@@ -120,7 +120,7 @@ CREATE TABLE server_data (
     host_id VARCHAR(20),
     server_icon VARCHAR(500),
     server_member_id VARCHAR(20),
-    PRIMARY KEY(discord_server_id, server_member_id)
+    PRIMARY KEY(discord_server_id, server_member_id),
     FOREIGN KEY(server_member_id)
     REFERENCES user_data(discord_user_id)
     ON UPDATE CASCADE ON DELETE RESTRICT
