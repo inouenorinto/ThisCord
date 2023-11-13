@@ -7,7 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<title>Thiscord</title>
-
 		<!-- cropper.js -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
 			integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg=="
@@ -63,7 +62,7 @@
 			}
 			const infoDiv = document.querySelector("#user");
 			infoDiv.innerHTML =
-			"<img class=\"user_icon\" src=\"${pageContext.request.contextPath}\\"+ user_icon+"\"></img>"+
+			"<img class=\"user_icon_img\" src=\"${pageContext.request.contextPath}\\"+ user_icon+"\"></img>"+
 			userinfo.user_name + " ";
 		}
 
@@ -203,17 +202,14 @@
 			var form = document.getElementById(formId);
 	        var submitButton = document.getElementById('form_submit');
 
-	        // 送信中フラグを設定
 	        form.setAttribute('data-submitting', 'true');
 
-	        // フォーム送信
 	        form.submit();
 			
 		}
 
 
 	    function handleKeyPress(event) {
-	        // エンターキーが押されたかを確認
 	        if (event.key === "Enter") {
 	        	sendMessage();
 	            
@@ -226,7 +222,7 @@
 	</head>
 
 	<body>
-		<h6>Thiscord</h6>
+		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 		
 		<div class="container-fluid">
@@ -277,7 +273,7 @@
 								<p><small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。</small></p>
 								<input type="hidden" id="editedImageField" name="editedImage">
 								<div class="sub">
-									<button type="button" id="form_submit" class="btn_sub" onclick="submitForm('imageForm')">新規作成</button>
+									<button type="button" id="form_submit" class="btn_sub" onclick="form_crea('imageForm')">新規作成</button>
 								</div>
 							</form>
 
@@ -326,7 +322,7 @@
 					<div class="scrollbar text-box">
 						<div id="channels-list"></div>
 					</div>
-					<div id="user"></div>
+					<div id="user" class="user_view"></div>
 				</div>
 
 				<!-- テキストチャット -->

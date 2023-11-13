@@ -42,7 +42,7 @@ public class ServerDataDAO {
                 serverDataBean.setServer_name(rs.getString("server_name"));
                 serverDataBean.setHost_id(rs.getInt("host_id"));
                 serverDataBean.setServer_icon(rs.getString("server_icon"));
-                serverDataBean.setServer_member_id(rs.getString("server_member_id"));
+                serverDataBean.setServer_member_id(rs.getInt("server_member_id"));
                 result.add(serverDataBean);
             }
         } catch (SQLException e) {
@@ -66,12 +66,12 @@ public class ServerDataDAO {
         return result;
     }
     
-    public String getServerName(int id) {
+    public String[] getServerNameAndIcon(int id) {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
-	    String result = null;
-	    String SQL = "select server_name from server_data where server_id = ?";
+	    String result[] = new String[2];
+	    String SQL = "select server_name, server_icon from server_data where server_id = ?";
 		try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
@@ -79,7 +79,8 @@ public class ServerDataDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs != null && rs.next()) {
-				result = rs.getString("server_name");
+				result[0] = rs.getString("server_name");
+				result[1] = rs.getString("server_icon");
 			}
 			if (cn != null) {
 				cn.close();
