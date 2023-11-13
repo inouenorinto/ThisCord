@@ -10,7 +10,7 @@ import bean.ServerDataBean;
 import util.mysql.MySqlManager;
 
 public class ServerDataDAO {
-    private static final String DB_SELECT = "SELECT * FROM server_data WHERE server_id = ?";
+    private static final String DB_SELECT = "SELECT * FROM server_data";
 
     private Connection cn = null;
     private PreparedStatement pstmt = null;
@@ -30,11 +30,10 @@ public class ServerDataDAO {
         this.cn = MySqlManager.getConnection();
     }
 
-    public ArrayList<ServerDataBean> findAll(int server_id) {
+    public ArrayList<ServerDataBean> findAll() {
         ArrayList<ServerDataBean> result = new ArrayList<>();
         try {
             pstmt = cn.prepareStatement(DB_SELECT);
-            pstmt.setInt(1, server_id);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 ServerDataBean serverDataBean = new ServerDataBean();
@@ -42,7 +41,6 @@ public class ServerDataDAO {
                 serverDataBean.setServer_name(rs.getString("server_name"));
                 serverDataBean.setHost_id(rs.getInt("host_id"));
                 serverDataBean.setServer_icon(rs.getString("server_icon"));
-                serverDataBean.setServer_member_id(rs.getString("server_member_id"));
                 result.add(serverDataBean);
             }
         } catch (SQLException e) {
