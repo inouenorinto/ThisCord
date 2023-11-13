@@ -4,6 +4,20 @@ COMMENT 'beginuser by noob';
 GRANT USAGE ON *.* TO 'testuser1'@'localhost';
 GRANT ALL ON *.* TO 'testuser1'@'localhost';
 
+
+-- AWS testuser1 
+CREATE USER 'testuser1'@'%' IDENTIFIED BY 'password';
+
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, PROCESS, REFERENCES, INDEX, ALTER, SHOW DATABASES, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER ON *.* TO 'testuser1'@'%' WITH GRANT OPTION;
+
+UNINSTALL PLUGIN validate_password;
+
+FLUSH PRIVILEGE;
+
+mysql -u testuser1 -p -h エンドポイント
+
+
+
 -- 実行してもしなくても
 SELECT user, host FROM mysql.user;
 
@@ -120,7 +134,7 @@ CREATE TABLE server_data (
     host_id VARCHAR(20),
     server_icon VARCHAR(500),
     server_member_id VARCHAR(20),
-    PRIMARY KEY(discord_server_id, server_member_id)
+    PRIMARY KEY(discord_server_id, server_member_id),
     FOREIGN KEY(server_member_id)
     REFERENCES user_data(discord_user_id)
     ON UPDATE CASCADE ON DELETE RESTRICT
