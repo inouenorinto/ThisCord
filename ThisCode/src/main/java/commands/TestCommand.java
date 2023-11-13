@@ -17,8 +17,11 @@ public class TestCommand {
 		serverdatas = serverdatadao.findAll();
 		
 		for (ServerDataBean bean : serverdatas) {
-			System.out.println(bean.getServer_name());
+			System.out.print("serverid: " + bean.getServer_id() + "\t");
+			System.out.print("name: " + bean.getServer_name() + "\t");
+			System.out.print("hostid: " + bean.getHost_id() + "\t");
+			System.out.println("icon" + bean.getServer_icon());
 		}
-		
+
 	}
 }
