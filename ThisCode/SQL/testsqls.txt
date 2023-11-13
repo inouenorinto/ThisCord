@@ -32,7 +32,7 @@ drop table server_data;
 drop table message_data;
 
 
-
+-- ユーザーの情報
 CREATE TABLE user_data (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     mailaddress VARCHAR(200),
@@ -41,6 +41,7 @@ CREATE TABLE user_data (
     user_icon VARCHAR(500)
 );
 
+-- メッセージのバックアップ
 CREATE TABLE message_data (
 	user_id INT,
 	server_id INT,
@@ -49,6 +50,7 @@ CREATE TABLE message_data (
 	message VARCHAR(500)
 );
 
+-- サーバーの情報
 CREATE TABLE server_data (
     server_id INT AUTO_INCREMENT PRIMARY KEY,
     server_name VARCHAR(100),
@@ -56,6 +58,7 @@ CREATE TABLE server_data (
     server_icon VARCHAR(500)
 );
 
+-- ユーザーがどのサーバーに参加しているか
 CREATE TABLE user_server_relationship (
     relationship_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -64,6 +67,7 @@ CREATE TABLE user_server_relationship (
     FOREIGN KEY (server_id) REFERENCES server_data(server_id)
 );
 
+-- テキストチャンネルのデータ
 CREATE TABLE text_channel_data (
 	channel_id INT AUTO_INCREMENT PRIMARY KEY,
 	channel_name VARCHAR(50),
