@@ -10,6 +10,7 @@ import framework.context.ResponseContext;
 public class WebResponseContext implements ResponseContext {
 	private Object result;
 	private String target;
+	private String send_target;
 	private HttpServletResponse response;
 
 	public WebResponseContext() {
@@ -68,5 +69,16 @@ public class WebResponseContext implements ResponseContext {
 			e.printStackTrace();
 		}
 		return print;
+	}
+
+	@Override
+	public void setRedirect(String path) {
+		send_target = path;
+		
+	}
+
+	@Override
+	public String getRedirect() {
+		return send_target;
 	}
 }

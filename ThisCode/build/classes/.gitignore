@@ -1,10 +1,7 @@
-/commands/
-/context/
-/controller/
 /endpoint/
-/util/
-/utl/
+/commands/
 /bean/
 /framework/
 /javaee/
 /db/
+/util/

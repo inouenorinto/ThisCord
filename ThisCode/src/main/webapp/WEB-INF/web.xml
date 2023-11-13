@@ -9,12 +9,12 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <servlet-name>FrontServlet</servlet-name>
-    <servlet-class>javaee.FrontServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FrontServlet</servlet-name>
-    <url-pattern>/fn/*</url-pattern>
-  </servlet-mapping>
+<!--  <servlet>-->
+<!--    <servlet-name>FrontServlet</servlet-name>-->
+<!--    <servlet-class>javaee.FrontServlet</servlet-class>-->
+<!--  </servlet>-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>FrontServlet</servlet-name>-->
+<!--    <url-pattern>/fn/*</url-pattern>-->
+<!--  </servlet-mapping>-->
 </web-app>
