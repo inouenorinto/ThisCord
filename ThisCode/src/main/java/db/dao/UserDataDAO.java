@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.UserBean;
@@ -28,7 +29,7 @@ public class UserDataDAO{
     }
 
     //Connectionとってくるコンストラクタ
-    private UserDataDAO() {
+    public UserDataDAO() {
         this.cn = MySqlManager.getConnection();
     }
     
@@ -96,8 +97,9 @@ public class UserDataDAO{
 				bean.setUser_icon(rs.getString("user_icon"));
 				
 				for(int num : usrdao.getServers(bean.getUser_id())) {
-					System.out.println("getRecord: "+sddao.getServerName(num));
-					bean.addRooms(num, sddao.getServerName(num));
+					
+					String info[] = sddao.getServerNameAndIcon(num);
+					bean.addRooms(num, info[0], info[1]);
 				}
 			}
 			if (cn != null) {
@@ -136,4 +138,68 @@ public class UserDataDAO{
 		}
 		return flag;
 	}
+	
+	public int insertUser(String user_name, String password, String email) {
+		String insert = "INSERT INTO user_data (mailaddress, password, user_name ) VALUES (?, ?, ?)";
+		String select = "select mailaddress from user_data";
+		String select_id ="select user_id from user_data where mailaddress=?"; 
+		int flag = -1;
+		Statement st = null;
+		try {
+			
+			st = cn.createStatement();
+			rs = st.executeQuery(select);
+			
+			if(rs.next()) {
+				rs = null;
+				pstmt = cn.prepareStatement(insert);
+				pstmt.setString(1, email);
+				pstmt.setString(2, password);
+				pstmt.setString(3, user_name);
+				int fla = pstmt.executeUpdate();
+				
+				if(fla != -1) {
+					pstmt = cn.prepareStatement(select_id);
+					pstmt.setString(1, email);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						System.out.println("userid"+ rs.getInt("user_id"));
+						flag = rs.getInt("user_id");
+					}
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} 
+		return flag;
+	}
+	
+	public int updateIcon(String email, String path) {
+		String update = "update user_data set user_icon=? where mailaddress=?";
+	    PreparedStatement ps = null;	    
+	    
+	    int flag = -1;
+	    
+		try {
+			ps = cn.prepareStatement(update);
+			ps.setString(1, path);
+			ps.setString(2, email);
+			flag = ps.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} 
+		return flag;
+	}
+	
+	public void close() {
+		try {
+			if (cn != null) {
+				cn.close();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
 }
