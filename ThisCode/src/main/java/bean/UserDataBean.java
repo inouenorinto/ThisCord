@@ -1,6 +1,7 @@
 package bean;
 import java.io.Serializable;
 
+//account表
 public class UserDataBean implements Serializable{
 	private int user_id;
 	private String mailaddress;
