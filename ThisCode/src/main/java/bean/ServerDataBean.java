@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ServerDataBean implements Serializable {
     private int server_id;
     private String server_name;
-    private int host_id;
+    private int user_id;
     private String server_icon;
     
     public ServerDataBean() {}
@@ -22,11 +22,11 @@ public class ServerDataBean implements Serializable {
 	public void setServer_name(String server_name) {
 		this.server_name = server_name;
 	}
-	public int getHost_id() {
-		return host_id;
+	public int getUser_id() {
+		return user_id;
 	}
-	public void setHost_id(int host_id) {
-		this.host_id = host_id;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 	public String getServer_icon() {
 		return server_icon;

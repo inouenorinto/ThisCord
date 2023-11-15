@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import bean.ServerDataBean;
 import util.mysql.MySqlManager;
 
-public class ServerDataDAO {
+public class ServerDataDAO { //server表
     private static final String DB_SELECT = "SELECT * FROM server_data";
+    private static final String DB_RECORD = "SELECT * FROM server_data WHERE server_id = ?";
 
     private Connection cn = null;
     private PreparedStatement pstmt = null;
@@ -39,7 +40,7 @@ public class ServerDataDAO {
                 ServerDataBean serverDataBean = new ServerDataBean();
                 serverDataBean.setServer_id(rs.getInt("server_id"));
                 serverDataBean.setServer_name(rs.getString("server_name"));
-                serverDataBean.setHost_id(rs.getInt("host_id"));
+                serverDataBean.setUser_id(rs.getInt("user_id"));
                 serverDataBean.setServer_icon(rs.getString("server_icon"));
                 result.add(serverDataBean);
             }
@@ -62,6 +63,40 @@ public class ServerDataDAO {
             }
         }
         return result;
+    }
+    
+    public ServerDataBean findRecord(int id) {
+    	ServerDataBean serverDataBean = new ServerDataBean();
+        try {
+            pstmt = cn.prepareStatement(DB_RECORD);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            
+            if (rs.next()) {	
+                serverDataBean.setServer_id(rs.getInt("server_id"));
+                serverDataBean.setServer_name(rs.getString("server_name"));
+                serverDataBean.setUser_id(rs.getInt("host_id"));
+                serverDataBean.setServer_icon(rs.getString("server_icon"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return serverDataBean;
     }
     
     public String[] getServerNameAndIcon(int id) {

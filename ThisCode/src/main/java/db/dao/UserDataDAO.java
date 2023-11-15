@@ -11,8 +11,9 @@ import bean.UserBean;
 import bean.UserDataBean;
 import util.mysql.MySqlManager;
 
+//account表
 public class UserDataDAO{
-    private static final String DB_SELECT = "select * from user_data where discord_user_id = ?";
+    private static final String DB_SELECT = "select * from account where user_id = ?";
 
     private Connection cn = null;
     private PreparedStatement pstmt = null;
@@ -29,7 +30,7 @@ public class UserDataDAO{
     }
 
     //Connectionとってくるコンストラクタ
-    public UserDataDAO() {
+    private UserDataDAO() {
         this.cn = MySqlManager.getConnection();
     }
     
@@ -79,7 +80,7 @@ public class UserDataDAO{
     
     //
 	public UserBean getRecord(String email) {
-	    String SQL="select * from user_data where mailaddress = ?";
+	    String SQL="select * from account where mailaddress = ?";
 	    
 	    UserBean bean = new UserBean();
 	    try {
@@ -114,7 +115,7 @@ public class UserDataDAO{
 	}
 	
 	private boolean isLoginValid(String email, String password) {
-	    String SQL = "select user_name, mailaddress, password from user_data where mailaddress = ?";
+	    String SQL = "select user_name, mailaddress, password from account where mailaddress = ?";
 	    boolean flag = false;
 		try {
 			cn = MySqlManager.getConnection();
@@ -140,9 +141,9 @@ public class UserDataDAO{
 	}
 	
 	public int insertUser(String user_name, String password, String email) {
-		String insert = "INSERT INTO user_data (mailaddress, password, user_name ) VALUES (?, ?, ?)";
-		String select = "select mailaddress from user_data";
-		String select_id ="select user_id from user_data where mailaddress=?"; 
+		String insert = "INSERT INTO account (mailaddress, password, user_name ) VALUES (?, ?, ?)";
+		String select = "select mailaddress from account";
+		String select_id ="select user_id from account where mailaddress=?"; 
 		int flag = -1;
 		Statement st = null;
 		try {
@@ -175,7 +176,7 @@ public class UserDataDAO{
 	}
 	
 	public int updateIcon(String email, String path) {
-		String update = "update user_data set user_icon=? where mailaddress=?";
+		String update = "update account set user_icon=? where mailaddress=?";
 	    PreparedStatement ps = null;	    
 	    
 	    int flag = -1;

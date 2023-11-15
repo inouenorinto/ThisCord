@@ -25,11 +25,11 @@ SELECT user, host FROM mysql.user;
 CREATE DATABASE thiscord;
 USE thiscord;
 
-drop table user_server_relationship;
-drop table text_channel_data;
-drop table user_data;
-drop table server_data;
-drop table message_data;
+drop table us_relationship;
+drop table text_channel;
+drop table server;
+drop table message;
+drop table account;
 
 
 -- ユーザーの情報
@@ -84,58 +84,58 @@ CREATE TABLE admin_user (
 	FOREIGN KEY (user_id) REFERENCES account(user_id)
 );
 
-INSERT INTO user_data (mailaddress, password, user_name, user_icon)
+INSERT INTO account (mailaddress, password, user_name, user_icon)
 VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'user_icon_url');
 
-INSERT INTO user_data (mailaddress, password, user_name, user_icon)
+INSERT INTO account (mailaddress, password, user_name, user_icon)
 VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'user_icon_url');
 
-INSERT INTO user_data (mailaddress, password, user_name, user_icon)
+INSERT INTO account (mailaddress, password, user_name, user_icon)
 VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'user_icon_url');
 
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('勉強サーバー', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('おじいさん', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('ゆるゲーム', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('APEX', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('valorant', 2, 'user_icon_url');
 
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 1);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 2);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 3);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 4);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (2, 5);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (2, 1);
 
 
-INSERT INTO text_channel_data (channel_id, server_id) 
+INSERT INTO text_channel (channel_id, server_id) 
 VALUES (2, 1);
 
-INSERT INTO text_channel_data (channel_name, server_id) 
+INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('勉強', 1);
 
-INSERT INTO text_channel_data (channel_name, server_id) 
+INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('ゲーム', 1);
 
 
