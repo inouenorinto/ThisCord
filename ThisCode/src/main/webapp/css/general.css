@@ -56,6 +56,8 @@ h6 {
 
 
 
+
+
 .server-header {
 	z-index: 1;
     grid-area: server-header;
@@ -104,8 +106,11 @@ h6 {
 .channel-scroll {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 90%;
+	height: 87.5%;
 }
+
+
+
 
 .chat-field {
     grid-area: chat-field;
@@ -127,6 +132,9 @@ h6 {
 	font-size: 20px;
 }
 
+
+
+
 .member-list {
     grid-area: member-list;
     background-color: rgb(43 45 49);
@@ -139,13 +147,7 @@ h6 {
 
 
 
-/*作成中（多分、投稿者のアイコン）*/
-.user-icon {
-	width: 3vw;
-	height: 3vw;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
+
 /*チャンネル一覧の左上を丸くする*/
 .radius-lefttop {
 	border-radius: 15px 0px 0px 0px;
@@ -159,7 +161,7 @@ h6 {
   	background-color: rgb(49 51 56);
 }
 /*formのtext入力の体裁*/
-.formcss input{
+.formcss input {
 	background-color: #40454B;/*(後々修正)色が正確じゃない*/
 	border-radius: 10px 10px 10px 10px;
 	outline: none;
@@ -167,6 +169,24 @@ h6 {
 	width: 100%;
 	height: 100%;
 }
+
+.user-field {
+	width: 240px;
+	height: 52px;
+    margin-bottom: 0;
+    background-color: #191b1d;
+    display: flex;
+    align-items: center;
+
+}
+
+.user-field img {
+    height: 32px;
+    width: 32px;
+    margin-left:10px;
+    border-radius: 50%;
+}
+
 
 
 .text-color {

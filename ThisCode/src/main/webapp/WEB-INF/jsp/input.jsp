@@ -135,6 +135,12 @@
 				チャンネル<br>
 				チャンネル<br>
 			</div>
+			<div class="d-flex align-items-end h-10">
+				<div class="user-field">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+						class="" alt="サーバーアイコン">
+				</div>
+			</div>
 		</div>
 		
 		<!-- チャットメニューバー -->
