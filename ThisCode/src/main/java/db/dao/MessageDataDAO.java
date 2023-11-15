@@ -18,8 +18,17 @@ public class MessageDataDAO{
     Connection cn;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
+    private static MessageDataDAO msdao = null;
+    
+    static {
+    	msdao = new MessageDataDAO();
+    }
+    
+    public static final MessageDataDAO getInstance() {
+    	return msdao;
+    }
 
-    public MessageDataDAO(Connection cn){
+    private MessageDataDAO(){
         this.cn = MySqlManager.getConnection();
     }
 
