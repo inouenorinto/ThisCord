@@ -33,7 +33,7 @@ drop table message_data;
 
 
 -- ユーザーの情報
-CREATE TABLE user_data (
+CREATE TABLE account (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     mailaddress VARCHAR(200),
     password VARCHAR(24),
@@ -41,26 +41,28 @@ CREATE TABLE user_data (
     user_icon VARCHAR(500)
 );
 
--- メッセージのバックアップ
-CREATE TABLE message_data (
+-- メッセージの履歴
+CREATE TABLE message (
+	message_id INT AUTO_INCREMENT PRIMARY KEY,
 	user_id INT,
-	server_id INT,
 	channel_id INT,
 	send_date VARCHAR(50),
-	message VARCHAR(500)
+	message VARCHAR(500),
+	FOREIGN KEY (user_id) REFERENCES account(user_id),
+	FOREIGN KEY (channel_id) REFERENCES text_channel(channel_id)
 );
 
 -- サーバーの情報
-CREATE TABLE server_data (
+CREATE TABLE server (
     server_id INT AUTO_INCREMENT PRIMARY KEY,
     server_name VARCHAR(100),
-    host_id INT,
-    server_icon VARCHAR(500)
+    user_id INT,
+    server_icon VARCHAR(500),
+    FOREIGN KEY (user_id) REFERENCES account(user_id)
 );
 
 -- ユーザーがどのサーバーに参加しているか
-CREATE TABLE user_server_relationship (
-    relationship_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE us_relationship (
     user_id INT,
     server_id INT,
     FOREIGN KEY (user_id) REFERENCES user_data(user_id),
@@ -68,18 +70,25 @@ CREATE TABLE user_server_relationship (
 );
 
 -- テキストチャンネルのデータ
-CREATE TABLE text_channel_data (
+CREATE TABLE text_channel (
 	channel_id INT AUTO_INCREMENT PRIMARY KEY,
 	channel_name VARCHAR(50),
 	server_id INT,
 	FOREIGN KEY (server_id) REFERENCES server_data(server_id)
 );
 
+
+-- 管理者ユーザーのデータ
+CREATE TABLE admin_user (
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES account(user_id)
+);
+
 INSERT INTO user_data (mailaddress, password, user_name, user_icon)
 VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'user_icon_url');
 
 INSERT INTO user_data (mailaddress, password, user_name, user_icon)
-VALUES ('ojiisann@gmail.com', 'ojiisan', 'ojiisann', 'user_icon_url');
+VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'user_icon_url');
 
 INSERT INTO user_data (mailaddress, password, user_name, user_icon)
 VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'user_icon_url');
