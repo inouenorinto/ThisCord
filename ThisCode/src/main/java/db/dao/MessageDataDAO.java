@@ -102,6 +102,7 @@ public class MessageDataDAO{
     }
     public void insertRecord(int user_id, int channel_id, String send_date, String message) {
     	try {
+            cn.setAutoCommit(false);
 	    	pstmt = cn.prepareStatement(INSERT_MESSAGE);
 	    	pstmt.setInt(1, user_id);
 	    	pstmt.setInt(2, channel_id);
