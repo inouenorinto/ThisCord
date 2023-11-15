@@ -25,11 +25,11 @@ SELECT user, host FROM mysql.user;
 CREATE DATABASE thiscord;
 USE thiscord;
 
-drop table usrelationship;
+drop table us_relationship;
 drop table text_channel;
-drop table account;
 drop table server;
 drop table message;
+drop table account;
 
 
 -- ユーザーの情報
