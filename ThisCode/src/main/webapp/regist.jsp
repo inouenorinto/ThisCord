@@ -42,7 +42,7 @@
 			</div>
 		</div>
 
-		<form id="imageForm" action="ImageUploadServlet" method="post" enctype="multipart/form-data">
+		<form id="imageForm" action="fn/register" method="post" enctype="multipart/form-data">
 		  <div class="mb-3">
 		    <label for="exampleInputEmail1" class="form-label mt-3">メールアドレス</label>
 		    <input type="email" name="email" class="form-control input_text" id="exampleInputEmail1" aria-describedby="emailHelp">

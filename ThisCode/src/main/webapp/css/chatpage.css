@@ -179,6 +179,8 @@ body{
 	background-color: rgb(56 58 64);
 	border-radius: 13px;
 	margin: 0px 15px 0px 15px;
+	position: absolute;/*←絶対位置*/
+    bottom: 0; /*下に固定*/
 }
 .input_div i {
 	margin-left: 15px;
@@ -198,10 +200,24 @@ body{
 .message_input:focus {
 	border: none;
 	outline: none;
-	
 }
 
-
+.user_view {
+	background-color: #232428;
+	height: 52px;
+	display: flex;
+  	align-items: center;
+  	
+    
+    
+  	
+}
+.user_icon_img {
+	height: 32px;
+	width: 32px;
+	margin-left:10px;
+	border-radius: 50%;
+}
 
 
 
