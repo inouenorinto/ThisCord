@@ -1,3 +1,4 @@
+//us_relationship表
 package db.dao;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import bean.UserServerRelationshipBean;
 import util.mysql.MySqlManager;
 
 public class UserServerRelationshipDAO {
-	private static final String SERVER_SELECT = ""; //わからんからあとで
+	private static final String SERVER_SELECT = "select * from user_server_relationship where user_id = ? and server_id = ?"; //これでいいかわからん
 	
 	Connection cn = null;
 	PreparedStatement pstmt = null;
@@ -30,17 +31,15 @@ public class UserServerRelationshipDAO {
 		this.cn = MySqlManager.getConnection();
 	}
 	
-	public ArrayList<UserServerRelationshipBean> findAll(int relationship_id) {
+	public ArrayList<UserServerRelationshipBean> findAll() {
         ArrayList<UserServerRelationshipBean> result = new ArrayList<>();
         
         try{
             pstmt = cn.prepareStatement(SERVER_SELECT);
-            pstmt.setInt(1,relationship_id);
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
                 UserServerRelationshipBean userServerRelationshipBean = new UserServerRelationshipBean();
-                userServerRelationshipBean.setRelationsip_id(rs.getInt("relationsip_id"));
                 userServerRelationshipBean.setUser_id(rs.getInt("user_id"));
                 userServerRelationshipBean.setServer_id(rs.getInt("server_id"));
 

@@ -1,16 +1,10 @@
+//us_relationship表
 package bean;
 
 public class UserServerRelationshipBean {
-	private int relationsip_id;
 	private int user_id;
 	private int server_id;
 	
-	public int getRelationsip_id() {
-		return relationsip_id;
-	}
-	public void setRelationsip_id(int relationsip_id) {
-		this.relationsip_id = relationsip_id;
-	}
 	public int getUser_id() {
 		return user_id;
 	}
