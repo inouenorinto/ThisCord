@@ -21,222 +21,297 @@
 	   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 	
 	<div class="container-fluid">
-		<div class="row">
+		<!-- サーバー一覧 -->
+		<div class="server-scroll server-list">
 		
-			<div class="col-md-1 scroll no-padding">
-				<div class="server-img">
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+			<div class="server-icon">
+				<img src="${pageContext.request.contextPath}/img/ino.jpg"
+				class="" alt="サーバーアイコン">
+			</div>
+		</div>
+		
+		
+		<!-- チャンネルメニューバー -->
+		<div class="radius-lefttop text-center channel-header text-color">
+			チャンネル一覧
+		</div>
+		<!-- チャンネル一覧 -->
+		<div class="channel-list">
+			<!-- 一覧 -->
+			<div class="channel-scroll text-box">
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+				チャンネル<br>
+			</div>
+			<div class="d-flex align-items-end h-10">
+				<div class="user-field">
 					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-				<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-				<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-								<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-				<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-				<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-				<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-				<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
-				</div>
-				<div class="server-img">
-					<img src="${pageContext.request.contextPath}/img/ino.jpg"
-					class="rounded-circle" alt="サーバーアイコン">
+						class="" alt="サーバーアイコン">
 				</div>
 			</div>
-			
-			
-			<!-- チャンネル一覧 -->
-			<div class="col-md-2 b-color-chat-side radiusleftup no-padding h-100">
-				<!-- メニューバー -->
-				<div class="radiusleftup menubar text-center">
-					チャンネル一覧
-				</div>
-				<!-- 一覧 -->
-				<div class="scrollbar text-box">
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-					チャンネル<br>
-				</div>
-			</div>
-			
-			
-			<!-- テキストチャット -->
-			<div class="col-md-7 b-color-chat chatposi no-padding h-100">
-				<!-- メニューバー -->
-				<div class="menubar text-center">
-					一般チャット
-				</div>
-				<!-- チャット -->
-				<div class="text-color scrollbar text-box">
-					<div>
+		</div>
+		
+		<!-- チャットメニューバー -->
+		<div class="text-center server-header">
+			一般チャット
+		</div>
+		<!-- チャット -->
+		<div class="chat-field text-box text-color">
+			<div class="chat-scroll">
+				<div class="d-flex mb-3">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+						class="chat-icon" alt="サーバーアイコン">
+					<div class="text-maxwidth">
 						<div>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+							 <span class="chat-name">名前</span> 2023/11/03 09:29
 						</div>
-						<div>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-						
-						</div>
-						<div>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-						
-						</div>
-						<div>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-						
-						</div>
-						<div>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-							チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
-						</div>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
 					</div>
 				</div>
 				
-				<div class="b-color-chat">
-					<form action="" method="" class="formcss b-color-chat">
-						<input type="text" name="" id="" placeholder="メッセージを送信">
-					</form>
+				<div class="d-flex mb-3">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+						class="chat-icon" alt="サーバーアイコン">
+					<div>
+						<div>
+							 <span class="chat-name">名前</span> 2023/11/03 09:29
+						</div>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+					</div>
 				</div>
-			
-			</div>
-			
-			
-			
-			<div class="col-md-2 b-color-chat-side no-padding scrollbar h-100">
-				<div class="text-box">
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
-					ユーザー<br>
+				<div class="d-flex mb-3">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+						class="chat-icon" alt="サーバーアイコン">
+					<div>
+						<div>
+							 <span class="chat-name">名前</span> 2023/11/03 09:29
+						</div>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+					</div>
+				</div>
+				<div class="d-flex mb-3">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+						class="chat-icon" alt="サーバーアイコン">
+					<div>
+						<div>
+							 <span class="chat-name">名前</span> 2023/11/03 09:29
+						</div>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+					</div>
+				</div>
+				<div class="d-flex mb-3">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+						class="chat-icon" alt="サーバーアイコン">
+					<div>
+						<div>
+							 <span class="chat-name">名前</span> 2023/11/03 09:29
+						</div>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+					</div>
+				</div>
+				<div class="d-flex mb-3">
+					<img src="${pageContext.request.contextPath}/img/ino.jpg"
+						class="chat-icon" alt="サーバーアイコン">
+					<div>
+						<div>
+							 <span class="chat-name">名前</span> 2023/11/03 09:29
+						</div>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+						チャット欄チャット欄チャット欄チャット欄チャット欄チャット欄チャット<br>
+					</div>
 				</div>
 			</div>
 			
-			<!--
-			<div class="col-md">
-			スマホ用画面
-			</div>
-			-->
-  		
+			<form action="" method="" class="formcss">
+				<input type="text" name="" id="" placeholder="メッセージを送信">
+			</form>
 		</div>
+		
+		
+		
+		<div class="member-scroll member-list">
+			<div class="text-box">
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+				ユーザー<br>
+			</div>
+		</div>
+		
+		<!--
+		<div class="col-md">
+		スマホ用画面
+		</div>
+		-->
+ 	
 	</div>
 </body>
 </html>
