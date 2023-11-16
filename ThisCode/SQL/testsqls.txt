@@ -25,10 +25,11 @@ SELECT user, host FROM mysql.user;
 CREATE DATABASE thiscord;
 USE thiscord;
 
+drop table admin_user;
 drop table us_relationship;
+drop table message;
 drop table text_channel;
 drop table server;
-drop table message;
 drop table account;
 
 
@@ -39,6 +40,23 @@ CREATE TABLE account (
     password VARCHAR(24),
     user_name VARCHAR(50),
     user_icon VARCHAR(500)
+);
+
+-- サーバーの情報
+CREATE TABLE server (
+    server_id INT AUTO_INCREMENT PRIMARY KEY,
+    server_name VARCHAR(100),
+    user_id INT,
+    server_icon VARCHAR(500),
+    FOREIGN KEY (user_id) REFERENCES account(user_id)
+);
+
+-- テキストチャンネルのデータ
+CREATE TABLE text_channel (
+	channel_id INT AUTO_INCREMENT PRIMARY KEY,
+	channel_name VARCHAR(50),
+	server_id INT,
+	FOREIGN KEY (server_id) REFERENCES server(server_id)
 );
 
 -- メッセージの履歴
@@ -52,31 +70,13 @@ CREATE TABLE message (
 	FOREIGN KEY (channel_id) REFERENCES text_channel(channel_id)
 );
 
--- サーバーの情報
-CREATE TABLE server (
-    server_id INT AUTO_INCREMENT PRIMARY KEY,
-    server_name VARCHAR(100),
-    user_id INT,
-    server_icon VARCHAR(500),
-    FOREIGN KEY (user_id) REFERENCES account(user_id)
-);
-
 -- ユーザーがどのサーバーに参加しているか
 CREATE TABLE us_relationship (
     user_id INT,
     server_id INT,
-    FOREIGN KEY (user_id) REFERENCES user_data(user_id),
-    FOREIGN KEY (server_id) REFERENCES server_data(server_id)
+    FOREIGN KEY (user_id) REFERENCES account(user_id),
+    FOREIGN KEY (server_id) REFERENCES server(server_id)
 );
-
--- テキストチャンネルのデータ
-CREATE TABLE text_channel (
-	channel_id INT AUTO_INCREMENT PRIMARY KEY,
-	channel_name VARCHAR(50),
-	server_id INT,
-	FOREIGN KEY (server_id) REFERENCES server_data(server_id)
-);
-
 
 -- 管理者ユーザーのデータ
 CREATE TABLE admin_user (
