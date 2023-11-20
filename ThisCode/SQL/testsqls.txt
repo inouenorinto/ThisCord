@@ -25,15 +25,16 @@ SELECT user, host FROM mysql.user;
 CREATE DATABASE thiscord;
 USE thiscord;
 
-drop table user_server_relationship;
-drop table text_channel_data;
-drop table user_data;
-drop table server_data;
-drop table message_data;
+drop table admin_user;
+drop table us_relationship;
+drop table message;
+drop table text_channel;
+drop table server;
+drop table account;
 
 
-
-CREATE TABLE user_data (
+-- ユーザーの情報
+CREATE TABLE account (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     mailaddress VARCHAR(200),
     password VARCHAR(24),
@@ -41,88 +42,99 @@ CREATE TABLE user_data (
     user_icon VARCHAR(500)
 );
 
-CREATE TABLE message_data (
-	user_id INT,
-	server_id INT,
-	channel_id INT,
-	send_date VARCHAR(50),
-	message VARCHAR(500)
-);
-
-CREATE TABLE server_data (
+-- サーバーの情報
+CREATE TABLE server (
     server_id INT AUTO_INCREMENT PRIMARY KEY,
     server_name VARCHAR(100),
-    host_id INT,
-    server_icon VARCHAR(500)
-);
-
-CREATE TABLE user_server_relationship (
-    relationship_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    server_id INT,
-    FOREIGN KEY (user_id) REFERENCES user_data(user_id),
-    FOREIGN KEY (server_id) REFERENCES server_data(server_id)
+    server_icon VARCHAR(500),
+    FOREIGN KEY (user_id) REFERENCES account(user_id)
 );
 
-CREATE TABLE text_channel_data (
+-- テキストチャンネルのデータ
+CREATE TABLE text_channel (
 	channel_id INT AUTO_INCREMENT PRIMARY KEY,
 	channel_name VARCHAR(50),
 	server_id INT,
-	FOREIGN KEY (server_id) REFERENCES server_data(server_id)
+	FOREIGN KEY (server_id) REFERENCES server(server_id)
 );
 
-INSERT INTO user_data (mailaddress, password, user_name, user_icon)
-VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'resource\\user_icons\\default2.png');
+-- メッセージの履歴
+CREATE TABLE message (
+	message_id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	channel_id INT,
+	send_date VARCHAR(50),
+	message VARCHAR(500),
+	FOREIGN KEY (user_id) REFERENCES account(user_id),
+	FOREIGN KEY (channel_id) REFERENCES text_channel(channel_id)
+);
 
-INSERT INTO user_data (mailaddress, password, user_name, user_icon)
-VALUES ('ojiisann@gmail.com', 'ojiisan', 'ojiisann', 'resource\\user_icons\\defaul3.png');
+-- ユーザーがどのサーバーに参加しているか
+CREATE TABLE us_relationship (
+    user_id INT,
+    server_id INT,
+    FOREIGN KEY (user_id) REFERENCES account(user_id),
+    FOREIGN KEY (server_id) REFERENCES server(server_id)
+);
 
-INSERT INTO user_data (mailaddress, password, user_name, user_icon)
-VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'resource\\user_icons\\default4.png');
+-- 管理者ユーザーのデータ
+CREATE TABLE admin_user (
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES account(user_id)
+);
 
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'user_icon_url');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'user_icon_url');
+
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('勉強サーバー', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('おじいさん', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('ゆるゲーム', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('APEX', 1, 'user_icon_url');
 
-INSERT INTO server_data (server_name, host_id, server_icon)
+INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('valorant', 2, 'user_icon_url');
 
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 1);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 2);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 3);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (1, 4);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (2, 5);
 
-INSERT INTO user_server_relationship (user_id, server_id) 
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (2, 1);
 
 
-INSERT INTO text_channel_data (channel_id, server_id) 
+INSERT INTO text_channel (channel_id, server_id) 
 VALUES (2, 1);
 
-INSERT INTO text_channel_data (channel_name, server_id) 
+INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('勉強', 1);
 
-INSERT INTO text_channel_data (channel_name, server_id) 
+INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('ゲーム', 1);
 
 

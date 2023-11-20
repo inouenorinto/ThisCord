@@ -3,20 +3,36 @@ html, body {
 	width: 100%;
 	height: 100%;
 	color: #70737C;
-	background-color: #1E1F22;
+    background-color: rgb(30 31 34);
 /*	overflow: hidden;*/
-}
-form {
-	width: 100%;
-	height: 35px;
 }
 h6 {
 	margin : 0%;
+	height: 3%;
+}
+
+.flex {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
 }
 
 .container-fluid {
-	width: 100%;
-	height: 100%;
+    display: grid;
+    grid-template-columns: 72px 240px 984px 240px;
+    grid-template-rows: 48px 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "server-list channel-header server-header  server-header"
+        "server-list channel-list chat-field member-list"
+        "server-list channel-list chat-field member-list"
+        "server-list channel-list chat-field member-list";
+    height: 97%;
+    padding: 0%;
+
 }
 .row {
 	height: 100%;
@@ -25,29 +41,11 @@ h6 {
 .column {
 	height: 100%;
 }
-.text-color {
-	color: #FFFFFF;
-}
 
-
-.scrollbar {
-	overflow-x: hidden;
-	overflow-y: scroll;
-	height: 84%;
-}
-.scroll {
-	overflow-x: hidden;
-	overflow-y: scroll;
-	height: 100%;
-}
-.scroll::-webkit-scrollbar {
-	display:none;
-}
 ::-webkit-scrollbar {
   width: 8px;
   height: 10px;
 }
- 
 ::-webkit-scrollbar-thumb {
   background: #1A1B20;
   border-radius: 5px;
@@ -58,64 +56,142 @@ h6 {
 }
 
 
-/*チャンネル一覧の色*/
-.b-color-chat-side {
-	background-color: #2B2D31;
+
+
+
+.server-header {
+	z-index: 1;
+    grid-area: server-header;
+    background-color: rgb(49 51 56);
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
-/*チャット欄の色*/
-.b-color-chat {
-	background-color: #33363D;
+.server-list {
+    grid-area: server-list;
+    background-color: rgb(30 31 34);
 }
-/*サーバーのアイコン体裁*/
-.server-img {
-	padding: 5px 0 5px 0;
+.server-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+}
+.server-scroll::-webkit-scrollbar {
+	display:none;
+}
+.server-icon {
+	margin: 8px 0px 8px 0px;
 	display: flex;
 	align-items: center;
   	justify-content: center;
 }
-.server-img img {
-	width: 5vw;
-	height: 5vw;
+.server-icon img {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
 }
-/*作成中（多分、投稿者のアイコン）*/
-.user-icon {
-	width: 3vw;
-	height: 3vw;
-	margin-top: 5px;
-	margin-bottom: 5px;
+
+
+
+
+
+
+.channel-header {
+    z-index: 1;
+    grid-area: channel-header;
+    background-color: rgb(43 45 49);
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
-/*作成中（チャットの投稿の体裁）*/
-.chatposi {
-	position: relative;
+.channel-list {
+    grid-area: channel-list;
+    background-color: rgb(43 45 49);
 }
+.channel-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 87.5%;
+}
+
+
+
+
+.chat-field {
+    grid-area: chat-field;
+    background-color: rgb(49 51 56);
+    position: relative;
+}
+.chat-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 90%;
+}
+.chat-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+.chat-name {
+	font-size: 20px;
+}
+
+
+
+
+.member-list {
+    grid-area: member-list;
+    background-color: rgb(43 45 49);
+}
+.member-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+}
+
+
+
+
 /*チャンネル一覧の左上を丸くする*/
-.radiusleftup {
-	border-radius: 10px 0px 0px 0px;
+.radius-lefttop {
+	border-radius: 15px 0px 0px 0px;
 }
-/*formの位置*/
+/*form*/
 .formcss {
-	position: absolute;
+	width: 99%;
+	height: 37px;
 	bottom: 10px;
 	display: flex;
-  	justify-content: center;
+  	background-color: rgb(49 51 56);
 }
 /*formのtext入力の体裁*/
-.formcss input{
-	background-color: #40454B;
+.formcss input {
+	background-color: #40454B;/*(後々修正)色が正確じゃない*/
 	border-radius: 10px 10px 10px 10px;
 	outline: none;
 	border: none;
-	width: 95%;
+	width: 100%;
 	height: 100%;
 }
-.menubar {
-	height: 40px;
-	width: 100%;
-	margin: auto;
-	box-shadow: 0px -4px 2px -2px rgb(30,31,34) inset
+
+.user-field {
+	width: 240px;
+	height: 52px;
+    margin-bottom: 0;
+    background-color: #191b1d;
+    display: flex;
+    align-items: center;
+
 }
-.no-padding {
-	padding: 0;
+
+.user-field img {
+    height: 32px;
+    width: 32px;
+    margin-left:10px;
+    border-radius: 50%;
+}
+
+
+
+.text-color {
+	color: rgb(219 222 225);
 }
 .text-center {
 	padding-left: 10px;
@@ -125,4 +201,7 @@ h6 {
 .text-box {
 	padding-left: 20px;
 	text-align: left;
+}
+.text-maxwidth {
+	max-width: 90%;
 }
