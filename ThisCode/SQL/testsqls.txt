@@ -129,8 +129,8 @@ INSERT INTO us_relationship (user_id, server_id)
 VALUES (2, 1);
 
 
-INSERT INTO text_channel (channel_id, server_id) 
-VALUES (2, 1);
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('Java' 1);
 
 INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('勉強', 1);

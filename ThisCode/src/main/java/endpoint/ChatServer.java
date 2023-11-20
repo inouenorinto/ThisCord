@@ -9,6 +9,10 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.Gson;
+
+import bean.MessageBean;
+
 @ServerEndpoint("/chat/{server_id}/{channel_id}/{user_id}")
 public class ChatServer {
     @OnOpen
@@ -39,6 +43,8 @@ public class ChatServer {
         int user_id = (int) session.getUserProperties().get("user_id");
         System.out.println(server_id+"."+ user_id + ": " + message);
         
+        addMessageToDB(message);
+        
         broadcast(server_id, channel_id, message);
     }
 
@@ -59,6 +65,28 @@ public class ChatServer {
                 e.printStackTrace();
             }
         }
+    }
+    public void addMessageToDB(String message) {
+    	Gson gson = new Gson();
+
+        MessageBean mb = gson.fromJson(message, MessageBean.class);
+        
+        System.out.println(mb.getMessage_id());
+        System.out.print(mb.getUser_id());
+        System.out.print(mb.getChannel_id());
+        System.out.println(mb.getSend_date());
+        System.out.println(mb.getMessage());
+        
+//		MessageDataDAO mdd = MessageDataDAO.getInstance();
+//		
+//		mb = new MessageBean();
+//		mb.setMessage_id(0);
+//		mb.setUser_id(1);
+//		mb.setChannel_id(2);
+//		mb.setSend_date("2023/11/20");
+//		mb.setMessage("おはよう");
+//		
+//		mdd.insertRecord(mb);
     }
 }
 
