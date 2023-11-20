@@ -46,7 +46,7 @@ public class MessageDataDAO{
 
             while(rs.next()) {
                 MessageBean messageBean = new MessageBean();
-                messageBean.setUser_id(rs.getString("user_id"));
+                messageBean.setUser_id(rs.getInt("user_id"));
                 messageBean.setSend_date(rs.getString("send_date"));
                 messageBean.setMessage(rs.getString("message"));
                 result.add(messageBean);

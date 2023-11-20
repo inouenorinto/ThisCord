@@ -28,7 +28,7 @@ public class ChatPageCommand extends AbstractCommand {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
-	    String SQL="select * from user_data where mailaddress = ?";
+	    String SQL="select * from account where mailaddress = ?";
 	    
 	    UserBean bean = new UserBean();
 	    try {
@@ -66,7 +66,7 @@ public class ChatPageCommand extends AbstractCommand {
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
 	    String result[] = new String [2];
-	    String SQL = "select server_name, server_icon from server_data where server_id = ?";
+	    String SQL = "select server_name, server_icon from server where server_id = ?";
 		try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
@@ -94,7 +94,7 @@ public class ChatPageCommand extends AbstractCommand {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
-	    String SQL = "select server_id from user_server_relationship where user_id = ?";
+	    String SQL = "select server_id from us_relationship where user_id = ?";
 	    try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
