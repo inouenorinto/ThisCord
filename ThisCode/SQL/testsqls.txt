@@ -72,13 +72,13 @@ CREATE TABLE text_channel_data (
 );
 
 INSERT INTO user_data (mailaddress, password, user_name, user_icon)
-VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'user_icon_url');
+VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'resource\\user_icons\\default2.png');
 
 INSERT INTO user_data (mailaddress, password, user_name, user_icon)
-VALUES ('ojiisann@gmail.com', 'ojiisan', 'ojiisann', 'user_icon_url');
+VALUES ('ojiisann@gmail.com', 'ojiisan', 'ojiisann', 'resource\\user_icons\\defaul3.png');
 
 INSERT INTO user_data (mailaddress, password, user_name, user_icon)
-VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'user_icon_url');
+VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'resource\\user_icons\\default4.png');
 
 
 INSERT INTO server_data (server_name, host_id, server_icon)

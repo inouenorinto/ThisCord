@@ -182,9 +182,27 @@ body{
 	position: absolute;/*←絶対位置*/
     bottom: 0; /*下に固定*/
 }
+
 .input_div i {
 	margin-left: 15px;
 	color: rgb(219 222 225);
+}
+
+/*チャンネルのタイトル*/
+.channel-title {
+	
+}
+
+.fa-plus {
+	
+	color: #70737C;
+}
+.channels-list-item {
+	padding: 5px;
+}
+.channels-list-item:hover{
+	border-radius: 5px;
+	background-color: rgb(77, 80, 89);
 }
 
 .message_input {

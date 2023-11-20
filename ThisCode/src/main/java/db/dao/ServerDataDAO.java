@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.ServerDataBean;
@@ -84,11 +85,27 @@ public class ServerDataDAO {
 				cn.close();
 			}
 
-            
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
+    
+    public int getMaxServerId() {
+    	int result = -1;
+    	Statement st = null;
+    	ResultSet rs = null;
+    	try {
+    		st = cn.createStatement();
+    		rs = st.executeQuery("select max(server_id) AS server_id from server_data");
+    		
+    		if (rs.next()) {
+    			result = rs.getInt("server_id");
+    		}
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	return result;
+    }
 
 }

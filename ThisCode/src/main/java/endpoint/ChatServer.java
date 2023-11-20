@@ -17,6 +17,7 @@ public class ChatServer {
     	System.out.println("user_id" + s_server_id);
     	System.out.println("channel" + s_channel_id);
     	System.out.println("user_id" + s_user_id);
+    	
     	int server_id = Integer.parseInt(s_server_id);
     	int channel_id = Integer.parseInt(s_channel_id);
     	int user_id = Integer.parseInt(s_user_id);

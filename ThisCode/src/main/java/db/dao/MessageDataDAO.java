@@ -61,7 +61,6 @@ public class MessageDataDAO{
         return result;
     }
 
-
     public boolean updateRecord(int server_id, int channel_id, String newMessage) {
         boolean success = false;
 
