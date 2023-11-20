@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import bean.UserBean;
+import db.dao.ServerDataDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
@@ -25,14 +26,20 @@ public class MakeServerCommand extends AbstractCommand {
 		UserBean bean = (UserBean)req.getAttributeInSession("bean");
 		System.out.println("userid: "+bean.getUser_id());
 		
+        ServerDataDAO serverDao = ServerDataDAO.getInstance();
+        int next_id = serverDao.getMaxServerId() + 1;
+		
         if (server_icon != null && !server_icon.isEmpty()) {
-            saveBase64Image(server_icon, server_name+".jpg");
+            saveBase64Image(server_icon, next_id+".jpg");
         } else {
         	System.out.println("nullです");
         }
         
-		String path = "resource/server_icons/" + server_name+".jpg";
-		makeServer(server_name,  bean.getUser_id(), path);
+
+        String path = "resource/server_icons/" + next_id +".jpg";
+        
+        
+		int server_id = makeServer(server_name,  bean.getUser_id(), path);
 		
 		res.setTarget("fn/chat");
 	}
@@ -48,8 +55,8 @@ public class MakeServerCommand extends AbstractCommand {
         }
     }
 	
-	private boolean makeServer(String server_name, int user_id,String path) {
-		boolean flag = false;
+	private int makeServer(String server_name, int user_id,String path) {
+		int flag = -1;
 		
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
@@ -82,10 +89,11 @@ public class MakeServerCommand extends AbstractCommand {
 			pstmt.setInt(2, index);
 			pstmt.executeUpdate();
 			
+			flag = index;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		return flag;
 	}

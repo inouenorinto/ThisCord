@@ -64,7 +64,7 @@
 		    <label class="form-check-label" for="exampleCheck1">Check me out</label>
 		  </div>
 		  <button type="submit" class="btn btn-primary">アップロード</button>
-		  <input type="hidden" id="editedImageField"name="editedImage">
+		  <input type="hidden" id="editedImageField" name="editedImage" value="default">
 		</form>
 		
 	</div>

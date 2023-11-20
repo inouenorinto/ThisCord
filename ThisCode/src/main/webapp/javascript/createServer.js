@@ -1,4 +1,3 @@
-console.log("こんにちは");
 let preview = document.querySelector("#preview");
 console.log(preview);
 document.querySelector('#imageInput').addEventListener('change', function(event) {

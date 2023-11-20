@@ -93,7 +93,6 @@ VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'user_icon_url');
 INSERT INTO account (mailaddress, password, user_name, user_icon)
 VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'user_icon_url');
 
-
 INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('勉強サーバー', 1, 'user_icon_url');
 
