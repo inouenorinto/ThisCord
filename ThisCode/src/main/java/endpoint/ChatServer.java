@@ -1,5 +1,6 @@
 package endpoint;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.websocket.OnClose;
@@ -44,15 +45,8 @@ public class ChatServer {
         int channel_id = (int) session.getUserProperties().get("channel_id");
         int user_id = (int) session.getUserProperties().get("user_id");
         System.out.println(server_id+"."+ user_id + ": " + message);
-		
-		MessageBean mb = new MessageBean();
-		
-		mb.setUser_id(user_id);
-		mb.setChannel_id(channel_id);
-		mb.setSend_date("2023/11/20");
-		mb.setMessage(message);
         
-        addMessageToDB(mb);
+        addMessageToDB(user_id, message);
         
         broadcast(server_id, channel_id, message);
     }
@@ -75,18 +69,22 @@ public class ChatServer {
             }
         }
     }
-    public void addMessageToDB(MessageBean mb) {
+    public void addMessageToDB(int user_id, String jmessage) {
+    	System.out.println("addMessageToDB");
     	Gson gson = new Gson();
 
-        String message = gson.fromJson(mb.getMessage(), String.class);
+        HashMap message = gson.fromJson(jmessage, HashMap.class);
         
-        System.out.println(mb.getMessage_id());
-        System.out.print(mb.getUser_id());
-        System.out.print(mb.getChannel_id());
-        System.out.println(mb.getSend_date());
-        System.out.println(message);
+        Double test = (Double)message.get("nowRoomId");
+        
+        MessageBean mb = new MessageBean();
+        
+        mb.setUser_id(user_id);
+        mb.setChannel_id((int)Math.round((Double)message.get("nowChannelId")));
+        mb.setSend_date((String)message.get("date"));
+        mb.setMessage((String)message.get("message"));
 		
-        MessageDataDAO mdd = MessageDataDAO.getInstance();
+	    MessageDataDAO mdd = MessageDataDAO.getInstance();
 		mdd.insertRecord(mb);
     }
 }

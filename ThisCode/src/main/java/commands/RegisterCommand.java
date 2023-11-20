@@ -35,7 +35,7 @@ public class RegisterCommand extends AbstractCommand {
 	}
 	
 	private void userRegister(RegisterUserDTO dto) {
-		UserDataDAO dao = new UserDataDAO();
+		UserDataDAO dao = UserDataDAO.getInstance();
 		int flag = dao.insertUser(dto.getUser_name(), dto.getPassword(), dto.getEmail());
 		
 		if(flag != -1) {

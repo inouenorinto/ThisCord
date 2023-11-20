@@ -19,7 +19,7 @@ async function getUserInfo() {
 		if (response.ok) {
 
 			userinfo = await response.json();
-			usernme = userinfo.user_name;
+			username = userinfo.user_name;
 			user_icon = userinfo.user_icon;
 			rooms = userinfo.rooms;
 			roomsMap = new Map(Object.entries(rooms));

@@ -36,9 +36,9 @@ public class GetServerInfoCommand extends AbstractCommand {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "select * from user_server_relationship where server_id= ?";
-		String selectSQL="select * from server_data where server_id= ?";
-		String select_channel_SQL="select * from text_channel_data where server_id= ?";
+		String SQL = "select * from us_relationship where server_id= ?";
+		String selectSQL="select * from server where server_id= ?";
+		String select_channel_SQL="select * from text_channel where server_id= ?";
 		
 		try {
 			cn = MySqlManager.getConnection();
@@ -55,7 +55,7 @@ public class GetServerInfoCommand extends AbstractCommand {
 			pstmt.setInt(1, server_id);
 			rs = pstmt.executeQuery();
 			if (rs != null && rs.next()) {
-				bean.setHost_id(rs.getInt("host_id"));
+				bean.setHost_id(rs.getInt("user_id"));
 				bean.setServer_id(server_id);
 				bean.setServer_name(rs.getString("server_name"));
 				bean.setServer_icon(rs.getString("server_icon"));
@@ -85,7 +85,7 @@ public class GetServerInfoCommand extends AbstractCommand {
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
 	    String result = null;
-	    String SQL = "select user_name from user_data where user_id = ?";
+	    String SQL = "select user_name from account where user_id = ?";
 		try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
@@ -113,7 +113,7 @@ public class GetServerInfoCommand extends AbstractCommand {
 		Connection cn = null;
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
-	    String SQL = "select user_id from user_server_relationship where server_id = ?";
+	    String SQL = "select user_id from us_relationship where server_id = ?";
 	    try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
