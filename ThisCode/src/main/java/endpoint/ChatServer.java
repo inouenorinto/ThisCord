@@ -9,6 +9,11 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.Gson;
+
+import bean.MessageBean;
+import db.dao.MessageDataDAO;
+
 @ServerEndpoint("/chat/{server_id}/{channel_id}/{user_id}")
 public class ChatServer {
     @OnOpen
@@ -39,6 +44,15 @@ public class ChatServer {
         int channel_id = (int) session.getUserProperties().get("channel_id");
         int user_id = (int) session.getUserProperties().get("user_id");
         System.out.println(server_id+"."+ user_id + ": " + message);
+		
+		MessageBean mb = new MessageBean();
+		
+		mb.setUser_id(user_id);
+		mb.setChannel_id(channel_id);
+		mb.setSend_date("2023/11/20");
+		mb.setMessage(message);
+        
+        addMessageToDB(mb);
         
         broadcast(server_id, channel_id, message);
     }
@@ -60,6 +74,20 @@ public class ChatServer {
                 e.printStackTrace();
             }
         }
+    }
+    public void addMessageToDB(MessageBean mb) {
+    	Gson gson = new Gson();
+
+        String message = gson.fromJson(mb.getMessage(), String.class);
+        
+        System.out.println(mb.getMessage_id());
+        System.out.print(mb.getUser_id());
+        System.out.print(mb.getChannel_id());
+        System.out.println(mb.getSend_date());
+        System.out.println(message);
+		
+        MessageDataDAO mdd = MessageDataDAO.getInstance();
+		mdd.insertRecord(mb);
     }
 }
 

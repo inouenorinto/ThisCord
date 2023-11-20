@@ -99,14 +99,15 @@ public class MessageDataDAO{
         }
         return success;
     }
-    public void insertRecord(int user_id, int channel_id, String send_date, String message) {
+    public void insertRecord(MessageBean mb) {
     	try {
             cn.setAutoCommit(false);
 	    	pstmt = cn.prepareStatement(INSERT_MESSAGE);
-	    	pstmt.setInt(1, user_id);
-	    	pstmt.setInt(2, channel_id);
-	    	pstmt.setString(3, send_date);
-	    	pstmt.setString(4, message);
+	    	
+	    	pstmt.setInt(1, mb.getUser_id());
+	    	pstmt.setInt(2, mb.getChannel_id());
+	    	pstmt.setString(3, mb.getSend_date());
+	    	pstmt.setString(4, mb.getMessage());
 	    	
 	    	pstmt.executeUpdate();
 	    	
