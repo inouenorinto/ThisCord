@@ -10,8 +10,8 @@ import bean.MessageBean;
 import util.mysql.MySqlManager;
 
 public class MessageDataDAO{
-    private static final String SELECT_MESSAGE_DATA = "SELECT * FROM message_data"
-    		+ "WHERE server_id = ? && channel_id = ? ";
+    private static final String SELECT_MESSAGE_DATA = "SELECT message_id, user_id, channel_id, send_date, message FROM message"
+    		+ "WHERE channel_id = ?";
     private static final String UPDATE_MESSAGE = "UPDATE message_data SET message = ? "
             + "WHERE server_id = ? AND channel_id = ?";
     private static final String INSERT_MESSAGE = "INSERT INTO message (user_id, channel_id, send_date, message) "
@@ -35,18 +35,19 @@ public class MessageDataDAO{
         this.cn = MySqlManager.getConnection();
     }
 
-    public ArrayList<MessageBean> findRecord(int server_id, int channel_id) {
+    public ArrayList<MessageBean> findRecord(int channel_id) {
         ArrayList<MessageBean> result = new ArrayList<>();
 
         try {
             pstmt = cn.prepareStatement(SELECT_MESSAGE_DATA);
-            pstmt.setInt(1, server_id);
-            pstmt.setInt(2, channel_id);
+            pstmt.setInt(1, channel_id);
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
                 MessageBean messageBean = new MessageBean();
+                messageBean.setMessage_id(rs.getInt("message_id"));
                 messageBean.setUser_id(rs.getInt("user_id"));
+                messageBean.setChannel_id(rs.getInt("channel_id"));
                 messageBean.setSend_date(rs.getString("send_date"));
                 messageBean.setMessage(rs.getString("message"));
                 result.add(messageBean);
