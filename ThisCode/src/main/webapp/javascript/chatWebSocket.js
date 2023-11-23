@@ -95,7 +95,20 @@
          console.log("Received message: " + event.data);
          const chat = document.getElementById("message-container");
          const rep = JSON.parse(event.data);
-         chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
+         //chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
+     	chat.innerHTML +=
+		'<div class="message-wrapper">'+
+		    '<div>'+
+		        '<img class=" chat-icon" src="'+rep.usericon+'" >'+
+		    '</div>'+
+		    
+		    '<div class="wrapper-item">'+
+		        '<span class="message-user-name">'+rep.username +'</span>'+
+		        '<span class="message-date">'+rep.date+'</span>'+
+		        '<p class="message-text">'+rep.message+'</p>'+
+		    '</div>'+
+		'</div>';
+     
      };
  
      chatSocket.onclose = event => {

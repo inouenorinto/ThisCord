@@ -26,7 +26,7 @@ public class FrontServlet extends HttpServlet {
 	
 	public void doAction(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		ApplicationController app = new WebApplicationController();
-		
+		System.out.println("doAction");
 		req.setCharacterEncoding("UTF-8");
 		RequestContext reqc = app.getRequest(req);
 		ResponseContext resc = app.getResponse(res);

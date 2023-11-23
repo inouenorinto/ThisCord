@@ -29,9 +29,9 @@
 </head>
 <body>
 	<h6>Thiscord</h6>
-	<div class="container-fluid">
+	<div id="container-fluid" class="container-fluid">
 	
-		<!-- サーバー一覧 -->
+<!---------------------------------- サーバー一覧(server-list) -------------------------------->
 		<div class="server-scroll server-list">
 		
 			<!-- ホームボタン -->
@@ -59,12 +59,12 @@
 			</div>
 		</div>
 		
-		<!-- チャンネルメニューバー -->
+<!-------------------------------- チャンネルメヘッダー(channel-header) -------------------------------->
 		<div class="radius-lefttop text-center channel-header text-color">
 			<div id="server"></div>
 			<i class="fa-solid fa-angle-down fa-xs"></i>
 		</div>
-		<!-- チャンネル一覧 -->
+<!-------------------------------- チャンネル一覧 (channel-list)-------------------------------->
 		<div class="channel-list">
 			<!-- 一覧 -->
 			<div class="channel-scroll text-box">
@@ -91,10 +91,16 @@
 							<span class="channel-title">ボイスチャンネル</span>
 						</div>
 						<div class="flex-item">
-							<a href="/ThisCord/createChannel.jsp" class="invitation-link">
+							<a id="videotest" href="/ThisCord/createChannel.jsp" class="invitation-link">
 								<i class="fa-solid fa-plus fa-sm"></i>
 							</a>
 						</div>
+					</div>
+				</div>
+				<div id="voice-channels-list">
+					<div class="text-channels">
+						<a onclick="videoChat(); connect();">一般</a>
+						<%-- <a onclick="videoChat();">一般</a> --%>
 					</div>
 				</div>
 			</div>
@@ -128,11 +134,15 @@
 					</div>
 				</div>
 			</div>
-			
 		</div>
-		
-		<!-- チャットメニューバー -->
-		<div class="text-center server-header">
+<!-------------------------------- ビデオ一覧(video-field)-------------------------------->
+		<div id="video-field" class="video-field none">
+			<div id="video-play-field">
+				<video id="local_video" autoplay style="width: 240px; height: 180px; border: 1px solid black;"></video>
+			</div>
+		</div>
+<!-------------------------------- チャットメニューバー(server-header) -------------------------------->
+		<div id="server-header" class="text-center server-header">
 			<div class="channle-name">
 				<div class="flexbox">
 					<div class="flex-item hash-tag">#</div>
@@ -140,25 +150,12 @@
 				</div>
 			</div>
 		</div>
-		<!-- チャット -->
-		<div class="chat-field text-box text-color">
+	
+<!-------------------------------- チャットフィールド -------------------------------->
+		<div id="chat-field" class="chat-field text-box text-color">
 			<div class="chat-scroll">
 				<div class="d-flex mb-3">
-					<div id="container"></div>
-						<div id="message-container"></div>
-						<div class="message-warpper">
-							<div>
-								<img class="chat-icon" src="">
-							</div>
-							
-							<div>
-								<span class="message-user-name">たなか</span>
-								<span class="message-date">2023/11/22</span>
-								<p class="message-text">こんにちは</p>
-							</div>
-							
-													
-						</div>
+					<div id="message-container"></div>	
 				</div>
 			</div>
 			<!-- メッセージ入力フィールド -->
@@ -170,7 +167,7 @@
 			</div>
 		</div>
 		
-		<div class="member-scroll member-list">
+		<div id="member-list" class="member-scroll member-list">
 			<div class="text-box">
 				<div id="members-list"></div>
 			</div>
@@ -256,53 +253,11 @@
 		</div>
 	</div>
 <script src="${pageContext.request.contextPath}/javascript/createServer.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/javascript/multi.js"></script> --%>
+<script src="${pageContext.request.contextPath}/javascript/multi.js"></script>
+<script src="${pageContext.request.contextPath}/javascript/chatPageOperations.js"></script>
 <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 </body>
-    <script>
-    
-	const micro = document.getElementById('microphone');
-	let flag = true;
-	micro.addEventListener('click',()=>{
-		if(flag) {
-			micro.innerHTML = '<i class="fa-solid fa-microphone-slash fa-sm"></i>';
-			flag = false;
-		} else {
-			micro.innerHTML = '<i class="fa-solid fa-microphone fa-sm"></i>';
-			flag = true;
-		}
-		
-	});
-    
-    
-    let selectedElement = null;
-    function toggleClickedState(element) {
-    	console.log(element);
-   	    if (selectedElement && selectedElement !== element) {
-  	        selectedElement.classList.remove('clicked');
-  	    } 
-
-  	    element.classList.add('clicked');
-  	    selectedElement = element;
-   	}
-
-	let selectedChannel = null;
-   	function toggleChannelState(element) {
-   		console.log(element);
-   	    if (selectedChannel && selectedChannel !== element) {
-   	    	selectedChannel.classList.remove('clicked');
-  	    } 
-
-  	    element.classList.toggle('clicked');
-  	  	selectedChannel = element;
-   	}
-   	
-    window.globalFunction = {};
-    window.globalFunction.toggleClickedState = toggleClickedState;
-    window.globalFunction.toggleChannelState = toggleChannelState;
-
-	
-    </script>
 </html>
