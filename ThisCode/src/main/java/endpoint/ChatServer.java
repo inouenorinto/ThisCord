@@ -1,5 +1,6 @@
 package endpoint;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.websocket.OnClose;
@@ -8,6 +9,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+
+import com.google.gson.Gson;
+
+import bean.MessageBean;
+import db.dao.MessageDataDAO;
 
 @ServerEndpoint("/chat/{server_id}/{channel_id}/{user_id}")
 public class ChatServer {
@@ -40,6 +46,8 @@ public class ChatServer {
         int user_id = (int) session.getUserProperties().get("user_id");
         System.out.println(server_id+"."+ user_id + ": " + message);
         
+        addMessageToDB(user_id, message);
+        
         broadcast(server_id, channel_id, message);
     }
 
@@ -60,6 +68,24 @@ public class ChatServer {
                 e.printStackTrace();
             }
         }
+    }
+    public void addMessageToDB(int user_id, String jmessage) {
+    	System.out.println("addMessageToDB");
+    	Gson gson = new Gson();
+
+        HashMap message = gson.fromJson(jmessage, HashMap.class);
+        
+        Double test = (Double)message.get("nowRoomId");
+        
+        MessageBean mb = new MessageBean();
+        
+        mb.setUser_id(user_id);
+        mb.setChannel_id((int)Math.round((Double)message.get("nowChannelId")));
+        mb.setSend_date((String)message.get("date"));
+        mb.setMessage((String)message.get("message"));
+		
+	    MessageDataDAO mdd = MessageDataDAO.getInstance();
+		mdd.insertRecord(mb);
     }
 }
 
