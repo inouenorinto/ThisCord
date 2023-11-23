@@ -28,15 +28,16 @@ public class MakeServerCommand extends AbstractCommand {
 		
         ServerDataDAO serverDao = ServerDataDAO.getInstance();
         int next_id = serverDao.getMaxServerId() + 1;
-		
+        String path;
+        
         if (server_icon != null && !server_icon.isEmpty()) {
             saveBase64Image(server_icon, next_id+".jpg");
+            path = "resource/server_icons/" + next_id +".jpg";
         } else {
         	System.out.println("nullです");
+        	path = "user_icon_url";
         }
         
-
-        String path = "resource/server_icons/" + next_id +".jpg";
         
         
 		int server_id = makeServer(server_name,  bean.getUser_id(), path);
