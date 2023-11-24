@@ -35,7 +35,7 @@ public class MakeServerCommand extends AbstractCommand {
             path = "resource/server_icons/" + next_id +".jpg";
         } else {
         	System.out.println("nullです");
-        	path = "user_icon_url";
+        	path = "default";
         }
         
         
