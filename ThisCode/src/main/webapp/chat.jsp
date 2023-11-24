@@ -25,6 +25,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/general.css">
 
 <!-- 独自javascript -->
+
 <script src="${pageContext.request.contextPath}/javascript/chatWebSocket.js"></script>
 </head>
 <body>
@@ -32,7 +33,7 @@
 	<div id="container-fluid" class="container-fluid">
 	
 <!---------------------------------- サーバー一覧(server-list) -------------------------------->
-		<div class="server-scroll server-list">
+		<div id="server-list" class="server-scroll server-list">
 		
 			<!-- ホームボタン -->
 			<div class="server-list-item">
@@ -135,12 +136,13 @@
 				</div>
 			</div>
 		</div>
-<!-------------------------------- ビデオ一覧(video-field)-------------------------------->
+<!-------------------------------- ビデオフィールド(video-field)-------------------------------->
 		<div id="video-field" class="video-field none">
-			<div id="video-play-field">
-				<video id="local_video" autoplay style="width: 240px; height: 180px; border: 1px solid black;"></video>
+			<div id="video-play-field" class="video-play-field">
+				<video id="local_video" class="video-element" autoplay></video>
 			</div>
 		</div>
+		
 <!-------------------------------- チャットメニューバー(server-header) -------------------------------->
 		<div id="server-header" class="text-center server-header">
 			<div class="channle-name">
@@ -151,7 +153,7 @@
 			</div>
 		</div>
 	
-<!-------------------------------- チャットフィールド -------------------------------->
+<!-------------------------------- チャットフィールド(chat-field) -------------------------------->
 		<div id="chat-field" class="chat-field text-box text-color">
 			<div class="chat-scroll">
 				<div class="d-flex mb-3">
@@ -166,7 +168,7 @@
 				</div>
 			</div>
 		</div>
-		
+<!-------------------------------- メンバーリスト(member-list) -------------------------------->
 		<div id="member-list" class="member-scroll member-list">
 			<div class="text-box">
 				<div id="members-list"></div>
