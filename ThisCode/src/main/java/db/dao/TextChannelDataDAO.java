@@ -10,8 +10,8 @@ import bean.TextChannelDataBean;
 import util.mysql.MySqlManager;
 
 public  class TextChannelDataDAO {
-	private static final String CHANNEL = "SELECT * FROM text_channel_data";
-	private static final String FINDRECORD = "SELECT * FROM text_channel_data WHERE channel_id = ?";
+	private static final String CHANNEL = "SELECT * FROM text_channel";
+	private static final String FINDRECORD = "SELECT * FROM text_channel WHERE channel_id = ?";
 	
 	private Connection cn = null;
 	private PreparedStatement pstmt = null;

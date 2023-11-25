@@ -1,4 +1,4 @@
-/**
+ /**
  *chatpage.jspのWebSocketに関するjavascript
  */
  let defaultSrc='default';
@@ -38,7 +38,7 @@
      const infoDiv = document.querySelector("#user");
      infoDiv.innerHTML =
      	'<div class="user-box">'+
-         	'<img class="user_icon_img" src="' + user_icon + '"></img>'+
+         	'<img class="user_icon_img" src="resource/user_icons/' + user_icon + '"></img>'+
          	'<div style="line-height: 17px; padding:4px 0px 4px 8px;">'+
          		'<p id="user-name">'+userinfo.user_name + '</p>'+
          		'<p id="user-id">'+userinfo.user_name+'-'+ userid +'</p>'+
@@ -55,8 +55,10 @@
          console.log(roomName[1]);
          const src = roomName[1];
          if(src === defaultSrc) {
+			 console.log("ある :"+roomId);
              roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><div class="server-name">'+roomName[0]+'</div></a></div>';
          } else {
+			 console.log(roomId);
              roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><img src="' + src +'"></img></a></div>';
          }
          

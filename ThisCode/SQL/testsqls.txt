@@ -85,13 +85,13 @@ CREATE TABLE admin_user (
 );
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'default');
+VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'default1.png');
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'default');
+VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'default2.png');
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'default');
+VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'default3.png');
 
 INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('勉強サーバー', 1, 'default');
