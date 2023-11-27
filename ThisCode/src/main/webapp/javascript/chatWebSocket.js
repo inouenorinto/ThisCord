@@ -25,7 +25,7 @@
              username = userinfo.user_name;
              userid = userinfo.user_id;
              user_icon = userinfo.user_icon;
-             rooms = userinfo.rooms;
+             rooms = userinfo.servers;
              roomsMap = new Map(Object.entries(rooms));
              createRoomB(roomsMap);
              console.log(userinfo);
@@ -44,21 +44,19 @@
          		'<p id="user-id">'+userinfo.user_name+'-'+ userid +'</p>'+
          	'</div>'+
          '</div>';
- } 
+ }
+ 
  
 //サーバーのボタンを生成する関数
  function createRoomB(roomInfo) {
      const roomListDiv = document.getElementById("room-list");
      roomListDiv.innerHTML = "";
- 
      for (const [roomId, roomName] of roomInfo) {
          console.log(roomName[1]);
          const src = roomName[1];
          if(src === defaultSrc) {
-			 console.log("ある :"+roomId);
              roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><div class="server-name">'+roomName[0]+'</div></a></div>';
          } else {
-			 console.log(roomId);
              roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><img src="' + src +'"></img></a></div>';
          }
          
@@ -118,21 +116,27 @@
      const currentElemnt = document.querySelector('#channel-id-'+channel_id);
      window.globalFunction.toggleChannelState(currentElemnt);
  }
+
+async function joinRoom(roomId) {
+    if (chatSocket) {
+        chatSocket.close();
+    }
+    fieldClear();
+
+    nowRoomId = roomId;
+    console.log(roomsMap.get(roomId));
+    await getServerInfo(nowRoomId);
+
+    const infoDiv = document.querySelector("#server");
+    infoDiv.innerHTML = roomsMap.get(roomId)[0];
+    createChannelButton(channelsMap);
+    
+    const firstTextChannel = channelsMap.entries().next().value;
+ 	const firstTextChannelId = firstTextChannel[0];
+ 	
+ 	joinChannel(firstTextChannelId);
+}
  
- async function joinRoom(roomId) {
-     if (chatSocket) {
-         chatSocket.close();
-     }
-     fieldClear();
- 
-     nowRoomId = roomId;
-     console.log(roomsMap.get(roomId));
-     getServerInfo(nowRoomId);
-     
-     const infoDiv = document.querySelector("#server");
-     infoDiv.innerHTML = roomsMap.get(roomId)[0];
-     createChannelButton(channelsMap);
- }
  
  async function getServerInfo(roomId) {
      try {
@@ -217,4 +221,20 @@
  
      }
  }
- document.addEventListener("DOMContentLoaded", getUserInfo);
+ 
+ //ログインしたらデフォルトで一番上のサーバーを表示する
+async function init() {
+    await getUserInfo();
+
+    const firstServer = roomsMap.entries().next().value;
+    const firstServerId = firstServer[0];
+    await joinRoom(firstServerId);
+
+//	const firstTextChannel = channelsMap.entries().next().value;
+// 	const firstTextChannelId = firstTextChannel[0];
+// 	
+// 	joinChannel(firstTextChannelId);
+}
+ 
+ document.addEventListener("DOMContentLoaded", init);
+ 

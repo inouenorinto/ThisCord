@@ -129,6 +129,9 @@ VALUES (2, 1);
 
 
 INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 1);
+
+INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('Java' 1);
 
 INSERT INTO text_channel (channel_name, server_id) 
@@ -137,17 +140,13 @@ VALUES ('勉強', 1);
 INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('ゲーム', 1);
 
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 2);
 
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 3);
 
---　複合主キーver
-CREATE TABLE server_data (
-    discord_server_id VARCHAR(20),
-    server_name VARCHAR(100),
-    host_id VARCHAR(20),
-    server_icon VARCHAR(500),
-    server_member_id VARCHAR(20),
-    PRIMARY KEY(discord_server_id, server_member_id),
-    FOREIGN KEY(server_member_id)
-    REFERENCES user_data(discord_user_id)
-    ON UPDATE CASCADE ON DELETE RESTRICT
-);
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 4);
+
+commit;

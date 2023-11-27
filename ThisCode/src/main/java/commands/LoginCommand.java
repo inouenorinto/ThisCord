@@ -23,7 +23,6 @@ public class LoginCommand extends AbstractCommand {
 		} else {
 			res.setTarget("/login.html");
 		}
-		
 	}
 
 }
