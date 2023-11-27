@@ -85,28 +85,28 @@ CREATE TABLE admin_user (
 );
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'user_icon_url');
+VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'default1.png');
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'user_icon_url');
+VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'default2.png');
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'user_icon_url');
+VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'default3.png');
 
 INSERT INTO server (server_name, user_id, server_icon)
-VALUES ('勉強サーバー', 1, 'user_icon_url');
+VALUES ('勉強サーバー', 1, 'default');
 
 INSERT INTO server (server_name, user_id, server_icon)
-VALUES ('おじいさん', 1, 'user_icon_url');
+VALUES ('おじいさん', 1, 'default');
 
 INSERT INTO server (server_name, user_id, server_icon)
-VALUES ('ゆるゲーム', 1, 'user_icon_url');
+VALUES ('ゆるゲーム', 1, 'default');
 
 INSERT INTO server (server_name, user_id, server_icon)
-VALUES ('APEX', 1, 'user_icon_url');
+VALUES ('APEX', 1, 'default');
 
 INSERT INTO server (server_name, user_id, server_icon)
-VALUES ('valorant', 2, 'user_icon_url');
+VALUES ('valorant', 2, 'default');
 
 
 INSERT INTO us_relationship (user_id, server_id) 
@@ -129,6 +129,9 @@ VALUES (2, 1);
 
 
 INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 1);
+
+INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('Java' 1);
 
 INSERT INTO text_channel (channel_name, server_id) 
@@ -137,17 +140,13 @@ VALUES ('勉強', 1);
 INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('ゲーム', 1);
 
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 2);
 
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 3);
 
---　複合主キーver
-CREATE TABLE server_data (
-    discord_server_id VARCHAR(20),
-    server_name VARCHAR(100),
-    host_id VARCHAR(20),
-    server_icon VARCHAR(500),
-    server_member_id VARCHAR(20),
-    PRIMARY KEY(discord_server_id, server_member_id),
-    FOREIGN KEY(server_member_id)
-    REFERENCES user_data(discord_user_id)
-    ON UPDATE CASCADE ON DELETE RESTRICT
-);
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 4);
+
+commit;

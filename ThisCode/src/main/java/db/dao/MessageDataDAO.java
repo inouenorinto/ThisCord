@@ -10,9 +10,9 @@ import bean.MessageBean;
 import util.mysql.MySqlManager;
 
 public class MessageDataDAO{
-    private static final String SELECT_MESSAGE_DATA = "SELECT * FROM message_data"
+    private static final String SELECT_MESSAGE_DATA = "SELECT * FROM message"
     		+ "WHERE server_id = ? && channel_id = ? ";
-    private static final String UPDATE_MESSAGE = "UPDATE message_data SET message = ? "
+    private static final String UPDATE_MESSAGE = "UPDATE message SET message = ? "
             + "WHERE server_id = ? AND channel_id = ?";
     private static final String INSERT_MESSAGE = "INSERT INTO message (user_id, channel_id, send_date, message) "
     		+ "VALUES(?, ?, ?, ?)";
