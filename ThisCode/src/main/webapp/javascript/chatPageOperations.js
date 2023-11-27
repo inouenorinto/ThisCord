@@ -3,13 +3,23 @@ const serverHeader = document.getElementById('server-header');
 const chatField = document.getElementById('chat-field');
 const memberList = document.getElementById('member-list');
 const containerFluid = document.getElementById('container-fluid');
+const mediaInterface = document.getElementById('media-interface');
+
+let videoDisplay = false;
 
 function videoChat(){
+	if(videoDisplay == false) {
+		videoDisplay = true;
+	} else {
+		videoDisplay = false;
+	}
     videoField.classList.toggle('none');
     serverHeader.classList.toggle('none');
     chatField.classList.toggle('none');
     memberList.classList.toggle('none');
+    mediaInterface.classList.toggle('none');
     containerFluid.classList.toggle('video-container');
+    
 }
 
 const micro = document.getElementById('microphone');
@@ -41,7 +51,7 @@ let selectedChannel = null;
            selectedChannel.classList.remove('clicked');
       } 
 
-      element.classList.toggle('clicked');
+      element.classList.add('clicked');
         selectedChannel = element;
    }
    
