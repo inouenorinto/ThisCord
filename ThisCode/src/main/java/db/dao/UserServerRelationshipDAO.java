@@ -13,7 +13,7 @@ import util.mysql.MySqlManager;
 public class UserServerRelationshipDAO {
 	private static final String SERVER_SELECT = "select * from user_server_relationship"; //これでいいかわからん
 	private static final String FINDRECORD = "select * from user_server_relationship where user_id = ? and server_id = ?";
-
+	private static final String SELECT_PARTICIPATING_SERVER ="select * from us_relationship where user_id = ?";
 	
 	Connection cn = null;
 	PreparedStatement pstmt = null;
@@ -68,6 +68,41 @@ public class UserServerRelationshipDAO {
         return result;
     }
 	
+	public ArrayList<UserServerRelationshipBean> getParticipatingServer(int userId){
+		ArrayList<UserServerRelationshipBean> result = new ArrayList<>();
+        
+        try{
+            pstmt = cn.prepareStatement(SELECT_PARTICIPATING_SERVER);
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                UserServerRelationshipBean userServerRelationshipBean = new UserServerRelationshipBean();
+                userServerRelationshipBean.setUser_id(rs.getInt("user_id"));
+                userServerRelationshipBean.setServer_id(rs.getInt("server_id"));
+
+                result.add(userServerRelationshipBean);
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(pstmt != null) {
+                try{
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try{
+                    cn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+	}
 	
 	
 	public UserServerRelationshipBean findRecord(int id) {
@@ -109,7 +144,7 @@ public class UserServerRelationshipDAO {
 	public Integer[] getServers(int user_id) {
 		ArrayList<Integer> result = new ArrayList<>();
 
-	    String SQL = "select server_id from user_server_relationship where user_id = ?";
+	    String SQL = "select server_id from us_relationship where user_id = ?";
 	    try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
@@ -121,9 +156,6 @@ public class UserServerRelationshipDAO {
 					System.out.println("getServers: "+rs.getInt("server_id"));
 					result.add(rs.getInt("server_id"));
 				}
-			}
-			if (cn != null) {
-				cn.close();
 			}
 
             

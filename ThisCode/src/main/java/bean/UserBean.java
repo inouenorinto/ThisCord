@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserBean {
-	private Map<Integer, String[]> rooms = new HashMap<>();
+	//Integer:server_id String[0]:server_name String[1]:server_icon_url
+	private Map<Integer, String[]> servers = new HashMap<>();
     private int user_id; 
     private String mailaddress;
     private String password;
@@ -52,11 +53,11 @@ public class UserBean {
 	}
 
 	public Map<Integer, String[]> getRooms() {
-		return rooms;
+		return servers;
 	}
 
 	public void addRooms(int room_id, String room_name, String room_icon_url) {
 		String room_info[] = {room_name, room_icon_url};
-		this.rooms.put(room_id, room_info);
+		this.servers.put(room_id, room_info);
 	}
 }

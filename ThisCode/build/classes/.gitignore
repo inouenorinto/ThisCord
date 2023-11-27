@@ -1,6 +1,7 @@
-/javaee/
-/db/
-/util/
 /bean/
 /commands/
+/db/
 /endpoint/
+/framework/
+/javaee/
+/util/
