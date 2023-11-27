@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import bean.TextChannelDataBean;
 import util.mysql.MySqlManager;
@@ -102,8 +104,8 @@ public  class TextChannelDataDAO {
         return textChannelDataBean;
 	}
 	
-	public ArrayList<TextChannelDataBean> findRecords(int server_id) {
-		ArrayList<TextChannelDataBean> result = new ArrayList<>();
+	public Map<Integer, String> findRecords(int server_id) {
+		Map<Integer, String> result = new HashMap<>();
 
         try{
             pstmt = cn.prepareStatement(SELECT_CHANNELS);
@@ -111,12 +113,7 @@ public  class TextChannelDataDAO {
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                TextChannelDataBean textChannelDataBean = new TextChannelDataBean();
-                textChannelDataBean.setChannel_id(rs.getInt("channel_id"));
-                textChannelDataBean.setChannel_name(rs.getString("channel_name"));
-                textChannelDataBean.setServer_id(rs.getInt("server_id"));
-                result.add(textChannelDataBean);
-                System.out.println("TextChannelDataDAO :"+ rs.getString("channel_name"));
+                result.put(rs.getInt("channel_id"), rs.getString("channel_name"));
             }
         } catch (SQLException e){
             e.printStackTrace();

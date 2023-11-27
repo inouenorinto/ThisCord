@@ -104,6 +104,31 @@ public class UserServerRelationshipDAO {
         return result;
 	}
 	
+	public ArrayList<Integer> getJoinedUsers(int server_id) {
+		ArrayList<Integer> result = new ArrayList<>();
+		
+		Connection cn = null;
+		PreparedStatement  pstmt = null;
+	    ResultSet rs = null;
+	    String SQL = "select user_id from us_relationship where server_id = ?";
+	    try {
+			cn = MySqlManager.getConnection();
+			pstmt = cn.prepareStatement(SQL);
+			pstmt.setInt(1, server_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs != null) {
+				while(rs.next()) {
+					result.add(rs.getInt("user_id"));
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	    
+	    return result;
+	}
+	
 	
 	public UserServerRelationshipBean findRecord(int id) {
         UserServerRelationshipBean userServerRelationshipBean = new UserServerRelationshipBean();
