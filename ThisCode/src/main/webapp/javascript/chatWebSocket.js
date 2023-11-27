@@ -4,6 +4,7 @@
  let defaultSrc='default';
 
  let nowRoomId = null;
+ let nowRoomHostId = null;
  let rooms = null;
  let roomsMap = null;
  let nowChannelId = null;
@@ -148,12 +149,28 @@ async function joinRoom(roomId) {
  
              roominfo = await response.json();
              const members = roominfo.member;
+             nowRoomHostId = roominfo.host_id;
              membersMap = new Map(Object.entries(members));
              
              //メンバー一覧に表示する処理
              for (const [user_id, user_name] of membersMap) {
                  const memberListDiv = document.getElementById("members-list");
-                 memberListDiv.innerHTML += user_name + '<dir>';
+
+				if(nowRoomHostId == user_id) {
+					memberListDiv.innerHTML += 
+                	'<div class="member-wrapper">'+
+						'<img class="member-icon" src="resource/user_icons/'+ user_name[1] +'"></img>'+
+						'<span class="member-name">' + user_name[0] + '</span>'+
+						'<i class="server-host fa-solid fa-crown fa-xs"></i>'+
+					'</div>';
+				} else {
+					memberListDiv.innerHTML += 
+                	'<div class="member-wrapper">'+
+						'<img class="member-icon" src="resource/user_icons/'+ user_name[1] +'"></img>'+
+						'<span class="member-name">' + user_name[0] + '</span>'+
+					'</div>';
+
+				}
              }
  
              const channels = roominfo.channels;

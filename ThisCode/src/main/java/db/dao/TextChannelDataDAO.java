@@ -108,6 +108,8 @@ public  class TextChannelDataDAO {
 		Map<Integer, String> result = new HashMap<>();
 
         try{
+        	this.cn = MySqlManager.getConnection();
+
             pstmt = cn.prepareStatement(SELECT_CHANNELS);
             pstmt.setInt(1, server_id);
             rs = pstmt.executeQuery();

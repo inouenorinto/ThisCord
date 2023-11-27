@@ -617,7 +617,7 @@ h6 {
 }
 
 
-
+/************************************メンバーリスト****************************************/
 .member-list {
 	grid-area: member-list;
 	background-color: rgb(43 45 49);
@@ -628,8 +628,39 @@ h6 {
 	overflow-y: scroll;
 	height: 100%;
 }
+.meber-list-title {
+	font-size: 14px;
+	font-weight: 500;
+	color: #949ba4;
+	padding: 16px 0px 0px 8px;
+}
 
+.member-wrapper {
+	display: flex;
+	align-items: center;
+	height: 44px;
+	padding: 1px 8px 1px 8px;
+}
 
+.member-icon {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+}
+
+.member-name {
+	
+	color: #949ba4;
+	font-size: 15px;
+	margin-left: 12px;
+}
+.server-host {
+	position: relative;
+	top: 2px;
+	color: #f0b132;
+	margin-left: 4px;
+	font-size: 10px;
+}
 
 
 /*チャンネル一覧の左上を丸くする*/

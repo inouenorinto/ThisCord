@@ -171,6 +171,7 @@
 <!-------------------------------- メンバーリスト(member-list) -------------------------------->
 		<div id="member-list" class="member-scroll member-list">
 			<div class="text-box">
+				<h3 class="meber-list-title">メンバー</h3>
 				<div id="members-list"></div>
 			</div>
 		</div>
