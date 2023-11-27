@@ -12,6 +12,7 @@ import util.mysql.MySqlManager;
 public  class TextChannelDataDAO {
 	private static final String CHANNEL = "SELECT * FROM text_channel";
 	private static final String FINDRECORD = "SELECT * FROM text_channel WHERE channel_id = ?";
+	private static final String SELECT_CHANNELS ="SELECT * FROM text_channel WHERE server_id = ?";
 	
 	private Connection cn = null;
 	private PreparedStatement pstmt = null;
@@ -100,6 +101,45 @@ public  class TextChannelDataDAO {
         }
         return textChannelDataBean;
 	}
+	
+	public ArrayList<TextChannelDataBean> findRecords(int server_id) {
+		ArrayList<TextChannelDataBean> result = new ArrayList<>();
+
+        try{
+            pstmt = cn.prepareStatement(SELECT_CHANNELS);
+            pstmt.setInt(1, server_id);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                TextChannelDataBean textChannelDataBean = new TextChannelDataBean();
+                textChannelDataBean.setChannel_id(rs.getInt("channel_id"));
+                textChannelDataBean.setChannel_name(rs.getString("channel_name"));
+                textChannelDataBean.setServer_id(rs.getInt("server_id"));
+                result.add(textChannelDataBean);
+                System.out.println("TextChannelDataDAO :"+ rs.getString("channel_name"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (pstmt != null) {
+                try{
+                    pstmt.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try{
+                    cn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+	}
+	
+	
 
 
 }

@@ -15,6 +15,7 @@
  let userinfo = null;
  let user_icon = null;
  
+ //サーバーからユーザーデータを取得する関数
  async function getUserInfo() {
      try {
          const response = await fetch("/ThisCord/fn/getuserinfo");
@@ -117,6 +118,8 @@
      window.globalFunction.toggleChannelState(currentElemnt);
  }
 
+
+//サーバーに参加する関数
 async function joinRoom(roomId) {
     if (chatSocket) {
         chatSocket.close();
@@ -137,7 +140,7 @@ async function joinRoom(roomId) {
  	joinChannel(firstTextChannelId);
 }
  
- 
+ //サーバーの情報を取得する関数
  async function getServerInfo(roomId) {
      try {
          const response = await fetch("/ThisCord/fn/getserverinfo?roomId=" + roomId);
@@ -146,6 +149,8 @@ async function joinRoom(roomId) {
              roominfo = await response.json();
              const members = roominfo.member;
              membersMap = new Map(Object.entries(members));
+             
+             //メンバー一覧に表示する処理
              for (const [user_id, user_name] of membersMap) {
                  const memberListDiv = document.getElementById("members-list");
                  memberListDiv.innerHTML += user_name + '<dir>';
@@ -229,11 +234,6 @@ async function init() {
     const firstServer = roomsMap.entries().next().value;
     const firstServerId = firstServer[0];
     await joinRoom(firstServerId);
-
-//	const firstTextChannel = channelsMap.entries().next().value;
-// 	const firstTextChannelId = firstTextChannel[0];
-// 	
-// 	joinChannel(firstTextChannelId);
 }
  
  document.addEventListener("DOMContentLoaded", init);
