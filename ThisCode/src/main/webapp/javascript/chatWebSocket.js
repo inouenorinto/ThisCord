@@ -67,18 +67,23 @@ async function getServerInfo(roomId) {
 async function getMessageInfo(channel_id) {
 	try {
 		const response = await fetch("/ThisCord/fn/getmessageinfo?channel_id=" + channel_id);
-
-		roominfo = await response.json();
-		const members = roominfo.member;
-		membersMap = new Map(Object.entries(members));
-		const channels = roominfo.channels;
-		channelsMap = new Map(Object.entries(channels));
-
-		createRoomB(roomsMap);
-		createChannelButton(channelsMap);
-		console.log(roominfo);
-		console.error("Failed to fetch room information");
 		
+		if (response.ok) {
+			const jmessage = await response.json();
+			const messages = new ArrayList(Object.entries(jmessage));
+			for (const message in messages) {
+				const chat = document.getElementById("message-container");
+				chat.innerHTML += message.username + " " + message.date + "<br>" + message.message + "<br><br>";
+			}
+			const channels = roominfo.channels;
+			channelsMap = new Map(Object.entries(channels));
+	
+			createRoomB(roomsMap);
+			createChannelButton(channelsMap);
+			console.log(roominfo);
+		} else {
+			console.error("Failed to fetch room information");
+		}
 	} catch (error) {
 		console.error("Error: " + error);
 	}
@@ -107,7 +112,7 @@ function createChannelButton(channelInfo) {
 	}
 }
 
-function joinChannel(channel_id) {
+function joinChannel(channel_id) { 
 	if (chatSocket) {
 		chatSocket.close();
 	}

@@ -19,22 +19,19 @@ public class GetMessageInfoCommand extends AbstractCommand {
 		String jmessage = null;
 		MessageDataDAO mdd = MessageDataDAO.getInstance();
     	ArrayList<MessageBean> result = mdd.findRecord(channel_id);
-    	for (MessageBean mb  result) {
-    		
-    	}
     	
-    	jmessage = "{"
-    		+ "nowRoomId: nowRoomId,"
-    		+ "nowRoomName: roomsMap.get(nowRoomId),"
-    		+ "nowChannelId: nowChannelId,"
-    		+ "nowChanneName: channelsMap.get(nowChannelId),"
-    		+ "username: userinfo.user_name,"
-    		+ "date: getDate(),"
-    		+ "message: message"
-    	+ "}";
-		
-		System.out.println("gson bean"+ new Gson().toJson(channel_id));
+    	System.out.println("gson bean"+ new Gson().toJson(result));
 		res.setCharacterEncoding("UTF-8");
-		res.getWriter().write(new Gson().toJson(channel_id));
+		res.getWriter().write(new Gson().toJson(result));
+    	
+//    	jmessage = "{"
+//    		+ "nowRoomId: nowRoomId,"
+//    		+ "nowRoomName: roomsMap.get(nowRoomId),"
+//    		+ "nowChannelId: nowChannelId,"
+//    		+ "nowChanneName: channelsMap.get(nowChannelId),"
+//    		+ "username: userinfo.user_name,"
+//    		+ "date: getDate(),"
+//    		+ "message: message"
+//    	+ "}";
 	}
 }
