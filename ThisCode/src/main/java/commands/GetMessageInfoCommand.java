@@ -18,7 +18,7 @@ public class GetMessageInfoCommand extends AbstractCommand {
 		
 		String jmessage = null;
 		MessageDataDAO mdd = MessageDataDAO.getInstance();
-    	ArrayList<MessageBean> result = mdd.findRecord(channel_id);
+    	ArrayList<MessageBean> result = mdd.findRecord(server_id, channel_id);
     	
     	System.out.println("gson bean"+ new Gson().toJson(result));
 		res.setCharacterEncoding("UTF-8");

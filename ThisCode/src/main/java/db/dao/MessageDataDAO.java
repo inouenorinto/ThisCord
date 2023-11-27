@@ -11,7 +11,7 @@ import util.mysql.MySqlManager;
 
 public class MessageDataDAO{
     private static final String SELECT_MESSAGE_DATA = "SELECT * FROM message_data"
-    		+ "WHERE server_id = ? && channel_id = ? ";
+    		+ "WHERE server_id = ? && channel_id = ? ORDER BY message_id";
     private static final String UPDATE_MESSAGE = "UPDATE message_data SET message = ? "
             + "WHERE server_id = ? AND channel_id = ?";
     private static final String INSERT_MESSAGE = "INSERT INTO message (user_id, channel_id, send_date, message) "
@@ -46,7 +46,9 @@ public class MessageDataDAO{
 
             while(rs.next()) {
                 MessageBean messageBean = new MessageBean();
+                messageBean.setMessage_id(rs.getInt("message_id"));
                 messageBean.setUser_id(rs.getInt("user_id"));
+                messageBean.setChannel_id(rs.getInt("channel_id"));
                 messageBean.setSend_date(rs.getString("send_date"));
                 messageBean.setMessage(rs.getString("message"));
                 result.add(messageBean);
