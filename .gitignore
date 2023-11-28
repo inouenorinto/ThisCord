@@ -11,6 +11,8 @@ local.properties
 .loadpath
 .recommenders
 
+build\classes\.gitignore
+
 # External tool builders
 .externalToolBuilders/
 

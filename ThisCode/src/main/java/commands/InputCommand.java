@@ -1,12 +1,15 @@
 package commands;
 
-import context.ResponseContext;
+import framework.command.AbstractCommand;
+import framework.context.RequestContext;
+import framework.context.ResponseContext;
 
 public class InputCommand extends AbstractCommand {
 
 	@Override
-	public ResponseContext execute(ResponseContext resc) {
-		resc.setTarget("input");
-		return resc;
+	public void execute(RequestContext req, ResponseContext res) {
+		res.setTargetJsp("input");
+
 	}
+
 }

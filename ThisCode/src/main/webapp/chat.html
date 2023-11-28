@@ -2,113 +2,240 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Chat Application</title>
-    <script>
-        let room = null;
-        let rooms = null;
-        let chatDiv = null;
-        let chatSocket = null;
-        let username = null;
-        let userinfo = null;
-        
-        
-        async function getUserInfo() {
+	<meta charset="UTF-8">
+	<title>Chat Application</title>
+	<script>
+		let nowRoomId = null;
+		let rooms = null;
+		let roomsMap = null;
+		let nowChannelId = null;
+		let channelsMap = null;
+		let chatDiv = null;
+		let chatSocket = null;
+		let username = null;
+		let userinfo = null;
+
+		async function getUserInfo() {
 			try {
-                const response = await fetch("/ThisCord/get-user-info");
-                if (response.ok) {
-                    userinfo = await response.json();
-					usernme = userinfo.username;
+				const response = await fetch("/ThisCord/fn/getuserinfo");
+				if (response.ok) {
+
+					userinfo = await response.json();
+					usernme = userinfo.user_name;
 					rooms = userinfo.rooms;
-                    createRoomButtons(rooms);
-                    console.log(userinfo);
-                } else {
-                    console.error("Failed to fetch room information");
-                }
-            } catch (error) {
-                console.error("Error: " + error);
-            }
+					roomsMap = new Map(Object.entries(rooms));
+					createRoomB(roomsMap);
+					console.log(userinfo);
+				} else {
+					console.error("Failed to fetch room information");
+				}
+			} catch (error) {
+				console.error("Error: " + error);
+			}
+			const infoDiv = document.querySelector("#user");
+			infoDiv.innerHTML = "ユーザー名："+ userinfo.user_name +" ";
+		}
+		
+		async function getServerInfo(roomId) {
+			try {
+				const response = await fetch("/ThisCord/fn/getserverinfo?roomId=" + roomId);
+				if (response.ok) {
+
+					roominfo = await response.json();
+					const members = roominfo.member;
+					membersMap = new Map(Object.entries(members));
+					for (const [user_id, user_name] of membersMap) {
+						const memberListDiv = document.getElementById("members-list");
+						memberListDiv.innerHTML += user_name + '<dir>';
+					}
+					
+					const channels = roominfo.channels;
+					channelsMap = new Map(Object.entries(channels));
+
+					createRoomB(roomsMap);
+					createChannelButton(channelsMap);
+					console.log(roominfo);
+				} else {
+					console.error("Failed to fetch room information");
+				}
+			} catch (error) {
+				console.error("Error: " + error);
+			}
 		}
 
-        function createRoomButtons(roomInfo) {
-            const roomListDiv = document.getElementById("room-list");
-            roomListDiv.innerHTML = "";
+		function createRoomB(roomInfo) {
+			const roomListDiv = document.getElementById("room-list");
+			roomListDiv.innerHTML = "";
 
-            for (const room of roomInfo) {
-                const roomButton = document.createElement("button");
-                roomButton.textContent = room;
-                roomButton.onclick = () => joinRoom(room);
-                roomListDiv.appendChild(roomButton);
-            }
-        }
+			for (const [roomId, roomName] of roomInfo) {
+				const roomButton = document.createElement("button");
+				roomButton.textContent = roomName;
+				roomButton.onclick = () => joinRoom(roomId);
+				roomListDiv.appendChild(roomButton);
+			}
+		}
+		
+		function createChannelButton(channelInfo) {
+			const channelsListDiv = document.getElementById("channels-list");
+			channelsListDiv.innerHTML = "";
+			
+			for (const [channel_id, channel_name] of channelInfo) {
+				const channelButton = document.createElement("button");
+				channelButton.textContent = channel_name;
+				channelButton.onclick = () => joinChannel(channel_id);
+				channelsListDiv.appendChild(channelButton);
+			}
+		}
+		
+		function joinChannel(channel_id) {
+			if (chatSocket) {
+				chatSocket.close();
+			}
+			const infoDiv = document.querySelector("#channel");
+			infoDiv.innerHTML = "チャンネル："+ channelsMap.get(channel_id) +" ";
+			
+			nowChannelId = channel_id;
+			console.log("url: "+`ws://localhost:8080/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
+			chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
+			
+			chatSocket.onopen = event => {
+				console.log("接続開始");
+			};
 
-        async function joinRoom(roomname) {
-            room = roomname;
+			chatSocket.onmessage = event => {
+				// メッセージを表示するロジックをここに追加
+				console.log("Received message: " + event.data);
+				const chat = document.getElementById("message-container");
+				const rep = JSON.parse(event.data);
+				chat.innerHTML += rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
+			};
 
-            try {
-                const response = await fetch("/ThisCord/get-username");
-                if (response.ok) {
-                    username = await response.text();
-                } else {
-                    console.error("Failed to fetch username");
-                }
-            } catch (error) {
-                console.error("Error: " + error);
-                return;
-            }
+			chatSocket.onclose = event => {
+				console.log("切断");
+			};
+		}
+		
 
-            chatDiv = document.getElementById("chat");
-            chatDiv.style.display = "block";
+		async function joinRoom(roomId) {
+			if (chatSocket) {
+				chatSocket.close();
+			}
+			fieldClear();
+			
+			nowRoomId = roomId;
+			getServerInfo(nowRoomId);
 
-            chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${room}/${username}`);
-            
-            chatSocket.onopen = event => {
-                console.log("Connected to the server");                
-            };
+			chatDiv = document.getElementById("chat");
+			chatDiv.style.display = "block";
+			
+			spaDiv = document.getElementById("spa");
+			spaDiv.style.display = "block";
+			
+			spaDiv = document.getElementById("spa1");
+			spaDiv.style.display = "block";
+			
+			spaDiv = document.getElementById("spa2");
+			spaDiv.style.display = "block";
+			
+			//chatSocket = new WebSocket(`ws://localhost:8080/ThisCord/chat/${nowRoomId}/${userinfo.user_name}`);
 
-            chatSocket.onmessage = event => {
-                // メッセージを表示するロジックをここに追加
-                console.log("Received message: " + event.data);
-                const chat = document.getElementById("message-container");
-                chat.innerHTML+= username+": "+event.data+"<br>";
-            };
+			
+			const infoDiv = document.querySelector("#server");
+			infoDiv.innerHTML = "サーバー："+ nowRoomId +" ";
+			createChannelButton(channelsMap);
+		}
 
-            chatSocket.onclose = event => {
-                console.log("Disconnected from the server");
-            };
-        }
+		function sendMessage() {
+			const messageInput = document.getElementById("message-input");
+			const message = messageInput.value;
+			let json =
+			{
+				nowRoomId: nowRoomId,
+				nowRoomName: roomsMap.get(nowRoomId),
+				nowChannelId: nowChannelId,
+				nowChanneName: channelsMap.get(nowChannelId),
+				username: userinfo.user_name,
+				date: getDate(),
+				message: message
+			};
 
-        function sendMessage() {
-            const messageInput = document.getElementById("message-input");
-            const message = messageInput.value;
-            chatSocket.send(message);
-            messageInput.value = "";
-        }
+			chatSocket.send(JSON.stringify(json));
+			messageInput.value = "";
+		}
+
+		function fieldClear() {
+			const chat = document.getElementById("message-container");
+			const memberListDiv = document.getElementById("members-list");
+			const channelsListDiv = document.getElementById("channels-list");
+			chat.innerHTML = "";
+			memberListDiv.innerHTML = "";
+			channelsListDiv.innerHTML = "";
+			
+		}
+
+		function getDate() {
+			var today = new Date();
+			var year = today.getFullYear();
+			var month = today.getMonth() + 1;
+			var day = today.getDate();
+			var hours = today.getHours();
+			var minutes = today.getMinutes();
+
+			return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+		}
 
 		document.addEventListener("DOMContentLoaded", getUserInfo);
-        
-    </script>
+
+	</script>
 </head>
 
 <body>
-    <div class="col-md-1">
-        <div class="scroll">
-            <div id="room-list">
-                <!-- ルームボタンがここに動的に生成されます -->
-            </div>
-        </div>
-    </div>
-    <div class="col-md-11">
-        <div id="chat" style="display: none;">
-            <div id="message-container">
-                <!-- チャットメッセージを表示するコンテナ -->
-            </div>
-            <div id="input-container">
-                <input type="text" id="message-input" placeholder="メッセージを入力">
-                <button onclick="sendMessage()">送信</button> <!-- sendMessage() を呼び出すように修正 -->
-            </div>
-        </div>
-    </div>
+	<div id="user"></div>
+	<div id="server"></div>
+	<div id="channel"></div>
+	<div>
+		<a href="/ThisCord/makeserver.jsp">
+			<button>ルーム作成</button>
+		</a>
+	</div>
+
+	<div class="col-md-1">
+		<div class="scroll">
+			<div id="room-list">
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-2" id="spa" style="display: none;">
+		<p>メンバーリスト</p>
+		<div id="members-list">
+
+		</div>
+	</div>
+	
+	<div class="col-md-2" id="spa2" style="display: none;">
+		<p>チャンネルリスト</p>
+		<div id="channels-list">
+		
+		</div>
+	</div>
+	
+	<div class="col-md-11">
+		<div id="spa1" style="display: none;">
+			<a href="/ThisCord/invitation.jsp">
+				<button>メンバーを招待</button>
+			</a>
+		</div>
+		<div id="chat" style="display: none;">
+			<div id="message-container">
+
+			</div>
+			<div id="input-container">
+				<input type="text" id="message-input" placeholder="メッセージを入力">
+				<button onclick="sendMessage()">送信</button>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>
