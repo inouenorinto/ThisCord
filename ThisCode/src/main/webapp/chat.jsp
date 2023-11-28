@@ -107,7 +107,7 @@
 			</div>
 			
 			<div class="user-info">
-				<div class="media-interface">
+				<div id="media-interface" class="media-interface none">
 					<div class="flexbox" style="height: 38px;">
 						<div style="line-height: 17px;">
 							<p id="status">通話中</p>
@@ -116,11 +116,11 @@
 						
 						<div>
 							<button class="interface-item-i"><i class="fa-solid fa-signal fa-sm"></i></button>
-							<button class="interface-item-i"><i class="fa-solid fa-phone-slash fa-sm"></i></button>
+							<button class="interface-item-i" onclick="videoChat(); stopVideo(); hangUp();"><i class="fa-solid fa-phone-slash fa-sm"></i></button>
 						</div>
 					</div>
 					<div class="flexbox">
-						<button class="interface-item-button"><i class="fa-solid fa-video-slash fa-sm"></i></button>
+						<button class="interface-item-button" onclick="stopVideo();"><i class="fa-solid fa-video-slash fa-sm"></i></button>
 						<button class="interface-item-button"><i class="fa-solid fa-desktop fa-sm"></i></button>
 					</div>
 				</div>
@@ -140,6 +140,16 @@
 		<div id="video-field" class="video-field none">
 			<div id="video-play-field" class="video-play-field">
 				<video id="local_video" class="video-element" autoplay></video>
+			</div>
+			<div class="video-controller">
+				<div class="controller-wrapper">
+					<button class="contoroller-item">
+						<i class="fa-solid fa-video fa-sm"></i>
+					</button>
+					<button class="contoroller-item-phone-slash" onclick="videoChat(); stopVideo(); hangUp();" >
+						<i class="fa-solid fa-phone-slash fa-lg"></i>
+					</button>
+				</div>
 			</div>
 		</div>
 		
@@ -161,8 +171,8 @@
 				</div>
 			</div>
 			<!-- メッセージ入力フィールド -->
-			<div id="chat" class="message_div">
-				<div class="flexbox">
+			<div class="message-form-wrapper">
+				<div id="chat" class="message_div">
 					<i class="fa-solid fa-hashtag"></i>
 					<input type="text" id="message-input" class="message_input" placeholder="メッセージを送信" onkeydown="handleKeyPress(event)">
 				</div>
@@ -171,6 +181,7 @@
 <!-------------------------------- メンバーリスト(member-list) -------------------------------->
 		<div id="member-list" class="member-scroll member-list">
 			<div class="text-box">
+				<h3 class="meber-list-title">メンバー</h3>
 				<div id="members-list"></div>
 			</div>
 		</div>
@@ -186,8 +197,7 @@
 <!-- ****************************************** モーダル群 ****************************************** -->
 
 	<!-- サーバを作成するモーダル -->
-	<div class="modal fade" id="createServerModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="createServerModal" tabindex="-1" aria-labelledby="createServerModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="center_content">
@@ -225,7 +235,7 @@
 
 				<div class="con">
 					<div class="back">
-						<div class="back-botan">戻る</div>
+						<div class="back-botan" data-bs-dismiss="modal">戻る</div>
 					</div>
 				</div>
 			</div>
@@ -233,8 +243,7 @@
 	</div>
 
 	<!-- サーバのアイコンを編集するモーダル -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -248,8 +257,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createServerModal">閉じる</button>
-					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServerModal">確定</button>
+					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-dismiss="modal">閉じる</button>
+					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal" >確定</button>
 				</div>
 			</div>
 		</div>

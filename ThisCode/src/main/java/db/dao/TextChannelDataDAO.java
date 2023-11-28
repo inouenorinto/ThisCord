@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import bean.TextChannelDataBean;
 import util.mysql.MySqlManager;
@@ -13,6 +15,7 @@ public  class TextChannelDataDAO {
 	private static final String CHANNEL = "SELECT * FROM text_channel";
 	private static final String FINDRECORD = "SELECT * FROM text_channel WHERE channel_id = ?";
 	private static final String SELECT_CHANNELS ="SELECT * FROM text_channel WHERE server_id = ?";
+	private static final String INSERT_TEXT_CHANNEL = "INSERT INTO text_channel (channel_name, server_id) VALUES (?, ?);";
 	
 	private Connection cn = null;
 	private PreparedStatement pstmt = null;
@@ -102,21 +105,18 @@ public  class TextChannelDataDAO {
         return textChannelDataBean;
 	}
 	
-	public ArrayList<TextChannelDataBean> findRecords(int server_id) {
-		ArrayList<TextChannelDataBean> result = new ArrayList<>();
+	public Map<Integer, String> findRecords(int server_id) {
+		Map<Integer, String> result = new HashMap<>();
 
         try{
+        	this.cn = MySqlManager.getConnection();
+
             pstmt = cn.prepareStatement(SELECT_CHANNELS);
             pstmt.setInt(1, server_id);
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                TextChannelDataBean textChannelDataBean = new TextChannelDataBean();
-                textChannelDataBean.setChannel_id(rs.getInt("channel_id"));
-                textChannelDataBean.setChannel_name(rs.getString("channel_name"));
-                textChannelDataBean.setServer_id(rs.getInt("server_id"));
-                result.add(textChannelDataBean);
-                System.out.println("TextChannelDataDAO :"+ rs.getString("channel_name"));
+                result.put(rs.getInt("channel_id"), rs.getString("channel_name"));
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -139,7 +139,25 @@ public  class TextChannelDataDAO {
         return result;
 	}
 	
-	
+	public void addTextChannel(String channelName, int serverId) {
+		try{
+			this.cn = MySqlManager.getConnection();
+            pstmt = cn.prepareStatement(INSERT_TEXT_CHANNEL);
+            pstmt.setString(1,channelName);
+            pstmt.setInt(2, serverId);
+            pstmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (pstmt != null) {
+                try{
+                    pstmt.close();
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
 
 
 }

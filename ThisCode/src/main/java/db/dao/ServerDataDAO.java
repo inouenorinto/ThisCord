@@ -13,6 +13,7 @@ import util.mysql.MySqlManager;
 public class ServerDataDAO { //server表
     private static final String DB_SELECT = "SELECT * FROM server";
     private static final String DB_RECORD = "SELECT * FROM server WHERE server_id = ?";
+    private static final String INSERT_NEW_SERVER ="INSERT INTO server (server_name, user_id, server_icon) VALUES (?, ?, ?)";
 
     private Connection cn = null;
     private PreparedStatement pstmt = null;
@@ -142,5 +143,27 @@ public class ServerDataDAO { //server表
     	}
     	return result;
     }
+    
+    public void insertNewServer(String server_name, int user_id, String path) {
+		try {
+			cn = MySqlManager.getConnection();
+			pstmt = cn.prepareStatement(INSERT_NEW_SERVER);
+			pstmt.setString(1, server_name);
+			pstmt.setInt(2, user_id);
+			pstmt.setString(3, path);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+            if(pstmt != null) {
+                try{
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
 
 }
