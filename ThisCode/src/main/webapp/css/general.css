@@ -409,6 +409,7 @@ h6 {
 	height: 90px;
 	padding: 8px;
 	background-color: #232428;
+	border-bottom: 1px solid #37393f;
 }
 
 .interface-item-i {
@@ -459,7 +460,6 @@ h6 {
 
 /*ユーザーの情報*/
 .user-field {
-	border-top: 1px solid #37393f;
 	width: 240px;
 	height: 52px;
 	margin-bottom: 0;
@@ -587,19 +587,25 @@ h6 {
 	width: 100%;
 }
 
+.message-form-wrapper{
+	width: 100%;
+	padding: 0px 16px 0px 16px;
+}
 .message_div {
 	display: flex;
 	border-radius: 5px;
-	text-align: center;
 	background-color: #383a40;
 	height: 44px;
+	padding: 0px 16px 0px 16px;
 	bottom: 0;
 	width: 100%;
+	align-items: center;
+	
 }
-
 .message_input {
 	background-color: rgba(0, 0, 0, 0);
 	padding: 10px;
+	
 	width: 100%;
 	border: none;
 	color: rgb(219 222 225);
@@ -617,7 +623,7 @@ h6 {
 }
 
 
-
+/************************************メンバーリスト****************************************/
 .member-list {
 	grid-area: member-list;
 	background-color: rgb(43 45 49);
@@ -628,8 +634,39 @@ h6 {
 	overflow-y: scroll;
 	height: 100%;
 }
+.meber-list-title {
+	font-size: 14px;
+	font-weight: 500;
+	color: #949ba4;
+	padding: 16px 0px 0px 8px;
+}
 
+.member-wrapper {
+	display: flex;
+	align-items: center;
+	height: 44px;
+	padding: 1px 8px 1px 8px;
+}
 
+.member-icon {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+}
+
+.member-name {
+	
+	color: #949ba4;
+	font-size: 15px;
+	margin-left: 12px;
+}
+.server-host {
+	position: relative;
+	top: 2px;
+	color: #f0b132;
+	margin-left: 4px;
+	font-size: 10px;
+}
 
 
 /*チャンネル一覧の左上を丸くする*/
@@ -918,3 +955,56 @@ h6 {
 	height: 321.500px;
 	background-color: #202125;
 }
+
+
+.video-controller {
+	width: 100%;
+	position: relative;
+	bottom: 10%;
+	
+}
+
+.controller-wrapper {
+	display: flex;
+	justify-content: center;
+	
+	
+}
+
+.contoroller-item {
+	background-color: #232428;
+	color: #fff;
+	border-radius: 50%;
+	border: none;
+	height: 56px;
+	width: 56px;
+	margin: 0px 8px 0px 8px;
+}
+
+.contoroller-item-phone-slash {
+	background-color: #ed4245;
+	color: #fff;
+	border-radius: 50%;
+	border: none;
+	height: 56px;
+	width: 56px;
+	margin: 0px 8px 0px 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

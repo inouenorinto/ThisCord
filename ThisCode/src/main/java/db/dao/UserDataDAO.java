@@ -78,6 +78,37 @@ public class UserDataDAO{
         return result;
     }
     
+    public UserDataBean getUserInfo(int user_id) {
+    	UserDataBean userDataBean = new UserDataBean();
+    	
+    	try {
+    		this.cn = MySqlManager.getConnection();
+            pstmt = cn.prepareStatement(DB_SELECT);
+            pstmt.setInt(1, user_id);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()) {
+            	userDataBean.setUser_id(rs.getInt("user_id"));
+            	userDataBean.setMailaddress(rs.getString("mailaddress"));
+            	userDataBean.setPassword(rs.getString("password"));
+            	userDataBean.setUser_name(rs.getString("user_name"));
+            	userDataBean.setUser_icon(rs.getString("user_icon"));
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return userDataBean;
+    }
+    
     //
 	public UserBean getRecord(String email) {
 	    String SQL="select * from account where mailaddress = ?";
