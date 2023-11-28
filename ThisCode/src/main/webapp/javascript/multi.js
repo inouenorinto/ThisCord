@@ -7,7 +7,7 @@ let remoteVideos = [];
 const MAX_CONNECTION_COUNT = 10;
 
 // リモートのビデオを表示するコンテナ（HTML）
-let container = document.getElementById('container');
+let container = document.getElementById('video-play-field');
 
 // --- WebRTCを使うためのプリフィックス -----
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
@@ -17,8 +17,9 @@ RTCSessionDescription = window.RTCSessionDescription || window.webkitRTCSessionD
 
 
 //WebRTCで通信をするためのシグナリングをするWebSocket
-const ip2 = '192.168.0.6';
+//const ip2 = '192.168.0.11';
 //const ip2 = '172.19.7.203';
+const ip2 = 'localhost';
 const websocket = new WebSocket('ws://' + ip2 + ':8080/ThisCord/signaling_room/'+roomname);
 console.log('roomname: '+ roomname +'url: '+'ws://' + ip2 + ':8080/ThisCord/signaling_room/'+roomname);
 websocket.onopen = (event) => {

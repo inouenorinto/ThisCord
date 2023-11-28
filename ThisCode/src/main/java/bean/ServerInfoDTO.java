@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServerInfoDTO {
-	private Map<Integer, String> member = new HashMap<>();
+	//Integer: user_id  String[0]:user_name  String[1]:user_icon スパゲッティでごめんね
+	private Map<Integer, String[]> member = new HashMap<>();
+	//Integer: channel_id  String:channel_name
 	private Map<Integer, String> channels = new HashMap<>();
 	private int server_id = 0;
 	private int host_id = 0;
@@ -24,15 +26,15 @@ public class ServerInfoDTO {
 		channels.put(channel_id, channel_name);
 	}
 	
-	public void addMember(int host_id, String user_name) {
-		member.put(host_id, user_name);
+	public void addMember(int host_id, String user_info[]) {
+		member.put(host_id, user_info);
 	}	
 
-	public Map<Integer, String> getMember() {
+	public Map<Integer, String[]> getMember() {
 		return member;
 	}
 
-	public void setMember(Map<Integer, String> member) {
+	public void setMember(Map<Integer, String[]> member) {
 		this.member = member;
 	}
 

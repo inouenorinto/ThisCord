@@ -11,8 +11,9 @@ import bean.ServerDataBean;
 import util.mysql.MySqlManager;
 
 public class ServerDataDAO { //server表
-    private static final String DB_SELECT = "SELECT * FROM server_data";
-    private static final String DB_RECORD = "SELECT * FROM server_data WHERE server_id = ?";
+    private static final String DB_SELECT = "SELECT * FROM server";
+    private static final String DB_RECORD = "SELECT * FROM server WHERE server_id = ?";
+    private static final String INSERT_NEW_SERVER ="INSERT INTO server (server_name, user_id, server_icon) VALUES (?, ?, ?)";
 
     private Connection cn = null;
     private PreparedStatement pstmt = null;
@@ -76,7 +77,7 @@ public class ServerDataDAO { //server表
             if (rs.next()) {	
                 serverDataBean.setServer_id(rs.getInt("server_id"));
                 serverDataBean.setServer_name(rs.getString("server_name"));
-                serverDataBean.setUser_id(rs.getInt("host_id"));
+                serverDataBean.setUser_id(rs.getInt("user_id"));
                 serverDataBean.setServer_icon(rs.getString("server_icon"));
             }
         } catch (SQLException e) {
@@ -105,7 +106,7 @@ public class ServerDataDAO { //server表
 		PreparedStatement  pstmt = null;
 	    ResultSet rs = null;
 	    String result[] = new String[2];
-	    String SQL = "select server_name, server_icon from server_data where server_id = ?";
+	    String SQL = "select server_name, server_icon from server where server_id = ?";
 		try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
@@ -132,7 +133,7 @@ public class ServerDataDAO { //server表
     	ResultSet rs = null;
     	try {
     		st = cn.createStatement();
-    		rs = st.executeQuery("select max(server_id) AS server_id from server_data");
+    		rs = st.executeQuery("select max(server_id) AS server_id from server");
     		
     		if (rs.next()) {
     			result = rs.getInt("server_id");
@@ -142,5 +143,27 @@ public class ServerDataDAO { //server表
     	}
     	return result;
     }
+    
+    public void insertNewServer(String server_name, int user_id, String path) {
+		try {
+			cn = MySqlManager.getConnection();
+			pstmt = cn.prepareStatement(INSERT_NEW_SERVER);
+			pstmt.setString(1, server_name);
+			pstmt.setInt(2, user_id);
+			pstmt.setString(3, path);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+            if(pstmt != null) {
+                try{
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
 
 }
