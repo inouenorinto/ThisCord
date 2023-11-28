@@ -141,16 +141,16 @@
 			<div id="video-play-field" class="video-play-field">
 				<video id="local_video" class="video-element" autoplay></video>
 			</div>
-							<div class="video-controller">
-					<div class="controller-wrapper">
-						<button class="contoroller-item">
-							<i class="fa-solid fa-video fa-sm"></i>
-						</button>
-						<button class="contoroller-item-phone-slash" onclick="videoChat(); stopVideo(); hangUp();" >
-							<i class="fa-solid fa-phone-slash fa-lg"></i>
-						</button>
-					</div>
+			<div class="video-controller">
+				<div class="controller-wrapper">
+					<button class="contoroller-item">
+						<i class="fa-solid fa-video fa-sm"></i>
+					</button>
+					<button class="contoroller-item-phone-slash" onclick="videoChat(); stopVideo(); hangUp();" >
+						<i class="fa-solid fa-phone-slash fa-lg"></i>
+					</button>
 				</div>
+			</div>
 		</div>
 		
 <!-------------------------------- チャットメニューバー(server-header) -------------------------------->
@@ -197,8 +197,7 @@
 <!-- ****************************************** モーダル群 ****************************************** -->
 
 	<!-- サーバを作成するモーダル -->
-	<div class="modal fade" id="createServerModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="createServerModal" tabindex="-1" aria-labelledby="createServerModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="center_content">
@@ -236,7 +235,7 @@
 
 				<div class="con">
 					<div class="back">
-						<div class="back-botan">戻る</div>
+						<div class="back-botan" data-bs-dismiss="modal">戻る</div>
 					</div>
 				</div>
 			</div>
@@ -244,8 +243,7 @@
 	</div>
 
 	<!-- サーバのアイコンを編集するモーダル -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -259,8 +257,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createServerModal">閉じる</button>
-					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServerModal">確定</button>
+					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-dismiss="modal">閉じる</button>
+					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal" >確定</button>
 				</div>
 			</div>
 		</div>

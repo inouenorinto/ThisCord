@@ -50,7 +50,7 @@
  
  
 //サーバーのボタンを生成する関数
- function createRoomB(roomInfo) {
+ async function createRoomB(roomInfo) {
      const roomListDiv = document.getElementById("room-list");
      roomListDiv.innerHTML = "";
      for (const [roomId, roomName] of roomInfo) {
@@ -59,7 +59,7 @@
          if(src === defaultSrc) {
              roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><div class="server-name">'+roomName[0]+'</div></a></div>';
          } else {
-             roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><img src="' + src +'"></img></a></div>';
+             roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><img id="retryImage" src="' + src +'" onerror="retry();"></img></a></div>';
          }
          
      }
@@ -233,8 +233,8 @@ async function joinRoom(roomId) {
      var submitButton = document.getElementById('form_submit');
  
      form.setAttribute('data-submitting', 'true');
- 
      form.submit();
+          
  }
  
  function handleKeyPress(event) {
@@ -251,6 +251,30 @@ async function init() {
     const firstServer = roomsMap.entries().next().value;
     const firstServerId = firstServer[0];
     await joinRoom(firstServerId);
+}
+
+
+//画像を非同期でとってくる
+function retryImageLoad(imageElement, retryCount, maxRetries, retryInterval) {
+    if (retryCount <= maxRetries) {
+        console.log(`Retrying image load, attempt ${retryCount}`);
+        imageElement.src = imageElement.src; // 画像の再読み込みを試みる
+
+        setTimeout(() => {
+            retryImageLoad(imageElement, retryCount + 1, maxRetries, retryInterval);
+        }, retryInterval);
+    } else {
+        console.error(`Failed to load image after ${maxRetries} attempts.`);
+    }
+}
+
+function retry(){
+	console.log("errorですよ");
+    const imageElement = document.getElementById('retryImage');
+    const maxRetries = 10; // 最大リトライ回数
+    const retryInterval = 50000; // リトライまでの待機時間（ミリ秒）
+	
+	retryImageLoad(imageElement, 1, maxRetries, retryInterval);
 }
  
  document.addEventListener("DOMContentLoaded", init);

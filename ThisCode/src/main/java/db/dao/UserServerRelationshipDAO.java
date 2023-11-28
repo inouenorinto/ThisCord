@@ -11,9 +11,10 @@ import bean.UserServerRelationshipBean;
 import util.mysql.MySqlManager;
 
 public class UserServerRelationshipDAO {
-	private static final String SERVER_SELECT = "select * from user_server_relationship"; //これでいいかわからん
-	private static final String FINDRECORD = "select * from user_server_relationship where user_id = ? and server_id = ?";
+	private static final String SERVER_SELECT = "select * from us_relationship"; //これでいいかわからん
+	private static final String FINDRECORD = "select * from us_relationship where user_id = ? and server_id = ?";
 	private static final String SELECT_PARTICIPATING_SERVER ="select * from us_relationship where user_id = ?";
+	private static final String updateSQL ="INSERT INTO us_relationship (user_id, server_id) VALUES (?, ?);";
 	
 	Connection cn = null;
 	PreparedStatement pstmt = null;
@@ -197,4 +198,36 @@ public class UserServerRelationshipDAO {
 	    
 	    return result.toArray(new Integer[result.size()]);
 	}
+	
+	
+	public void addRelationship(int serverId, int userId) {
+		try {
+			cn = MySqlManager.getConnection();
+			pstmt = cn.prepareStatement(updateSQL);
+			
+			pstmt.setInt(1, userId);
+			pstmt.setInt(2, serverId);
+			pstmt.executeUpdate();
+
+            
+		} catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+            if(pstmt != null) {
+                try{
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try{
+                    cn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
+	
 }
