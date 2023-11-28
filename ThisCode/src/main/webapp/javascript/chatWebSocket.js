@@ -47,6 +47,28 @@
          	'</div>'+
          '</div>';
  }
+
+ async function getMessageInfo(channel_id) {
+	try {
+		const response = await fetch("/ThisCord/fn/getmessageinfo?channel_id=" + channel_id);
+		
+		if (response.ok) {
+			const jmessage = await response.json();
+			const messages = new Map(Object.entries(jmessage));
+			
+			for (const [key, message] of messages) {
+				console.log(message.message);
+				const chat = document.getElementById("message-container");
+				chat.innerHTML += message.userName + " " + message.send_date + "<br>" + message.message + "<br><br>";
+			}
+		} else {
+			console.error("Failed to fetch message information");
+		}
+	} catch (error) {
+		console.error("Error: " + error);
+	}
+}
+
  
  
 //サーバーのボタンを生成する関数
@@ -90,6 +112,7 @@
  
      chatSocket.onopen = event => {
          console.log("接続開始");
+         getMessageInfo(channel_id);
      };
  
      chatSocket.onmessage = event => {
