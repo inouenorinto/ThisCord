@@ -70,7 +70,7 @@ public class ChatServer {
         }
     }
     public void addMessageToDB(int user_id, String jmessage) {
-    	System.out.println("addMessageToDB");
+    	System.out.println("addMessageToDB"+ jmessage);
     	Gson gson = new Gson();
 
         HashMap message = gson.fromJson(jmessage, HashMap.class);

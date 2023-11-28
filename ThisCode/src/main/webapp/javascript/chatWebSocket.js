@@ -56,9 +56,12 @@
 			const jmessage = await response.json();
 			const messages = new Map(Object.entries(jmessage));
 			
+			const chat = document.getElementById("message-container");
+			
+			chat.innerHTML = "";
+			
 			for (const [key, message] of messages) {
 				console.log(message.message);
-				const chat = document.getElementById("message-container");
 				chat.innerHTML += message.userName + " " + message.send_date + "<br>" + message.message + "<br><br>";
 			}
 		} else {
