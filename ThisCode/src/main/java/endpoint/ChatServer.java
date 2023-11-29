@@ -75,12 +75,10 @@ public class ChatServer {
 
         HashMap message = gson.fromJson(jmessage, HashMap.class);
         
-        Double test = (Double)message.get("nowRoomId");
-        
         MessageBean mb = new MessageBean();
         
         mb.setUser_id(user_id);
-        mb.setChannel_id((int)Math.round((Double)message.get("nowChannelId")));
+        mb.setChannel_id(Integer.parseInt((String)message.get("nowChannelId")));
         mb.setSend_date((String)message.get("date"));
         mb.setMessage((String)message.get("message"));
 		

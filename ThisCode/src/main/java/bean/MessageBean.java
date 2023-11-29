@@ -3,7 +3,8 @@ package bean;
 public class MessageBean {
 	private int message_id = 0;
 	private int user_id = 0;
-	private String userName = null;
+	private String user_name = null;
+	private String user_icon = null;
 	private int channel_id = 0;
 	private String send_date = null;
 	private String message = null;
@@ -20,11 +21,17 @@ public class MessageBean {
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getUser_icon() {
+		return user_icon;
+	}
+	public void setUser_icon(String user_icon) {
+		this.user_icon = user_icon;
 	}
 	public int getChannel_id() {
 		return channel_id;
