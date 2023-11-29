@@ -50,22 +50,7 @@ public class UserServerRelationshipDAO {
             }
         } catch(SQLException e){
             e.printStackTrace();
-        } finally {
-            if(pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try{
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        } 
         return result;
     }
 	
@@ -86,21 +71,7 @@ public class UserServerRelationshipDAO {
             }
         } catch(SQLException e){
             e.printStackTrace();
-        } finally {
-            if(pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try{
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        
         }
         return result;
 	}
@@ -153,21 +124,6 @@ public class UserServerRelationshipDAO {
             }
         } catch(SQLException e){
             e.printStackTrace();
-        } finally {
-            if(pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try{
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return userServerRelationshipBean;
     }
@@ -212,22 +168,7 @@ public class UserServerRelationshipDAO {
             
 		} catch(Exception e) {
 			e.printStackTrace();
-		}finally {
-            if(pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try{
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+		}
 	}
 	
 }

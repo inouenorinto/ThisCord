@@ -5,6 +5,7 @@ import db.dao.UserDataDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.encrypt.Encryption;
 
 public class LoginCommand extends AbstractCommand {
 
@@ -16,7 +17,7 @@ public class LoginCommand extends AbstractCommand {
 		UserDataDAO account = UserDataDAO.getInstance();
 		UserBean userBean = account.getRecord(email);
 		
-		if(email.equals(userBean.getMailaddress()) && password.equals(userBean.getPassword())) {
+		if(userBean != null && Encryption.check(password, userBean.getPassword())) {
 			
         	req.setAttributeInSession("bean", userBean);
 			res.setTarget("fn/chat");

@@ -58,21 +58,7 @@ public class MessageDataDAO{
 
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        
         }
         return result;
     }
@@ -92,14 +78,7 @@ public class MessageDataDAO{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        
         }
         return success;
     }
@@ -118,14 +97,6 @@ public class MessageDataDAO{
 	    	cn.commit();
     	} catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 }

@@ -51,21 +51,6 @@ public  class TextChannelDataDAO {
             }
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try{
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return result;
 	}
@@ -86,21 +71,7 @@ public  class TextChannelDataDAO {
             }
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try{
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        
         }
         return textChannelDataBean;
 	}
@@ -120,21 +91,6 @@ public  class TextChannelDataDAO {
             }
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try{
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return result;
 	}
@@ -148,15 +104,7 @@ public  class TextChannelDataDAO {
             pstmt.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-        }
+        } 
 	}
 
 
