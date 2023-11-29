@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.MessageBean;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 public class MessageDataDAO{
     private static final String SELECT_MESSAGE_DATA = "SELECT message_id, message.user_id, account.user_name, channel_id, send_date, message "

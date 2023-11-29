@@ -1,4 +1,4 @@
-package util.mysql;
+package db.mysql;
 
 
 import java.io.FileInputStream;

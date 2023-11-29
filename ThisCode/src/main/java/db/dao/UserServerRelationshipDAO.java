@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.UserServerRelationshipBean;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 public class UserServerRelationshipDAO {
 	private static final String SERVER_SELECT = "select * from us_relationship"; //これでいいかわからん
