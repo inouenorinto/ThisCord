@@ -100,8 +100,8 @@
 				</div>
 				<div id="voice-channels-list">
 					<div class="text-channels">
+						<div id=""></div>
 						<a onclick="videoChat(); connect();">一般</a>
-						<%-- <a onclick="videoChat();">一般</a> --%>
 					</div>
 				</div>
 			</div>

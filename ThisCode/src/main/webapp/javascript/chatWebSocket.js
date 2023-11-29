@@ -9,13 +9,29 @@
  let roomsMap = null;
  let nowChannelId = null;
  let channelsMap = null;
+ let voiceChannelsMap = null;
  let chatDiv = null;
  let chatSocket = null;
+ let noticeSocket = null;
  let username = null;
  let userid = null;
  let userinfo = null;
  let user_icon = null;
  
+ document.addEventListener("DOMContentLoaded", init);
+ 
+//ログインしたらデフォルトで一番上のサーバーを表示する
+async function init() {
+    await getUserInfo();
+
+    const firstServer = roomsMap.entries().next().value;
+    const firstServerId = firstServer[0];
+    await joinRoom(firstServerId);
+    
+    registerNotice();
+    
+}
+
  //サーバーからユーザーデータを取得する関数
  async function getUserInfo() {
      try {
@@ -47,6 +63,40 @@
          	'</div>'+
          '</div>';
  }
+ 
+ function registerNotice() {
+	noticeSocket = new WebSocket("ws://localhost:8080/ThisCord/notice/" + userid + "/" + username + "/" + user_icon);
+
+	chatSocket.onopen = event => {
+         console.log("接続開始");
+     };
+ 
+     chatSocket.onmessage = event => {
+     
+     };
+ 
+     chatSocket.onclose = event => {
+         console.log("切断");
+     };
+}
+
+ function joinVoiceChannel(channelId, user, icon) {
+	 console.log("osareta");
+	 sendJoinVoiceChannel(channelId, user, icon);
+ }
+ 
+ function sendJoinVoiceChannel(voiceChannelId, user, icon) {
+	 let json =
+     {
+		type:'joinVoiceChannel',
+		voiceChannelid:voiceChannelId,
+		user:user,
+		icon:icon
+     };
+     noticeSocket.send(JSON.stringify(json));
+ 
+ }
+
 
  async function getMessageInfo(channel_id) {
 	try {
@@ -84,7 +134,7 @@
          if(src === defaultSrc) {
              roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><div class="server-name">'+roomName[0]+'</div></a></div>';
          } else {
-             roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><img id="retryImage" src="' + src +'" onerror="retry();"></img></a></div>';
+             roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-'+ roomId +'" onclick=" joinRoom(\'' + roomId + '\');"  ><img id="retryImage" src="' + src +'" onerror="retryImageLoad(this, 10, 1000)"></img></a></div>';
          }
          
      }
@@ -97,9 +147,20 @@
  
      for (const [channel_id, channel_name] of channelInfo) {
  
-         channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-'+channel_id+'"><a href="javascript:joinChannel(\'' + channel_id +'\')"><i class="fa-solid fa-hashtag fa-sm mx-r-5"></i> '+ channel_name + '</a></div>';
+         channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-'+channel_id+'"><a href="javascript:joinChannel(\'' + channel_id +'\')"><i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i> '+ channel_name + '</a></div>';
      }
  }
+//ボイスチャンネルのボタンを生成する関数
+ function createVoiceChannelButton(channelInfo){
+	 const channelsListDiv = document.getElementById("voice-channels-list");
+     channelsListDiv.innerHTML = "";
+ 
+     for (const [channel_id, channel_name] of channelInfo) {
+ 
+         channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-'+channel_id+'"><a onclick="joinVoiceChannel(\''+ channel_id +'\', \''+ username +'\',\''+ user_icon +'\')"><i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> '+ channel_name + '</a></div>';
+     }
+ }
+ 
 
 //テキストチャンネルに参加する関数
  function joinChannel(channel_id) {
@@ -160,6 +221,7 @@ async function joinRoom(roomId) {
     const infoDiv = document.querySelector("#server");
     infoDiv.innerHTML = roomsMap.get(roomId)[0];
     createChannelButton(channelsMap);
+    createVoiceChannelButton(voiceChannelsMap);
     
     const firstTextChannel = channelsMap.entries().next().value;
  	const firstTextChannelId = firstTextChannel[0];
@@ -195,15 +257,16 @@ async function joinRoom(roomId) {
 						'<img class="member-icon" src="resource/user_icons/'+ user_name[1] +'"></img>'+
 						'<span class="member-name">' + user_name[0] + '</span>'+
 					'</div>';
-
 				}
              }
  
              const channels = roominfo.channels;
+             const voice_channels = roominfo.voice_channels;
              channelsMap = new Map(Object.entries(channels));
- 
+ 			 voiceChannelsMap = new Map(Object.entries(voice_channels))
              createRoomB(roomsMap);
              createChannelButton(channelsMap);
+             createVoiceChannelButton(voiceChannelsMap);
              console.log(roominfo);
          } else {
              console.error("Failed to fetch room information");
@@ -270,38 +333,39 @@ async function joinRoom(roomId) {
      }
  }
  
- //ログインしたらデフォルトで一番上のサーバーを表示する
-async function init() {
-    await getUserInfo();
 
-    const firstServer = roomsMap.entries().next().value;
-    const firstServerId = firstServer[0];
-    await joinRoom(firstServerId);
-}
 
 
 //画像を非同期でとってくる
-function retryImageLoad(imageElement, retryCount, maxRetries, retryInterval) {
-    if (retryCount <= maxRetries) {
-        console.log(`Retrying image load, attempt ${retryCount}`);
-        imageElement.src = imageElement.src; // 画像の再読み込みを試みる
+function retryImageLoad(imgElement, maxRetries, retryInterval) {
+    let retries = 0;
 
-        setTimeout(() => {
-            retryImageLoad(imageElement, retryCount + 1, maxRetries, retryInterval);
-        }, retryInterval);
-    } else {
-        console.error(`Failed to load image after ${maxRetries} attempts.`);
+    function loadImage() {
+        imgElement.onload = function() {
+            // 画像の読み込みが成功した場合
+            console.log('Image loaded successfully.');
+        };
+
+        imgElement.onerror = function() {
+            // 画像の読み込みがエラーの場合
+            if (retries < maxRetries) {
+                retries++;
+                console.log(`Retrying image load, attempt ${retries}`);
+                setTimeout(loadImage, retryInterval);
+            } else {
+                console.error(`Failed to load image after ${maxRetries} attempts.`);
+            }
+        };
+
+        // 画像の読み込みを開始
+        imgElement.src = imgElement.src;
     }
+
+    // 初回の画像読み込みを開始
+    loadImage();
 }
 
-function retry(){
-	console.log("errorですよ");
-    const imageElement = document.getElementById('retryImage');
-    const maxRetries = 10; // 最大リトライ回数
-    const retryInterval = 50000; // リトライまでの待機時間（ミリ秒）
-	
-	retryImageLoad(imageElement, 1, maxRetries, retryInterval);
-}
- 
- document.addEventListener("DOMContentLoaded", init);
+
+
+
  
