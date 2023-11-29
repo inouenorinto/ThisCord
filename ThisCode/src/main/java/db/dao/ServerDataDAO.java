@@ -48,21 +48,6 @@ public class ServerDataDAO { //server表
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return result;
     }
@@ -82,22 +67,7 @@ public class ServerDataDAO { //server表
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        } 
         return serverDataBean;
     }
     
@@ -155,15 +125,7 @@ public class ServerDataDAO { //server表
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-            if(pstmt != null) {
-                try{
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+		}
 	}
 
 }
