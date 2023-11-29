@@ -8,6 +8,7 @@ import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
 import util.ImageSaver;
+import util.encrypt.Encryption;
 
 public class RegisterCommand extends AbstractCommand {
 
@@ -19,10 +20,12 @@ public class RegisterCommand extends AbstractCommand {
         String password = req.getParameter("password")[0];
         String email = req.getParameter("email")[0];
         
+        String hashedPassword = Encryption.hash(password);	//パスワードのハッシュ化
+        
         RegisterUserDTO dto = new RegisterUserDTO();
         dto.setEmail(email);
         dto.setUser_name(username);
-        dto.setPassword(password);
+        dto.setPassword(hashedPassword);
         dto.setUser_icon(editedImageData);
         if(dto.getUser_icon().substring(1) == null) {
         	System.out.println("null");
