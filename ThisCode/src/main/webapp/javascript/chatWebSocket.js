@@ -62,7 +62,17 @@
 			
 			for (const [key, message] of messages) {
 				console.log(message.message);
-				chat.innerHTML += message.userName + " " + message.send_date + "<br>" + message.message + "<br><br>";
+				chat.innerHTML += '<div class="message-wrapper">'+
+					    '<div>'+
+					        '<img class=" chat-icon" src="resource/user_icons/'+message.user_icon+'" >'+
+					    '</div>'+
+					    
+					    '<div class="wrapper-item">'+
+					        '<span class="message-user-name">'+message.user_name +'</span>'+
+					        '<span class="message-date">'+message.send_date+'</span>'+
+					        '<p class="message-text">'+message.message+'</p>'+
+					    '</div>'+
+					'</div>';
 			}
 		} else {
 			console.error("Failed to fetch message information");
@@ -126,7 +136,7 @@
      	chat.innerHTML +=
 		'<div class="message-wrapper">'+
 		    '<div>'+
-		        '<img class=" chat-icon" src="'+rep.usericon+'" >'+
+		        '<img class=" chat-icon" src="resource/user_icons/'+rep.usericon+'" >'+
 		    '</div>'+
 		    
 		    '<div class="wrapper-item">'+
@@ -266,7 +276,6 @@ async function joinRoom(roomId) {
  function handleKeyPress(event) {
      if (event.key === "Enter") {
          sendMessage();
- 
      }
  }
  
