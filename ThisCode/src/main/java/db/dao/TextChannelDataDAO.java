@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bean.TextChannelDataBean;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 public  class TextChannelDataDAO {
 	private static final String CHANNEL = "SELECT * FROM text_channel";

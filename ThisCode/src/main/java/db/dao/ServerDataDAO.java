@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.ServerDataBean;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 public class ServerDataDAO { //server表
     private static final String DB_SELECT = "SELECT * FROM server";

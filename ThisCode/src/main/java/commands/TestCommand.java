@@ -1,6 +1,9 @@
 package commands;
 
-import db.dao.MessageDataDAO;
+import java.util.ArrayList;
+
+import bean.ServerDataBean;
+import db.dao.ServerDataDAO;
 
 public class TestCommand {
 	public static void main(String[] args) {

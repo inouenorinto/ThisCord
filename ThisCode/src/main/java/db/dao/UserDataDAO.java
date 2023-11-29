@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import bean.UserBean;
 import bean.UserDataBean;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 //account表
 public class UserDataDAO{
