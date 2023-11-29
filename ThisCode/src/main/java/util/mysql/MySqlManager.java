@@ -1,26 +1,45 @@
 package util.mysql;
 
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class MySqlManager {
-    private static String DATABASE_NAME = "thiscord";
-    private static String PROPATIES = "?characterEncoding=UTF-8&useTimezone=true&serverTimezone=Asia/Tokyo";
-    private static String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME+PROPATIES;
+    private static String DATABASE_NAME;
+    private static String PROPERTIES;
+    private static String URL;
 
-    private static String USER = "testuser1";
-    private static String PASS = "password";
+    private static String USER;
+    private static String PASS;
+    
+    public static void initConnection() {
+		Properties prop = new Properties();
+		
+		try {
+			prop.load(new FileInputStream("C:\\ThisLocal\\ThisCode\\src\\properties\\mysql.properties"));
+			DATABASE_NAME = prop.getProperty("databaseName");
+			PROPERTIES = prop.getProperty("properties");
+			URL = prop.getProperty("url");
+			USER = prop.getProperty("user");
+			PASS = prop.getProperty("pass");
+			System.out.println("unti");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 		
     public static Connection getConnection() {
 
         Connection conn = null;
         try {
-
+        	initConnection();
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            conn = DriverManager.getConnection(URL, USER, PASS);
+            conn = DriverManager.getConnection(URL + DATABASE_NAME + PROPERTIES, USER, PASS);
+            System.out.println("unti");
             
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
