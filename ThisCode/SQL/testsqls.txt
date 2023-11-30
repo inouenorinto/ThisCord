@@ -37,7 +37,7 @@ drop table account;
 CREATE TABLE account (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     mailaddress VARCHAR(200),
-    password VARCHAR(24),
+    password VARCHAR(60),
     user_name VARCHAR(50),
     user_icon VARCHAR(500)
 );
