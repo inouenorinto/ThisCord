@@ -17,7 +17,7 @@ public class LoginCommand extends AbstractCommand {
 		UserDataDAO account = UserDataDAO.getInstance();
 		UserBean userBean = account.getRecord(email);
 		
-		if(userBean != null && Encryption.check(password, userBean.getPassword())) {
+		if(email.equals(userBean.getMailaddress()) && password.equals(userBean.getPassword())) {
 			
         	req.setAttributeInSession("bean", userBean);
 			res.setTarget("fn/chat");
