@@ -1,10 +1,10 @@
 package bean;
 
 public class NoticeSessionBean {
-	private String user;
-	private String icon;
-	private int userId;
-
+	private String user = null;
+	private String icon = null;
+	private int userId = 0;
+	
 	public String getUser() {
 		return user;
 	}

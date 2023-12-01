@@ -1,11 +1,24 @@
 package bean;
 
+import java.util.ArrayList;
+
 public class JsonNoticeBean {
 	private String type;
 	private int voiceChannelid;
+	private int serverId;
 	private String user;
 	private String icon;
 	private int userId;
+	
+	private ArrayList<NoticeSessionBean> members = new ArrayList<>();
+
+	public ArrayList<NoticeSessionBean> getMembers() {
+		return members;
+	}
+
+	public void setMembers(ArrayList<NoticeSessionBean> members) {
+		this.members = members;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -45,5 +58,13 @@ public class JsonNoticeBean {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public int getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(int serverid) {
+		this.serverId = serverid;
 	}
 }
