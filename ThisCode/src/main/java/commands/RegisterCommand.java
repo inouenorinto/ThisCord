@@ -8,6 +8,7 @@ import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
 import util.ImageSaver;
+import util.encrypt.Encryption;
 
 public class RegisterCommand extends AbstractCommand {
 

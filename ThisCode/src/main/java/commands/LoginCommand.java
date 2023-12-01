@@ -5,6 +5,7 @@ import db.dao.UserDataDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.encrypt.Encryption;
 
 public class LoginCommand extends AbstractCommand {
 

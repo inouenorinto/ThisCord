@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import bean.UserBean;
 import bean.UserDataBean;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 //account表
 public class UserDataDAO{
@@ -59,22 +59,7 @@ public class UserDataDAO{
 
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        } 
         return result;
     }
     
@@ -97,15 +82,7 @@ public class UserDataDAO{
 
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        } 
         return userDataBean;
     }
     

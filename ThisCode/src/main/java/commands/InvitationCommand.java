@@ -8,7 +8,7 @@ import bean.ServerInfoDTO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 public class InvitationCommand extends AbstractCommand {
 

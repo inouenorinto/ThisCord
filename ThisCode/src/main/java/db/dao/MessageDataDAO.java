@@ -7,13 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.MessageBean;
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 public class MessageDataDAO{
-    private static final String SELECT_MESSAGE_DATA = "SELECT message_id, message.user_id, account.user_name, channel_id, send_date, message "
+    private static final String SELECT_MESSAGE_DATA = "SELECT message_id, message.user_id, account.user_name, account.user_icon, channel_id, send_date, message "
     		+ "FROM message "
     		+ "INNER JOIN account ON message.user_id = account.user_id "
-    		+ "WHERE channel_id = ?";
+    		+ "WHERE channel_id = ? "
+    		+ "ORDER BY message_id";
     private static final String UPDATE_MESSAGE = "UPDATE message_data SET message = ? "
             + "WHERE server_id = ? AND channel_id = ?";
     private static final String INSERT_MESSAGE = "INSERT INTO message (user_id, channel_id, send_date, message) "
@@ -49,7 +50,8 @@ public class MessageDataDAO{
                 MessageBean messageBean = new MessageBean();
                 messageBean.setMessage_id(rs.getInt("message_id"));
                 messageBean.setUser_id(rs.getInt("user_id"));
-                messageBean.setUserName(rs.getString("user_name"));
+                messageBean.setUser_name(rs.getString("user_name"));
+                messageBean.setUser_icon(rs.getString("user_icon"));
                 messageBean.setChannel_id(rs.getInt("channel_id"));
                 messageBean.setSend_date(rs.getString("send_date"));
                 messageBean.setMessage(rs.getString("message"));
@@ -58,21 +60,7 @@ public class MessageDataDAO{
 
         } catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        
         }
         return result;
     }
@@ -92,14 +80,7 @@ public class MessageDataDAO{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        
         }
         return success;
     }
@@ -118,14 +99,6 @@ public class MessageDataDAO{
 	    	cn.commit();
     	} catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 }
