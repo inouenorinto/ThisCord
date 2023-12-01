@@ -13,6 +13,7 @@ import db.dao.ServerDataDAO;
 import db.dao.TextChannelDataDAO;
 import db.dao.UserDataDAO;
 import db.dao.UserServerRelationshipDAO;
+import db.dao.VoiceChannelDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
@@ -60,8 +61,12 @@ public class GetServerInfoCommand extends AbstractCommand {
 			info[1] = dataBean.getUser_icon();
 			members.put(dataBean.getUser_Id(), info);
 		}
-		
 		resultDto.setMember(members);
+		
+		VoiceChannelDAO voiceDao = VoiceChannelDAO.getInstance();
+		Map<Integer, String> voiceChannels = voiceDao.getVoiceChannels(server_id);
+		resultDto.setVoice_channels(voiceChannels);
+		
 		
 		return resultDto;
 	}
