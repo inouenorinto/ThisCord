@@ -182,7 +182,18 @@ async function getMessageInfo(channel_id) {
 
 			for (const [key, message] of messages) {
 				console.log(message.message);
-				chat.innerHTML += message.userName + " " + message.send_date + "<br>" + message.message + "<br><br>";
+				chat.innerHTML += 
+					'<div class="message-wrapper">'+
+					    '<div>'+
+					        '<img class=" chat-icon" src="resource/user_icons/'+message.user_icon+'" >'+
+					    '</div>'+
+
+					    '<div class="wrapper-item">'+
+					        '<span class="message-user-name">'+message.user_name +'</span>'+
+					        '<span class="message-date">'+message.send_date+'</span>'+
+					        '<p class="message-text">'+message.message+'</p>'+
+					    '</div>'+
+					'</div>';
 			}
 		} else {
 			console.error("Failed to fetch message information");
@@ -230,9 +241,6 @@ function createVoiceChannelButton(channelInfo) {
 	}
 }
 
-
-
-
 //テキストチャンネルに参加する関数
 function joinChannel(channel_id) {
 	if (chatSocket) {
@@ -258,7 +266,7 @@ function joinChannel(channel_id) {
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<div>' +
-			'<img class=" chat-icon" src="' + rep.usericon + '" >' +
+			'<img class=" chat-icon" src="resource/user_icons/' + rep.usericon + '" >' +
 			'</div>' +
 
 			'<div class="wrapper-item">' +
@@ -359,23 +367,25 @@ async function getServerInfo(roomId) {
 }
 
 function sendMessage() {
-	const messageInput = document.getElementById("message-input");
-	const message = messageInput.value;
-	let json =
-	{
-		nowRoomId: nowRoomId,
-		nowRoomName: roomsMap.get(nowRoomId),
-		nowChannelId: nowChannelId,
-		nowChannelName: channelsMap.get(nowChannelId),
-		username: userinfo.user_name,
-		usericon: user_icon,
-		date: getDate(),
-		message: message
-	};
+     const messageInput = document.getElementById("message-input");
+     const message = messageInput.value;
+     if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
+	     let json =
+	     {
+	         nowRoomId: nowRoomId,
+	         nowRoomName: roomsMap.get(nowRoomId),
+	         nowChannelId: nowChannelId,
+	         nowChannelName: channelsMap.get(nowChannelId),
+	         username: userinfo.user_name,
+	         usericon:user_icon,
+	         date: getDate(),
+	         message: message
+	     };
 
-	chatSocket.send(JSON.stringify(json));
-	messageInput.value = "";
-}
+	     chatSocket.send(JSON.stringify(json));
+	     messageInput.value = "";
+	 }
+ }
 
 function fieldClear() {
 	const chat = document.getElementById("message-container");
