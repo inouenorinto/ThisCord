@@ -37,7 +37,7 @@ drop table account;
 CREATE TABLE account (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     mailaddress VARCHAR(200),
-    password VARCHAR(24),
+    password VARCHAR(60),
     user_name VARCHAR(50),
     user_icon VARCHAR(500)
 );
@@ -92,13 +92,13 @@ CREATE TABLE admin_user (
 );
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('tanaka@gmail.com', 'tanaka', 'tanaka', 'default1.png');
+VALUES ('tanaka@gmail.com', '$2a$12$ceg/qdoynIqywpqnwqaewOD16ra21lvILLmJx7i4trAav9bT0Nd7m', 'tanaka', 'default1.png');
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('ojiisan@gmail.com', 'ojiisan', 'ojiisan', 'default2.png');
+VALUES ('ojiisan@gmail.com', '$2a$12$quq.W9rYTGbGUxOV/jZpr.7/opaSv3ZSuXsM.kJisxDqjKyq0nMam', 'ojiisan', 'default2.png');
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
-VALUES ('saigou@gmail.com', 'saigou', 'saigou', 'default3.png');
+VALUES ('saigou@gmail.com', '$2a$12$gK.sIMj/1zrkcJ0gQFbojObwfqPiYc5aMafILg7krUBwN1UKyeJiG', 'saigou', 'default3.png');
 
 INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('勉強サーバー', 1, 'default');

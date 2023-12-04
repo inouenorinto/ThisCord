@@ -45,19 +45,19 @@
 		<form id="imageForm" action="fn/register" method="post" enctype="multipart/form-data">
 		  <div class="mb-3">
 		    <label for="exampleInputEmail1" class="form-label mt-3">メールアドレス</label>
-		    <input type="email" name="email" class="form-control input_text" id="exampleInputEmail1" aria-describedby="emailHelp">
+		    <input type="email" name="email" class="form-control input_text" id="exampleInputEmail1" aria-describedby="emailHelp" required>
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">ユーザー名</label>
-		    <input type="text" name="username" class="form-control input_text">
+		    <input type="text" name="username" class="form-control input_text" required>
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">パスワード</label>
-		    <input type="password" name="password" class="form-control input_text" id="exampleInputPassword1">
+		    <input type="password" name="password" class="form-control input_text" id="exampleInputPassword1" required>
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">パスワード(確認)</label>
-		    <input type="password" class="form-control input_text" id="exampleInputPassword1">
+		    <input type="password" class="form-control input_text" id="exampleInputPassword1" required>
 		  </div>
 		  <div class="mb-3 form-check">
 		    <input type="checkbox" class="form-check-input" id="exampleCheck1">

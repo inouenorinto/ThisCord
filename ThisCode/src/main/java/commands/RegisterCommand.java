@@ -30,6 +30,7 @@ public class RegisterCommand extends AbstractCommand {
         } else {
         	System.out.println("not null");
         }
+        System.out.println(dto.getUser_icon());
         userRegister(dto);
         res.setTarget("fn/login");
         
@@ -41,14 +42,13 @@ public class RegisterCommand extends AbstractCommand {
 		
 		if(flag != -1) {
 			String path = "C:\\ThisLocal\\ThisCode\\src\\main\\webapp\\resource\\user_icons\\" + flag+".jpg";
-	        if(dto.getUser_icon().substring(1) != null) {
-	        	System.out.println(dto.getUser_icon());
+	        if(dto.getUser_icon().equals("image: default")) {
 	        	ImageSaver.base64ToImage(dto.getUser_icon(), path);
-	        	dao.updateIcon(dto.getEmail(), "resource\\user_icons\\"+flag+".jpg");
+	        	dao.updateIcon(dto.getEmail(), flag+".jpg");
 	        } else {
 	        	Random random = new Random();
 	            int num = random.nextInt(4) + 1;
-	            dao.updateIcon(dto.getEmail(), "resource\\user_icons\\default"+num+".png");
+	            dao.updateIcon(dto.getEmail(), "default"+num+".png");
 	        }
 		}
 	}
