@@ -317,6 +317,7 @@ async function joinRoom(roomId) {
 	noticeSocket.send(JSON.stringify(json));
 	console.log(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
+	toggleHome();
 }
 
 //サーバーの情報を取得する関数
@@ -496,27 +497,43 @@ function  scrollEnd(duration) {
  * home画面のjavascript
  * 
  */
-
 const server_div = document.getElementById('server');
+const channelsWrapper = document.getElementById('channelsWrapper');
+const flendListWrapper = document.getElementById('flendListWrapper');
+const serverHeaderWrapper = document.getElementById('serverHeaderWrapper');
+const inputField = document.getElementById('inputField');
+const messageContainer = document.getElementById('message-container');
 
-function home() {
+let joinHomeFlag = false;
+function joinHome() {
 	server_div.innerHTML = 'Home';
+	channelsWrapper.classList.add('none');
+	serverHeaderWrapper.classList.add('none');
+	inputField.classList.add('none');
+	messageContainer.classList.add('none');
+	flendListWrapper.classList.remove('none');
+	
+	if(!joinHomeFlag) {
+		joinHomeFlag = true;
+	}
+}
+function toggleHome() {
+		channelsWrapper.classList.remove('none');
+		serverHeaderWrapper.classList.remove('none');
+		inputField.classList.remove('none');
+
+		messageContainer.classList.remove('none');
+		flendListWrapper.classList.add('none');
+		
+		joinHomeFlag = false;
 }
 
 async function getFlendList(){
 		try {
-		const response = await fetch("/ThisCord/fn/getFlend");
+		const response = await fetch("/ThisCord/fn/getFlendList");
 
 		if (response.ok) {
-
-			userinfo = await response.json();
-			username = userinfo.user_name;
-			userid = userinfo.user_id;
-			user_icon = userinfo.user_icon;
-			rooms = userinfo.servers;
-			roomsMap = new Map(Object.entries(rooms));
-			createRoomB(roomsMap);
-			console.log(userinfo);
+			
 		} else {
 			console.error("Failed to fetch room information");
 		}

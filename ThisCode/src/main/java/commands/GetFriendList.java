@@ -9,7 +9,7 @@ import framework.context.ResponseContext;
 public class GetFriendList extends AbstractCommand{
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-
+		
 		
 		
 		res.setCharacterEncoding("UTF-8");
