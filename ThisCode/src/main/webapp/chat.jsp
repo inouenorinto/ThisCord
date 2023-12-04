@@ -26,7 +26,7 @@
 
 <!-- 独自javascript -->
 
-<script src="${pageContext.request.contextPath}/javascript/chatWebSocket.js"></script>
+
 </head>
 <body>
 	<h6>Thiscord</h6>
@@ -98,12 +98,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="voice-channels-list">
-					<div class="text-channels">
-						<a onclick="videoChat(); connect();">一般</a>
-						<%-- <a onclick="videoChat();">一般</a> --%>
-					</div>
-				</div>
+				<div id="voice-channels-list"></div>
 			</div>
 			
 			<div class="user-info">
@@ -116,7 +111,7 @@
 						
 						<div>
 							<button class="interface-item-i"><i class="fa-solid fa-signal fa-sm"></i></button>
-							<button class="interface-item-i" onclick="videoChat(); stopVideo(); hangUp();"><i class="fa-solid fa-phone-slash fa-sm"></i></button>
+							<button class="interface-item-i" onclick="closeVoiceChannel();"><i class="fa-solid fa-phone-slash fa-sm"></i></button>
 						</div>
 					</div>
 					<div class="flexbox">
@@ -146,7 +141,7 @@
 					<button class="contoroller-item">
 						<i class="fa-solid fa-video fa-sm"></i>
 					</button>
-					<button class="contoroller-item-phone-slash" onclick="videoChat(); stopVideo(); hangUp();" >
+					<button class="contoroller-item-phone-slash" onclick="closeVoiceChannel();" >
 						<i class="fa-solid fa-phone-slash fa-lg"></i>
 					</button>
 				</div>
@@ -211,8 +206,7 @@
 					<!--アイコンのプレビューと編集-->
 
 					<div class="select-icon-container">
-						<img id='preview' class="select-icon-img"
-							src="${pageContext.request.contextPath}/resource/user_icons/default2.png">
+						<img id='preview' class="select-icon-img"src="${pageContext.request.contextPath}/resource/user_icons/default2.png">
 						<div class="plus_button_icon">
 							<a data-bs-toggle="modal" data-bs-target="#exampleModal"> 
 								<i class="fa-solid fa-plus fa-lg"></i>
@@ -263,6 +257,7 @@
 			</div>
 		</div>
 	</div>
+<script src="${pageContext.request.contextPath}/javascript/chatWebSocket.js"></script>
 <script src="${pageContext.request.contextPath}/javascript/createServer.js"></script>
 <script src="${pageContext.request.contextPath}/javascript/multi.js"></script>
 <script src="${pageContext.request.contextPath}/javascript/chatPageOperations.js"></script>

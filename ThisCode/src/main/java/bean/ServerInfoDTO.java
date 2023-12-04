@@ -8,6 +8,8 @@ public class ServerInfoDTO {
 	private Map<Integer, String[]> member = new HashMap<>();
 	//Integer: channel_id  String:channel_name
 	private Map<Integer, String> channels = new HashMap<>();
+	//Integer: channel_id  String:channel_name
+	private Map<Integer, String> voice_channels  = new HashMap<>();
 	private int server_id = 0;
 	private int host_id = 0;
 	private String server_name = null;
@@ -68,5 +70,13 @@ public class ServerInfoDTO {
 
 	public void setServer_icon(String server_icon) {
 		this.server_icon = server_icon;
+	}
+
+	public Map<Integer, String> getVoice_channels() {
+		return voice_channels;
+	}
+
+	public void setVoice_channels(Map<Integer, String> voice_channels) {
+		this.voice_channels = voice_channels;
 	}
 }

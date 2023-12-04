@@ -991,6 +991,23 @@ h6 {
 	margin: 0px 8px 0px 8px;
 }
 
+.voice-channel-member{
+	display: flex;
+	align-items: center;
+	padding: 2px 0px 6px 36px;
+}
+
+.voice-channel-icon {
+	border-radius: 50%;
+	height: 24px;
+	width: 24px;
+	margin-right: 8px;
+}
+.voice-channel-user {
+	color: #9097a0;
+	font-size : 13px;
+}
+
 
 
 

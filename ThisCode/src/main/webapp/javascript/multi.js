@@ -1,3 +1,5 @@
+
+
 let localVideo = document.getElementById('local_video');
 let localStream = null;
 let roomname = getRoomName();
@@ -490,15 +492,15 @@ function addIceCandidate(id, candidate) {
 function connect() {
 	startVideo();
 	setTimeout(() => {
-		  if (!isReadyToConnect()) {
-		    console.warn('NOT READY to connect');
-		  }
-		  else if (!canConnectMore()) {
-		    console.log('TOO MANY connections');
-		  }
-		  else {
+		if (!isReadyToConnect()) {
+			console.warn('NOT READY to connect');
+		}
+		else if (!canConnectMore()) {
+			console.log('TOO MANY connections');
+		}
+		else {
 			callMe();
-		  }
+		}
 	}, 2000);
 }
 
@@ -510,3 +512,10 @@ function hangUp() {
 function callMe() {
   emitRoom({type: 'call me'});
 }
+
+
+window.multi = {};
+window.multi.hangUp = hangUp;
+window.multi.connect = connect;
+window.multi.stopVideo = stopVideo;
+
