@@ -29,7 +29,10 @@
 
 </head>
 <body>
-	<h6>Thiscord</h6>
+	<div class="thiscord-title">
+		<h6>Thiscord</h6>
+	</div>
+	
 	<div id="container-fluid" class="container-fluid">
 	
 <!---------------------------------- サーバー一覧(server-list) -------------------------------->

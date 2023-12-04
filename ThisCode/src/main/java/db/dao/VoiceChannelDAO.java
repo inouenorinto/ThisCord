@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import util.mysql.MySqlManager;
+import db.mysql.MySqlManager;
 
 public class VoiceChannelDAO {
 	private static final String getVoiceChannels ="select * from voice_channel where server_id = ?";

@@ -67,9 +67,7 @@ public class GetServerInfoCommand extends AbstractCommand {
 		Map<Integer, String> voiceChannels = voiceDao.getVoiceChannels(server_id);
 		resultDto.setVoice_channels(voiceChannels);
 		
-		
 		return resultDto;
 	}
 	
-
 }

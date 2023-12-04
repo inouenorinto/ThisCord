@@ -182,17 +182,7 @@ async function getMessageInfo(channel_id) {
 
 			for (const [key, message] of messages) {
 				console.log(message.message);
-				chat.innerHTML += '<div class="message-wrapper">'+
-					    '<div>'+
-					        '<img class=" chat-icon" src="resource/user_icons/'+message.user_icon+'" >'+
-					    '</div>'+
-					    
-					    '<div class="wrapper-item">'+
-					        '<span class="message-user-name">'+message.user_name +'</span>'+
-					        '<span class="message-date">'+message.send_date+'</span>'+
-					        '<p class="message-text">'+message.message+'</p>'+
-					    '</div>'+
-					'</div>';
+				chat.innerHTML += message.userName + " " + message.send_date + "<br>" + message.message + "<br><br>";
 			}
 		} else {
 			console.error("Failed to fetch message information");
@@ -240,48 +230,53 @@ function createVoiceChannelButton(channelInfo) {
 	}
 }
 
- function joinChannel(channel_id) {
-     if (chatSocket) {
-         chatSocket.close();
-     }
-     const infoDiv = document.querySelector("#channel");
-     infoDiv.innerHTML = channelsMap.get(channel_id);
- 
-     nowChannelId = channel_id;
-     console.log("url: " + "ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
-     chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
- 
-     chatSocket.onopen = event => {
-         console.log("接続開始");
-         getMessageInfo(channel_id);
-     };
- 
-     chatSocket.onmessage = event => {
-         console.log("Received message: " + event.data);
-         const chat = document.getElementById("message-container");
-         const rep = JSON.parse(event.data);
-         //chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
-     	chat.innerHTML +=
-		'<div class="message-wrapper">'+
-		    '<div>'+
-		        '<img class=" chat-icon" src="resource/user_icons/'+rep.usericon+'" >'+
-		    '</div>'+
-		    
-		    '<div class="wrapper-item">'+
-		        '<span class="message-user-name">'+rep.username +'</span>'+
-		        '<span class="message-date">'+rep.date+'</span>'+
-		        '<p class="message-text">'+rep.message+'</p>'+
-		    '</div>'+
-		'</div>';
-     
-     };
- 
-     chatSocket.onclose = event => {
-         console.log("切断");
-     };
-     const currentElemnt = document.querySelector('#channel-id-'+channel_id);
-     window.globalFunction.toggleChannelState(currentElemnt);
- }
+
+
+
+//テキストチャンネルに参加する関数
+function joinChannel(channel_id) {
+	if (chatSocket) {
+		chatSocket.close();
+	}
+	const infoDiv = document.querySelector("#channel");
+	infoDiv.innerHTML = channelsMap.get(channel_id);
+
+	nowChannelId = channel_id;
+	console.log("url: " + "ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
+	chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
+
+	chatSocket.onopen = event => {
+		console.log("接続開始");
+		getMessageInfo(channel_id);
+	};
+
+	chatSocket.onmessage = event => {
+		console.log("Received message: " + event.data);
+		const chat = document.getElementById("message-container");
+		const rep = JSON.parse(event.data);
+		//chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<div>' +
+			'<img class=" chat-icon" src="' + rep.usericon + '" >' +
+			'</div>' +
+
+			'<div class="wrapper-item">' +
+			'<span class="message-user-name">' + rep.username + '</span>' +
+			'<span class="message-date">' + rep.date + '</span>' +
+			'<p class="message-text">' + rep.message + '</p>' +
+			'</div>' +
+			'</div>';
+
+	};
+
+	chatSocket.onclose = event => {
+		console.log("切断");
+	};
+	const currentElemnt = document.querySelector('#channel-id-' + channel_id);
+	window.globalFunction.toggleChannelState(currentElemnt);
+}
+
 
 //サーバーに参加する関数
 async function joinRoom(roomId) {
@@ -344,6 +339,7 @@ async function getServerInfo(roomId) {
 						'</div>';
 				}
 			}
+
 			const channels = roominfo.channels;
 			const voice_channels = roominfo.voice_channels;
 			channelsMap = new Map(Object.entries(channels));
@@ -365,22 +361,20 @@ async function getServerInfo(roomId) {
 function sendMessage() {
 	const messageInput = document.getElementById("message-input");
 	const message = messageInput.value;
-  if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
-    let json =
-    {
-       nowRoomId: nowRoomId,
-       nowRoomName: roomsMap.get(nowRoomId),
-       nowChannelId: nowChannelId,
-       nowChannelName: channelsMap.get(nowChannelId),
-       username: userinfo.user_name,
-       usericon:user_icon,
-       date: getDate(),
-       message: message
-    };
+	let json =
+	{
+		nowRoomId: nowRoomId,
+		nowRoomName: roomsMap.get(nowRoomId),
+		nowChannelId: nowChannelId,
+		nowChannelName: channelsMap.get(nowChannelId),
+		username: userinfo.user_name,
+		usericon: user_icon,
+		date: getDate(),
+		message: message
+	};
 
-    chatSocket.send(JSON.stringify(json));
-    messageInput.value = "";
-  }
+	chatSocket.send(JSON.stringify(json));
+	messageInput.value = "";
 }
 
 function fieldClear() {
