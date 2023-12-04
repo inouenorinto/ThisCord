@@ -62,7 +62,7 @@ public class NoticeServer {
     		session.getUserProperties().put("serverId", serverId);
 
     		serverSession.computeIfAbsent(serverId, k -> ConcurrentHashMap.newKeySet()).add(session);
-    		System.out.println("noticeServer オンライン数:"+serverSession.get(serverId).size());
+    		System.out.println("noticeServer サーバーオンライン数:"+serverSession.get(serverId).size());
     	}else if(bean.getType().equals("joinVoiceChannel")) {//ボイスチャンネルに入ったとき
     		System.out.println("NoticeServer.type :"+bean.getType());
     		session.getUserProperties().put("voiceChannelId", voiceChannelId);
@@ -72,7 +72,8 @@ public class NoticeServer {
     		JsonNoticeBean mess = JsonInitChannel(serverId,voiceChannelId );
     		String json = gson.toJson(mess);
     		
-    		System.out.println("チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
+    		//System.out.println("noticeServer サーバーオンライン数:"+serverSession.get(serverId).size());
+    		System.out.println("noticeServer チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
     		System.out.println(json);
     		
     		sendServer(serverId, json);
@@ -94,15 +95,14 @@ public class NoticeServer {
 	@OnClose
 	public void onClose(Session session, CloseReason reason) {
 	    System.out.println(reason);
-	    Integer serverId = (Integer) session.getUserProperties().get("serverId");  // キーを "sessionId" から "serverId" に変更
+	    Integer serverId = (Integer) session.getUserProperties().get("serverId");
 	    Integer voiceChannelId = (Integer) session.getUserProperties().get("voiceChannelId");
 	    serverSession.getOrDefault(serverId, Collections.emptySet()).remove(session);
 	    voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
 
 	    notices.remove(session);
 
-	    System.out.println("noticeServer 切断 オンライン数:" + serverSession.size());
-	    serverSession.size();
+	    System.out.println("noticeServer 切断 オンライン数:" + serverSession.get(serverId).size());
 	}
 
 	/* 接続エラーが発生したとき */
@@ -135,15 +135,21 @@ public class NoticeServer {
 	}
 	
 	public void sendServer(int serverId, String json) {
-		Set<Session> sessions = serverSession.getOrDefault(serverId, Collections.emptySet());;
-		for(Session session : sessions) {
-			try {
-				session.getBasicRemote().sendText(json);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	    Set<Session> sessions = serverSession.getOrDefault(serverId, Collections.emptySet());
+	    for (Session session : sessions) {
+	        try {
+	            if (session.isOpen()) {
+	                session.getBasicRemote().sendText(json);
+	                System.out.println("open");
+	            } else {
+	            	System.out.println("no open");
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
+
 
 	
 

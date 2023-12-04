@@ -32,8 +32,6 @@ public class SignalingRoom {
     public void onMessage(String message, Session session) {
     	String roomname = (String)session.getUserProperties().get("roomname");
     	
-    	System.out.println(session.getId()+"メッセージ送信");
-    	
     	Gson gson = new Gson();
     	
     	WebRtcSignalBean bean = null;
@@ -81,7 +79,6 @@ public class SignalingRoom {
     	Set<Session> sessions = rooms.get(roomname);
     	for (Session session : sessions) {
     		if(session.getId().equals(sendto)) {
-    			System.out.println("送った");
     			send(session, message);
     			break;
     		}

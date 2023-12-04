@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 html,
 body {
 	font-family: 'Noto Sans JP', sans-serif;
@@ -21,15 +20,6 @@ body {
 	padding: 8px 0px 1px 12px;
 	margin-bottom: 0px;
 }
-/*h6 {*/
-/*	position: relative;*/
-/*	width: 5%;*/
-/*	top: 8px;*/
-/*	left: 8px;*/
-/*	font-weight: 800;*/
-/*	font-size: 12px;*/
-/*	color: #b5bac1;*/
-/*}*/
 
 /***********************画面全体のグリッド**********************/
 .flex {
@@ -793,6 +783,7 @@ body {
 }
 
 .plus_button_icon {
+	cursor: pointer;
 	position: relative;
 	background-color: #5865f2;
 	width: 30px;
@@ -815,7 +806,7 @@ body {
 	background-color: #caccce;
 	border: none;
 	height: 45px;
-	color: #fff;
+	color: #333;
 }
 
 .input_text:focus {
@@ -844,6 +835,9 @@ body {
 	top: 10px;
 	right: 10px;
 
+}
+.back-botan{
+	cursor: pointer;
 }
 
 .center_content {
@@ -888,7 +882,6 @@ body {
 .modal-content {
 	background: linear-gradient(to top, rgb(228, 230, 233) 0%, rgb(228, 230, 233) 13%, #fff 13%, #fff 100%);
 }
-
 
 .server_icon {
 	border-radius: 50%;
@@ -958,12 +951,13 @@ body {
 	align-items: center;
 }
 
-
 .video-element {
-	border-radius: 10px;
-	width: 584px;
-	height: 321.500px;
-	background-color: #202125;
+    border-radius: 10px;
+    width: 584px;
+    height: 321.500px;
+    background-color: #202125;
+    object-fit: cover; /* 追加: 縦横比を保ちつつ横幅に合わせてズーム */
+    margin:0px 5px 0px 5px;
 }
 
 

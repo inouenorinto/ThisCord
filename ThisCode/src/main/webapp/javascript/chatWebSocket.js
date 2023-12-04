@@ -30,6 +30,7 @@ async function init() {
 	const firstServerId = firstServer[0];
 	registerNotice();
 	await joinRoom(firstServerId);
+	initform();
 }
 
 //サーバーからユーザーデータを取得する関数
@@ -87,6 +88,8 @@ function registerNotice() {
 function createVoiceChannelIcon(members, channelId) {
 	const videoChannelElement = document.getElementById('channelMember-' + channelId);
 	console.log(videoChannelElement);
+	
+	console.log("メンバーの人数："+members.length);
 	videoChannelElement.innerHTML = "";
 	for (let member of members) {
 
@@ -113,11 +116,11 @@ function joinVoiceChannel(channelId, user, icon) {
 	//共通の通話終了ボタンからチャンネル切断できるように変数を保存する
 	if (joinVoiceFlag) {
 		sendDisconnectVoiceChannel(nowVcId, user);
-		
+
 		window.multi.hangUp();
 		window.multi.stopVideo();
 		window.globalFunction.videoChat();
-		
+
 		if (channelId === nowVcId) {
 			joinVoiceFlag = false;
 			nowVcId = null;
@@ -125,19 +128,18 @@ function joinVoiceChannel(channelId, user, icon) {
 			sendJoinVoiceChannel(channelId, user, icon);
 			joinVoiceFlag = true;
 			nowVcId = channelId;
-			
+
 			window.globalFunction.videoChat();
-			window.multi.connect();
+			window.multi.connect(channelId);
 		}
 
 	} else {
 		sendJoinVoiceChannel(channelId, user, icon);
-		console.log(window.globalFunction);
 		joinVoiceFlag = true;
 		nowVcId = channelId;
-		
+
 		window.globalFunction.videoChat();
-		window.multi.connect();
+		window.multi.connect(channelId);
 
 		console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
 	}
@@ -148,7 +150,7 @@ function sendJoinVoiceChannel(voiceChannelId, user, icon) {
 	let json =
 	{
 		type: 'joinVoiceChannel',
-		serverId: nowChannelId,
+		serverId: nowRoomId,
 		voiceChannelid: voiceChannelId,
 		user: user,
 		icon: icon
@@ -161,7 +163,7 @@ function sendDisconnectVoiceChannel(voiceChannelId, user) {
 	let json =
 	{
 		type: 'disconnectVoiceChannel',
-		serverId: nowChannelId,
+		serverId: nowRoomId,
 		voiceChannelid: voiceChannelId,
 		user: user,
 	};
@@ -181,20 +183,21 @@ async function getMessageInfo(channel_id) {
 			chat.innerHTML = "";
 
 			for (const [key, message] of messages) {
-				console.log(message.message);
-				chat.innerHTML += 
-					'<div class="message-wrapper">'+
-					    '<div>'+
-					        '<img class=" chat-icon" src="resource/user_icons/'+message.user_icon+'" >'+
-					    '</div>'+
+				chat.innerHTML +=
+					'<div class="message-wrapper">' +
+					'<div>' +
+					'<img class=" chat-icon" src="resource/user_icons/' + message.user_icon + '" >' +
+					'</div>' +
 
-					    '<div class="wrapper-item">'+
-					        '<span class="message-user-name">'+message.user_name +'</span>'+
-					        '<span class="message-date">'+message.send_date+'</span>'+
-					        '<p class="message-text">'+message.message+'</p>'+
-					    '</div>'+
+					'<div class="wrapper-item">' +
+					'<span class="message-user-name">' + message.user_name + '</span>' +
+					'<span class="message-date">' + message.send_date + '</span>' +
+					'<p class="message-text">' + message.message + '</p>' +
+					'</div>' +
 					'</div>';
 			}
+
+			scrollEndfast()
 		} else {
 			console.error("Failed to fetch message information");
 		}
@@ -210,7 +213,6 @@ async function createRoomB(roomInfo) {
 	const roomListDiv = document.getElementById("room-list");
 	roomListDiv.innerHTML = "";
 	for (const [roomId, roomName] of roomInfo) {
-		console.log(roomName[1]);
 		const src = roomName[1];
 		if (src === defaultSrc) {
 			roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-' + roomId + '" onclick=" joinRoom(\'' + roomId + '\');"  ><div class="server-name">' + roomName[0] + '</div></a></div>';
@@ -275,6 +277,7 @@ function joinChannel(channel_id) {
 			'<p class="message-text">' + rep.message + '</p>' +
 			'</div>' +
 			'</div>';
+		scrollEnd(500);
 
 	};
 
@@ -294,7 +297,6 @@ async function joinRoom(roomId) {
 	fieldClear();
 
 	nowRoomId = roomId;
-	console.log(roomsMap.get(roomId));
 	await getServerInfo(nowRoomId);
 
 	const infoDiv = document.querySelector("#server");
@@ -355,7 +357,6 @@ async function getServerInfo(roomId) {
 			createRoomB(roomsMap);
 			createChannelButton(channelsMap);
 			createVoiceChannelButton(voiceChannelsMap);
-			console.log(roominfo);
 		} else {
 			console.error("Failed to fetch room information");
 		}
@@ -367,25 +368,25 @@ async function getServerInfo(roomId) {
 }
 
 function sendMessage() {
-     const messageInput = document.getElementById("message-input");
-     const message = messageInput.value;
-     if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
-	     let json =
-	     {
-	         nowRoomId: nowRoomId,
-	         nowRoomName: roomsMap.get(nowRoomId),
-	         nowChannelId: nowChannelId,
-	         nowChannelName: channelsMap.get(nowChannelId),
-	         username: userinfo.user_name,
-	         usericon:user_icon,
-	         date: getDate(),
-	         message: message
-	     };
+	const messageInput = document.getElementById("message-input");
+	const message = messageInput.value;
+	if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
+		let json =
+		{
+			nowRoomId: nowRoomId,
+			nowRoomName: roomsMap.get(nowRoomId),
+			nowChannelId: nowChannelId,
+			nowChannelName: channelsMap.get(nowChannelId),
+			username: userinfo.user_name,
+			usericon: user_icon,
+			date: getDate(),
+			message: message
+		};
 
-	     chatSocket.send(JSON.stringify(json));
-	     messageInput.value = "";
-	 }
- }
+		chatSocket.send(JSON.stringify(json));
+		messageInput.value = "";
+	}
+}
 
 function fieldClear() {
 	const chat = document.getElementById("message-container");
@@ -405,6 +406,15 @@ function getDate() {
 	var minutes = today.getMinutes();
 
 	return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+}
+
+function initform(){
+	const serverNameIn = document.getElementById('server_name');
+	
+	if(serverNameIn.value.length == 0) {
+		console.log(serverNameIn.value);
+		serverNameIn.value = username + 'のサーバー';
+	}
 }
 
 function form_crea(formId) {
@@ -452,3 +462,85 @@ function retryImageLoad(imgElement, maxRetries, retryInterval) {
 	// 初回の画像読み込みを開始
 	loadImage();
 }
+
+
+//自動スクロール
+const main = document.getElementById('chat-scroll');
+function scrollEndfast(){
+	main.scrollTop = main.scrollHeight;
+	scrollEndfast();
+}
+
+function  scrollEnd(duration) {
+	var scrollHeight = main.scrollHeight;
+	var startPosition = main.scrollTop;
+	var startTime = performance.now();
+
+	function scrollAnimation(currentTime) {
+		var elapsed = currentTime - startTime;
+		var progress = elapsed / duration;
+
+		main.scrollTop = startPosition + progress * (scrollHeight - startPosition);
+
+		if (progress < 1) {
+			requestAnimationFrame(scrollAnimation);
+		}
+	}
+
+	requestAnimationFrame(scrollAnimation);
+}
+
+
+
+/**
+ * home画面のjavascript
+ * 
+ */
+
+const server_div = document.getElementById('server');
+
+function home() {
+	server_div.innerHTML = 'Home';
+}
+
+async function getFlendList(){
+		try {
+		const response = await fetch("/ThisCord/fn/getFlend");
+
+		if (response.ok) {
+
+			userinfo = await response.json();
+			username = userinfo.user_name;
+			userid = userinfo.user_id;
+			user_icon = userinfo.user_icon;
+			rooms = userinfo.servers;
+			roomsMap = new Map(Object.entries(rooms));
+			createRoomB(roomsMap);
+			console.log(userinfo);
+		} else {
+			console.error("Failed to fetch room information");
+		}
+	} catch (error) {
+		console.error("Error: " + error);
+	}
+}
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -44,7 +44,7 @@
 					<span class="item_f9d377 none"></span>
 				</div>
 				
-				<a class="home-button" onclick="toggleClickedState(this);">
+				<a class="home-button" onclick="toggleClickedState(this); joinHome();">
 					<i class="fa-brands fa-discord fa-xl"></i>
 				</a>
 			</div>
@@ -163,7 +163,7 @@
 	
 <!-------------------------------- チャットフィールド(chat-field) -------------------------------->
 		<div id="chat-field" class="chat-field text-box text-color">
-			<div class="chat-scroll">
+			<div id="chat-scroll" class="chat-scroll">
 				<div class="d-flex mb-3">
 					<div id="message-container"></div>	
 				</div>
@@ -221,7 +221,7 @@
 				<form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data" onsubmit = "return false">
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">サーバー名</label>
-						<input type="text" name="server_name" class="form-control input_text" id="exampleFormControlInput1">
+						<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
 					</div>
 					<p><small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。</small></p>
 					<input type="hidden" id="editedImageField" name="editedImage">
@@ -242,7 +242,7 @@
 	<!-- サーバのアイコンを編集するモーダル -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="padding-bottom: 0px;">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">サーバーアイコン</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -253,7 +253,7 @@
 						<img id="cropper-tgt" style="width: 300px; height: 300px;">
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer" >
 					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-dismiss="modal">閉じる</button>
 					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal" >確定</button>
 				</div>
