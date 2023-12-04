@@ -228,20 +228,22 @@ async function joinRoom(roomId) {
  function sendMessage() {
      const messageInput = document.getElementById("message-input");
      const message = messageInput.value;
-     let json =
-     {
-         nowRoomId: nowRoomId,
-         nowRoomName: roomsMap.get(nowRoomId),
-         nowChannelId: nowChannelId,
-         nowChannelName: channelsMap.get(nowChannelId),
-         username: userinfo.user_name,
-         usericon:user_icon,
-         date: getDate(),
-         message: message
-     };
- 
-     chatSocket.send(JSON.stringify(json));
-     messageInput.value = "";
+     if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
+	     let json =
+	     {
+	         nowRoomId: nowRoomId,
+	         nowRoomName: roomsMap.get(nowRoomId),
+	         nowChannelId: nowChannelId,
+	         nowChannelName: channelsMap.get(nowChannelId),
+	         username: userinfo.user_name,
+	         usericon:user_icon,
+	         date: getDate(),
+	         message: message
+	     };
+	 
+	     chatSocket.send(JSON.stringify(json));
+	     messageInput.value = "";
+	 }
  }
  
  function fieldClear() {
