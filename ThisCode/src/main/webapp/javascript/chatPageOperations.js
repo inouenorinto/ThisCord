@@ -19,7 +19,6 @@ function videoChat(){
     memberList.classList.toggle('none');
     mediaInterface.classList.toggle('none');
     containerFluid.classList.toggle('video-container');
-    
 }
 
 const micro = document.getElementById('microphone');
@@ -58,3 +57,4 @@ let selectedChannel = null;
 window.globalFunction = {};
 window.globalFunction.toggleClickedState = toggleClickedState;
 window.globalFunction.toggleChannelState = toggleChannelState;
+window.globalFunction.videoChat = videoChat;
