@@ -63,7 +63,7 @@ public class NoticeServer {
 
     		serverSession.computeIfAbsent(serverId, k -> ConcurrentHashMap.newKeySet()).add(session);
     		System.out.println("noticeServer オンライン数:"+serverSession.get(serverId).size());
-    	}else if(bean.getType().equals("joinVoiceChannel")) {//ビデオチャンネルに入ったとき
+    	}else if(bean.getType().equals("joinVoiceChannel")) {//ボイスチャンネルに入ったとき
     		System.out.println("NoticeServer.type :"+bean.getType());
     		session.getUserProperties().put("voiceChannelId", voiceChannelId);
     		
@@ -71,16 +71,22 @@ public class NoticeServer {
     		
     		JsonNoticeBean mess = JsonInitChannel(serverId,voiceChannelId );
     		String json = gson.toJson(mess);
+    		
+    		System.out.println("チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
     		System.out.println(json);
+    		
     		sendServer(serverId, json);
-    	}else if(bean.getType().equals("disconnectVoiceChannel")) {
+    	}else if(bean.getType().equals("disconnectVoiceChannel")) {//ボイスチャンネルから出るとき
     		System.out.println("NoticeServer.type :"+bean.getType());
     		
     		voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
     		
     		JsonNoticeBean mess = JsonInitChannel(serverId,voiceChannelId );
     		String json = gson.toJson(mess);
+    		
     		System.out.println(json);
+    		System.out.println("チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
+    		
     		sendServer(serverId, json);
     	}
 	}
@@ -120,7 +126,7 @@ public class NoticeServer {
 		mess.setServerId(serverId);
 		mess.setVoiceChannelid(channelId);
 		
-		Set<Session> sessions = voiceChannelSession.getOrDefault(serverId, Collections.emptySet());
+		Set<Session> sessions = voiceChannelSession.getOrDefault(channelId, Collections.emptySet());
 		
 		for(Session ses: sessions) {
 			mess.getMembers().add(notices.get(ses));

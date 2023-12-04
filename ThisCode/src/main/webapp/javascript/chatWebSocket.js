@@ -18,7 +18,7 @@ let userid = null;
 let userinfo = null;
 let user_icon = null;
 
-const ip ='localhost';
+const ip = 'localhost';
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -75,52 +75,71 @@ function registerNotice() {
 		let json = JSON.parse(event.data);
 		let member = json.members;
 		let vcId = json.voiceChannelid;
-		console.log("メッセージ"+JSON.parse(event.data));
 		createVoiceChannelIcon(member, vcId);
 	};
 
 	noticeSocket.onclose = event => {
-		console.log("通知サーバー切断 :",event);
+		console.log("通知サーバー切断 :", event);
 	};
 }
 
 //ボイスチャンネルに参加してるユーザーの表示をする関数
-function createVoiceChannelIcon(members, channelId){
-	const videoChannelElement = document.getElementById('channelMember-'+channelId);
+function createVoiceChannelIcon(members, channelId) {
+	const videoChannelElement = document.getElementById('channelMember-' + channelId);
+	console.log(videoChannelElement);
 	videoChannelElement.innerHTML = "";
-	console.log("hyouji");
-	for(let member of members){
-		
+	for (let member of members) {
+
 		//videoChannelElement.innerHTML +='<div>'+ member.user +'</div>';
-		videoChannelElement.innerHTML += 
-			'<div class="voice-channel-member">'+
-					'<img class="voice-channel-icon" src="resource/user_icons/'+ member.icon +'">'+
-				'<div class="voice-channel-user">'+ member.user +'</div>'+
+		videoChannelElement.innerHTML +=
+			'<div class="voice-channel-member">' +
+			'<img class="voice-channel-icon" src="resource/user_icons/' + member.icon + '">' +
+			'<div class="voice-channel-user">' + member.user + '</div>' +
 			'</div>';
 	}
 }
 
+//jspのほかの切断ボタンから通話を切るための関数
+function closeVoiceChannel() {
+	joinVoiceChannel(nowVcId, nowUser, nowIcon);
+}
+
 //通知サーバーにボイスチャンネルに参加したことを通知する
 let joinVoiceFlag = false;
-let nowVcChannelId = null;
+let nowVcId = null;
 let nowUser = null;
 let nowIcon = null;
 function joinVoiceChannel(channelId, user, icon) {
 	//共通の通話終了ボタンからチャンネル切断できるように変数を保存する
-	if(nowVcChannelId == null) {
-		nowVcChannelId = channelId;
-		nowUser = user;
-		nowIcon = icon;
-	}
-	
-	if(joinVoiceFlag) {
-		console.log("チャンネルから切断");
-		sendDisconnectVoiceChannel(channelId, user);
-		joinVoiceFlag = false;
+	if (joinVoiceFlag) {
+		sendDisconnectVoiceChannel(nowVcId, user);
+		
+		window.multi.hangUp();
+		window.multi.stopVideo();
+		window.globalFunction.videoChat();
+		
+		if (channelId === nowVcId) {
+			joinVoiceFlag = false;
+			nowVcId = null;
+		} else {
+			sendJoinVoiceChannel(channelId, user, icon);
+			joinVoiceFlag = true;
+			nowVcId = channelId;
+			
+			window.globalFunction.videoChat();
+			window.multi.connect();
+		}
+
 	} else {
-		console.log("チャンネルに参加");
 		sendJoinVoiceChannel(channelId, user, icon);
+		console.log(window.globalFunction);
 		joinVoiceFlag = true;
+		nowVcId = channelId;
+		
+		window.globalFunction.videoChat();
+		window.multi.connect();
+
+		console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
 	}
 }
 
@@ -129,7 +148,7 @@ function sendJoinVoiceChannel(voiceChannelId, user, icon) {
 	let json =
 	{
 		type: 'joinVoiceChannel',
-		serverId:nowChannelId,
+		serverId: nowChannelId,
 		voiceChannelid: voiceChannelId,
 		user: user,
 		icon: icon
@@ -141,16 +160,12 @@ function sendJoinVoiceChannel(voiceChannelId, user, icon) {
 function sendDisconnectVoiceChannel(voiceChannelId, user) {
 	let json =
 	{
-		type:'disconnectVoiceChannel',
-		serverId:nowChannelId,
+		type: 'disconnectVoiceChannel',
+		serverId: nowChannelId,
 		voiceChannelid: voiceChannelId,
 		user: user,
 	};
 	noticeSocket.send(JSON.stringify(json));
-}
-//jspのほかの切断ボタンから通話を切るための関数
-function closeVoiceChannel() {
-	joinVoiceChannel(nowVcChannelId, nowUser, nowIcon);
 }
 
 async function getMessageInfo(channel_id) {
@@ -221,7 +236,7 @@ function createVoiceChannelButton(channelInfo) {
 	channelsListDiv.innerHTML = "";
 
 	for (const [channel_id, channel_name] of channelInfo) {
-		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a onclick="videoChat(); connect(); joinVoiceChannel(\'' + channel_id + '\', \'' + username + '\',\'' + user_icon + '\')"><i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ' + channel_name + '</a></div><div id="channelMember-' + channel_id + '"></div>';
+		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a onclick="joinVoiceChannel(\'' + channel_id + '\', \'' + username + '\',\'' + user_icon + '\')"><i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ' + channel_name + '</a></div><div id="channelMember-' + channel_id + '"></div>';
 	}
 }
 
@@ -286,11 +301,11 @@ async function joinRoom(roomId) {
 
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
-	
+
 	let json =
 	{
 		type: 'joinServer',
-		serverId:roomId,
+		serverId: roomId,
 		user: username,
 		icon: user_icon
 	};
@@ -403,8 +418,6 @@ function handleKeyPress(event) {
 }
 
 
-
-
 //画像を非同期でとってくる
 function retryImageLoad(imgElement, maxRetries, retryInterval) {
 	let retries = 0;
@@ -433,7 +446,3 @@ function retryImageLoad(imgElement, maxRetries, retryInterval) {
 	// 初回の画像読み込みを開始
 	loadImage();
 }
-
-
-
-

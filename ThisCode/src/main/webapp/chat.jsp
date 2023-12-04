@@ -26,7 +26,7 @@
 
 <!-- 独自javascript -->
 
-<script src="${pageContext.request.contextPath}/javascript/chatWebSocket.js"></script>
+
 </head>
 <body>
 	<h6>Thiscord</h6>
@@ -111,7 +111,7 @@
 						
 						<div>
 							<button class="interface-item-i"><i class="fa-solid fa-signal fa-sm"></i></button>
-							<button class="interface-item-i" onclick="videoChat(); closeVoiceChannel(); stopVideo(); hangUp();"><i class="fa-solid fa-phone-slash fa-sm"></i></button>
+							<button class="interface-item-i" onclick="closeVoiceChannel();"><i class="fa-solid fa-phone-slash fa-sm"></i></button>
 						</div>
 					</div>
 					<div class="flexbox">
@@ -141,7 +141,7 @@
 					<button class="contoroller-item">
 						<i class="fa-solid fa-video fa-sm"></i>
 					</button>
-					<button class="contoroller-item-phone-slash" onclick="videoChat(); closeVoiceChannel(); stopVideo(); hangUp();" >
+					<button class="contoroller-item-phone-slash" onclick="closeVoiceChannel();" >
 						<i class="fa-solid fa-phone-slash fa-lg"></i>
 					</button>
 				</div>
@@ -257,6 +257,7 @@
 			</div>
 		</div>
 	</div>
+<script src="${pageContext.request.contextPath}/javascript/chatWebSocket.js"></script>
 <script src="${pageContext.request.contextPath}/javascript/createServer.js"></script>
 <script src="${pageContext.request.contextPath}/javascript/multi.js"></script>
 <script src="${pageContext.request.contextPath}/javascript/chatPageOperations.js"></script>
