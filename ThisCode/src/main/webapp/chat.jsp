@@ -263,15 +263,15 @@
 	<div class="modal fade" id="createServerModal" tabindex="-1"
 		aria-labelledby="createServerModal" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content modal-content2">
 				<div class="center_content">
-					<h1 class="modal-title" id="exampleModalLabel">サーバーをカスタマイズ</h1>
+					<h1 class="modal-title modal-title2" id="exampleModalLabel">サーバーをカスタマイズ</h1>
 				</div>
-				<button type="button" class="btn-close ml-5" data-bs-dismiss="modal"
+				<button type="button" class="btn-close btn-close2 ml-5" data-bs-dismiss="modal"
 					aria-label="Close"></button>
 
 				<div class="center_content">
-					<p>新しいサーバーの名前とアイコンを設定して、個性を出しましょう。設定内容は後から変更できるわけがありません。</p>
+					<p>新しいサーバーの名前とアイコンを設定して、個性を出しましょう。設定内容は後から変更できません。</p>
 					<!--アイコンのプレビューと編集-->
 
 					<div class="select-icon-container">
@@ -316,7 +316,7 @@
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content" style="padding-bottom: 0px;">
+			<div class="modal-content edit-modal" style="padding-bottom: 0px;">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">サーバーアイコン</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -337,6 +337,31 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="invitationIconModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content invitation-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">フレンドをサーバーに招待する</h1>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body invitation-body">
+                    <div class="invitation-form">
+                        <form class="invitation-form" action="fn/invite" method="post">
+                            <label>ユーザーIDを入力してフレンドを追加</label>
+                            <div class="invitation-wrapper">
+                                <input class="invitation-input" type="text" name="userId">
+                                <input id="inputServerId" type="hidden" name="serverId">
+                                <button class="invitation-button" type="submit">送信</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
 	<script
 		src="${pageContext.request.contextPath}/javascript/chatWebSocket.js"></script>
 	<script

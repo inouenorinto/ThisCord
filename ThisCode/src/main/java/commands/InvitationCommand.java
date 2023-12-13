@@ -4,22 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import bean.ServerInfoDTO;
+import db.mysql.MySqlManager;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
-import db.mysql.MySqlManager;
 
 public class InvitationCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		int user_id = Integer.parseInt(req.getParameter("user_id")[0]);
-		ServerInfoDTO bean = (ServerInfoDTO) req.getAttributeInSession("serverInfo");
-		int server_id = bean.getServer_id();
-		
-		invaite(server_id, user_id);
-		
+		int user_id = Integer.parseInt(req.getParameter("userId")[0]);
+		int server_id = Integer.parseInt(req.getParameter("serverId")[0]);
+		System.out.println("InvitationCommnd.java : userid "+ user_id + " server_id" + server_id);
 		res.setTarget("fn/chat");
 	}
 	

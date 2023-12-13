@@ -25,7 +25,7 @@ public class SignalingRoom {
     	
     		rooms.computeIfAbsent(roomname, k -> ConcurrentHashMap.newKeySet()).add(session);
             session.getUserProperties().put("roomname", roomname);
-            System.out.println("接続: "+session.getId() + " room名:"+ roomname);
+            System.out.println("SignalingRoom.java 接続: "+session.getId() + " room名:"+ roomname);
     }
 
     @OnMessage
@@ -44,16 +44,23 @@ public class SignalingRoom {
     	if(bean.getType().equals("call me")) {//type:call meの場合
     		
     		bean.setFrom(session.getId());
-    		System.out.println("from: "+bean.getFrom());
+    		System.out.println("SignalingRoom.java from: "+bean.getFrom());
     		
     		broadcastRoom(gson.toJson(bean), roomname, session);
-    		System.out.println("call me");
+    		System.out.println("SignalingRoom.java call me");
+    		
+    	} else if(bean.getType().equals("bye")) {
+    		String channel = (String)session.getUserProperties().put("roomname", roomname);
+    		rooms.get(channel).remove(session);
+    		bean.setFrom(session.getId());
+    		broadcastRoom(gson.toJson(bean), roomname, session);
+    		System.out.println("SignalingRoom.java bye");
     		
     	} else {
     		bean.setFrom(session.getId());
     		String json = gson.toJson(bean);
     		sendTo(json, bean.getSendto(), roomname);
-    	} 
+    	}
     }
 
     @OnClose

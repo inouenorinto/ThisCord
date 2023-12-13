@@ -117,9 +117,9 @@ function joinVoiceChannel(channelId, user, icon) {
 	if (joinVoiceFlag) {
 		sendDisconnectVoiceChannel(nowVcId, user);
 
-		window.multi.hangUp();
 		window.multi.stopVideo();
 		window.globalFunction.videoChat();
+		window.multi.hangUp();
 
 		if (channelId === nowVcId) {
 			joinVoiceFlag = false;
@@ -229,10 +229,18 @@ function createChannelButton(channelInfo) {
 	channelsListDiv.innerHTML = "";
 
 	for (const [channel_id, channel_name] of channelInfo) {
-
-		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a href="javascript:joinChannel(\'' + channel_id + '\')"><i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i> ' + channel_name + '</a></div>';
+ 		channelsListDiv.innerHTML += 
+		'<div class="text-channels" id="channel-id-' + channel_id + '">'+
+		    '<a class="textIcon" href="javascript:joinChannel(\'' + channel_id + '\')">'+
+		        '<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>'+
+		        channel_name +
+		    '</a>'+
+		    '<a class="invitationIcon"  data-bs-toggle="modal" data-bs-target="#invitationIconModal"><i class="fa-solid fa-user-plus fa-xs"></i></a>	'+
+		'</div>';
 	}
 }
+
+
 //ボイスチャンネルのボタンを生成する関数
 function createVoiceChannelButton(channelInfo) {
 	const channelsListDiv = document.getElementById("voice-channels-list");
@@ -416,6 +424,9 @@ function initform(){
 		console.log(serverNameIn.value);
 		serverNameIn.value = username + 'のサーバー';
 	}
+	
+	const inputServerId = document.getElementById('inputServerId');
+	inputServerId.value = nowRoomId;
 }
 
 function form_crea(formId) {
