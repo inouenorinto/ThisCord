@@ -40,7 +40,7 @@ public class NoticeServer {
 
 		notices.put(session, bean);
 		
-		System.out.println("noticeServer オンライン:"+userName);
+		System.out.println("NoticeServer.java オンライン:"+userName);
 	}
 
 	@OnMessage
@@ -58,13 +58,13 @@ public class NoticeServer {
     	serverId = bean.getServerId();    	
     	voiceChannelId = bean.getVoiceChannelid(); 
     	if(bean.getType().equals("joinServer")) {//サーバーに入ったとき
-    		System.out.println("NoticeServer.type :"+bean.getType());
+    		System.out.println("NoticeServer.java type :"+bean.getType());
     		session.getUserProperties().put("serverId", serverId);
 
     		serverSession.computeIfAbsent(serverId, k -> ConcurrentHashMap.newKeySet()).add(session);
-    		System.out.println("noticeServer オンライン数:"+serverSession.get(serverId).size());
+    		System.out.println("NoticeServer.java サーバーオンライン数:"+serverSession.get(serverId).size());
     	}else if(bean.getType().equals("joinVoiceChannel")) {//ボイスチャンネルに入ったとき
-    		System.out.println("NoticeServer.type :"+bean.getType());
+    		System.out.println("NoticeServer.java type :"+bean.getType());
     		session.getUserProperties().put("voiceChannelId", voiceChannelId);
     		
     		voiceChannelSession.computeIfAbsent(voiceChannelId, k -> ConcurrentHashMap.newKeySet()).add(session);
@@ -72,20 +72,21 @@ public class NoticeServer {
     		JsonNoticeBean mess = JsonInitChannel(serverId,voiceChannelId );
     		String json = gson.toJson(mess);
     		
-    		System.out.println("チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
-    		System.out.println(json);
+    		//System.out.println("noticeServer サーバーオンライン数:"+serverSession.get(serverId).size());
+    		System.out.println("NoticeServer.java チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
+    		System.out.println("NoticeServer.java :"+ json);
     		
     		sendServer(serverId, json);
     	}else if(bean.getType().equals("disconnectVoiceChannel")) {//ボイスチャンネルから出るとき
-    		System.out.println("NoticeServer.type :"+bean.getType());
+    		System.out.println("NoticeServer.java .type :"+bean.getType());
     		
     		voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
     		
     		JsonNoticeBean mess = JsonInitChannel(serverId,voiceChannelId );
     		String json = gson.toJson(mess);
     		
-    		System.out.println(json);
-    		System.out.println("チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
+    		System.out.println("NoticeServer.java :"+json);
+    		System.out.println("NoticeServer.java チャンネル内オンライン数 :"+voiceChannelSession.get(voiceChannelId).size());
     		
     		sendServer(serverId, json);
     	}
@@ -93,22 +94,21 @@ public class NoticeServer {
 	
 	@OnClose
 	public void onClose(Session session, CloseReason reason) {
-	    System.out.println(reason);
-	    Integer serverId = (Integer) session.getUserProperties().get("serverId");  // キーを "sessionId" から "serverId" に変更
+	    System.out.println("NoticeServer.java :"+reason);
+	    Integer serverId = (Integer) session.getUserProperties().get("serverId");
 	    Integer voiceChannelId = (Integer) session.getUserProperties().get("voiceChannelId");
 	    serverSession.getOrDefault(serverId, Collections.emptySet()).remove(session);
 	    voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
 
 	    notices.remove(session);
 
-	    System.out.println("noticeServer 切断 オンライン数:" + serverSession.size());
-	    serverSession.size();
+	    System.out.println("NoticeServer.java 切断 オンライン数:" + serverSession.get(serverId).size());
 	}
 
 	/* 接続エラーが発生したとき */
 	@OnError
 	public void onError(Session session, Throwable t) {
-	    System.out.println("エラーが発生しました。");
+	    System.out.println("NoticeServer.java :エラーが発生しました。");
 
 	    int serverId = (int) session.getUserProperties().get("serverId");
 	    int voiceChannelId = (int) session.getUserProperties().get("voiceChannelId");
@@ -135,15 +135,21 @@ public class NoticeServer {
 	}
 	
 	public void sendServer(int serverId, String json) {
-		Set<Session> sessions = serverSession.getOrDefault(serverId, Collections.emptySet());;
-		for(Session session : sessions) {
-			try {
-				session.getBasicRemote().sendText(json);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	    Set<Session> sessions = serverSession.getOrDefault(serverId, Collections.emptySet());
+	    for (Session session : sessions) {
+	        try {
+	            if (session.isOpen()) {
+	                session.getBasicRemote().sendText(json);
+	                System.out.println("NoticeServer.java open");
+	            } else {
+	            	System.out.println("NoticeServer.java no open");
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
+
 
 	
 

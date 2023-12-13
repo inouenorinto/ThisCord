@@ -8,6 +8,7 @@ import bean.UserBean;
 import db.dao.ServerDataDAO;
 import db.dao.TextChannelDataDAO;
 import db.dao.UserServerRelationshipDAO;
+import db.dao.VoiceChannelDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
@@ -45,6 +46,9 @@ public class MakeServerCommand extends AbstractCommand {
         //デフォルトのテキストチャンネルを作る
         TextChannelDataDAO textChannelDao = TextChannelDataDAO.getInstance();
         textChannelDao.addTextChannel("一般", maxServerId);
+        
+        VoiceChannelDAO voiceDao = VoiceChannelDAO.getInstance();
+        voiceDao.addVoiceChannel("一般", maxServerId);
         
 		res.setTarget("fn/chat");
 	}

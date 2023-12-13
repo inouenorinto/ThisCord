@@ -30,6 +30,7 @@ async function init() {
 	const firstServerId = firstServer[0];
 	registerNotice();
 	await joinRoom(firstServerId);
+	initform();
 }
 
 //サーバーからユーザーデータを取得する関数
@@ -87,6 +88,8 @@ function registerNotice() {
 function createVoiceChannelIcon(members, channelId) {
 	const videoChannelElement = document.getElementById('channelMember-' + channelId);
 	console.log(videoChannelElement);
+	
+	console.log("メンバーの人数："+members.length);
 	videoChannelElement.innerHTML = "";
 	for (let member of members) {
 
@@ -113,11 +116,11 @@ function joinVoiceChannel(channelId, user, icon) {
 	//共通の通話終了ボタンからチャンネル切断できるように変数を保存する
 	if (joinVoiceFlag) {
 		sendDisconnectVoiceChannel(nowVcId, user);
-		
-		window.multi.hangUp();
+
 		window.multi.stopVideo();
 		window.globalFunction.videoChat();
-		
+		window.multi.hangUp();
+
 		if (channelId === nowVcId) {
 			joinVoiceFlag = false;
 			nowVcId = null;
@@ -125,19 +128,18 @@ function joinVoiceChannel(channelId, user, icon) {
 			sendJoinVoiceChannel(channelId, user, icon);
 			joinVoiceFlag = true;
 			nowVcId = channelId;
-			
+
 			window.globalFunction.videoChat();
-			window.multi.connect();
+			window.multi.connect(channelId);
 		}
 
 	} else {
 		sendJoinVoiceChannel(channelId, user, icon);
-		console.log(window.globalFunction);
 		joinVoiceFlag = true;
 		nowVcId = channelId;
-		
+
 		window.globalFunction.videoChat();
-		window.multi.connect();
+		window.multi.connect(channelId);
 
 		console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
 	}
@@ -148,7 +150,7 @@ function sendJoinVoiceChannel(voiceChannelId, user, icon) {
 	let json =
 	{
 		type: 'joinVoiceChannel',
-		serverId: nowChannelId,
+		serverId: nowRoomId,
 		voiceChannelid: voiceChannelId,
 		user: user,
 		icon: icon
@@ -161,7 +163,7 @@ function sendDisconnectVoiceChannel(voiceChannelId, user) {
 	let json =
 	{
 		type: 'disconnectVoiceChannel',
-		serverId: nowChannelId,
+		serverId: nowRoomId,
 		voiceChannelid: voiceChannelId,
 		user: user,
 	};
@@ -181,19 +183,21 @@ async function getMessageInfo(channel_id) {
 			chat.innerHTML = "";
 
 			for (const [key, message] of messages) {
-				console.log(message.message);
-				chat.innerHTML += '<div class="message-wrapper">'+
-					    '<div>'+
-					        '<img class=" chat-icon" src="resource/user_icons/'+message.user_icon+'" >'+
-					    '</div>'+
-					    
-					    '<div class="wrapper-item">'+
-					        '<span class="message-user-name">'+message.user_name +'</span>'+
-					        '<span class="message-date">'+message.send_date+'</span>'+
-					        '<p class="message-text">'+message.message+'</p>'+
-					    '</div>'+
+				chat.innerHTML +=
+					'<div class="message-wrapper">' +
+					'<div>' +
+					'<img class=" chat-icon" src="resource/user_icons/' + message.user_icon + '" >' +
+					'</div>' +
+
+					'<div class="wrapper-item">' +
+					'<span class="message-user-name">' + message.user_name + '</span>' +
+					'<span class="message-date">' + message.send_date + '</span>' +
+					'<p class="message-text">' + message.message + '</p>' +
+					'</div>' +
 					'</div>';
 			}
+
+			scrollEndfast()
 		} else {
 			console.error("Failed to fetch message information");
 		}
@@ -209,7 +213,6 @@ async function createRoomB(roomInfo) {
 	const roomListDiv = document.getElementById("room-list");
 	roomListDiv.innerHTML = "";
 	for (const [roomId, roomName] of roomInfo) {
-		console.log(roomName[1]);
 		const src = roomName[1];
 		if (src === defaultSrc) {
 			roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-' + roomId + '" onclick=" joinRoom(\'' + roomId + '\');"  ><div class="server-name">' + roomName[0] + '</div></a></div>';
@@ -226,10 +229,18 @@ function createChannelButton(channelInfo) {
 	channelsListDiv.innerHTML = "";
 
 	for (const [channel_id, channel_name] of channelInfo) {
-
-		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a href="javascript:joinChannel(\'' + channel_id + '\')"><i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i> ' + channel_name + '</a></div>';
+ 		channelsListDiv.innerHTML += 
+		'<div class="text-channels" id="channel-id-' + channel_id + '">'+
+		    '<a class="textIcon" href="javascript:joinChannel(\'' + channel_id + '\')">'+
+		        '<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>'+
+		        channel_name +
+		    '</a>'+
+		    '<a class="invitationIcon"  data-bs-toggle="modal" data-bs-target="#invitationIconModal"><i class="fa-solid fa-user-plus fa-xs"></i></a>	'+
+		'</div>';
 	}
 }
+
+
 //ボイスチャンネルのボタンを生成する関数
 function createVoiceChannelButton(channelInfo) {
 	const channelsListDiv = document.getElementById("voice-channels-list");
@@ -240,48 +251,51 @@ function createVoiceChannelButton(channelInfo) {
 	}
 }
 
- function joinChannel(channel_id) {
-     if (chatSocket) {
-         chatSocket.close();
-     }
-     const infoDiv = document.querySelector("#channel");
-     infoDiv.innerHTML = channelsMap.get(channel_id);
- 
-     nowChannelId = channel_id;
-     console.log("url: " + "ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
-     chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
- 
-     chatSocket.onopen = event => {
-         console.log("接続開始");
-         getMessageInfo(channel_id);
-     };
- 
-     chatSocket.onmessage = event => {
-         console.log("Received message: " + event.data);
-         const chat = document.getElementById("message-container");
-         const rep = JSON.parse(event.data);
-         //chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
-     	chat.innerHTML +=
-		'<div class="message-wrapper">'+
-		    '<div>'+
-		        '<img class=" chat-icon" src="resource/user_icons/'+rep.usericon+'" >'+
-		    '</div>'+
-		    
-		    '<div class="wrapper-item">'+
-		        '<span class="message-user-name">'+rep.username +'</span>'+
-		        '<span class="message-date">'+rep.date+'</span>'+
-		        '<p class="message-text">'+rep.message+'</p>'+
-		    '</div>'+
-		'</div>';
-     
-     };
- 
-     chatSocket.onclose = event => {
-         console.log("切断");
-     };
-     const currentElemnt = document.querySelector('#channel-id-'+channel_id);
-     window.globalFunction.toggleChannelState(currentElemnt);
- }
+//テキストチャンネルに参加する関数
+function joinChannel(channel_id) {
+	if (chatSocket) {
+		chatSocket.close();
+	}
+	const infoDiv = document.querySelector("#channel");
+	infoDiv.innerHTML = channelsMap.get(channel_id);
+
+	nowChannelId = channel_id;
+	console.log("url: " + "ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
+	chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
+
+	chatSocket.onopen = event => {
+		console.log("接続開始");
+		getMessageInfo(channel_id);
+	};
+
+	chatSocket.onmessage = event => {
+		console.log("Received message: " + event.data);
+		const chat = document.getElementById("message-container");
+		const rep = JSON.parse(event.data);
+		//chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<div>' +
+			'<img class=" chat-icon" src="resource/user_icons/' + rep.usericon + '" >' +
+			'</div>' +
+
+			'<div class="wrapper-item">' +
+			'<span class="message-user-name">' + rep.username + '</span>' +
+			'<span class="message-date">' + rep.date + '</span>' +
+			'<p class="message-text">' + rep.message + '</p>' +
+			'</div>' +
+			'</div>';
+		scrollEnd(500);
+
+	};
+
+	chatSocket.onclose = event => {
+		console.log("切断");
+	};
+	const currentElemnt = document.querySelector('#channel-id-' + channel_id);
+	window.globalFunction.toggleChannelState(currentElemnt);
+}
+
 
 //サーバーに参加する関数
 async function joinRoom(roomId) {
@@ -291,7 +305,6 @@ async function joinRoom(roomId) {
 	fieldClear();
 
 	nowRoomId = roomId;
-	console.log(roomsMap.get(roomId));
 	await getServerInfo(nowRoomId);
 
 	const infoDiv = document.querySelector("#server");
@@ -312,6 +325,7 @@ async function joinRoom(roomId) {
 	noticeSocket.send(JSON.stringify(json));
 	console.log(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
+	toggleHome();
 }
 
 //サーバーの情報を取得する関数
@@ -344,6 +358,7 @@ async function getServerInfo(roomId) {
 						'</div>';
 				}
 			}
+
 			const channels = roominfo.channels;
 			const voice_channels = roominfo.voice_channels;
 			channelsMap = new Map(Object.entries(channels));
@@ -351,7 +366,6 @@ async function getServerInfo(roomId) {
 			createRoomB(roomsMap);
 			createChannelButton(channelsMap);
 			createVoiceChannelButton(voiceChannelsMap);
-			console.log(roominfo);
 		} else {
 			console.error("Failed to fetch room information");
 		}
@@ -365,22 +379,22 @@ async function getServerInfo(roomId) {
 function sendMessage() {
 	const messageInput = document.getElementById("message-input");
 	const message = messageInput.value;
-  if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
-    let json =
-    {
-       nowRoomId: nowRoomId,
-       nowRoomName: roomsMap.get(nowRoomId),
-       nowChannelId: nowChannelId,
-       nowChannelName: channelsMap.get(nowChannelId),
-       username: userinfo.user_name,
-       usericon:user_icon,
-       date: getDate(),
-       message: message
-    };
+	if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
+		let json =
+		{
+			nowRoomId: nowRoomId,
+			nowRoomName: roomsMap.get(nowRoomId),
+			nowChannelId: nowChannelId,
+			nowChannelName: channelsMap.get(nowChannelId),
+			username: userinfo.user_name,
+			usericon: user_icon,
+			date: getDate(),
+			message: message
+		};
 
-    chatSocket.send(JSON.stringify(json));
-    messageInput.value = "";
-  }
+		chatSocket.send(JSON.stringify(json));
+		messageInput.value = "";
+	}
 }
 
 function fieldClear() {
@@ -401,6 +415,18 @@ function getDate() {
 	var minutes = today.getMinutes();
 
 	return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+}
+
+function initform(){
+	const serverNameIn = document.getElementById('server_name');
+	
+	if(serverNameIn.value.length == 0) {
+		console.log(serverNameIn.value);
+		serverNameIn.value = username + 'のサーバー';
+	}
+	
+	const inputServerId = document.getElementById('inputServerId');
+	inputServerId.value = nowRoomId;
 }
 
 function form_crea(formId) {
@@ -448,3 +474,101 @@ function retryImageLoad(imgElement, maxRetries, retryInterval) {
 	// 初回の画像読み込みを開始
 	loadImage();
 }
+
+
+//自動スクロール
+const main = document.getElementById('chat-scroll');
+function scrollEndfast(){
+	main.scrollTop = main.scrollHeight;
+	scrollEndfast();
+}
+
+function  scrollEnd(duration) {
+	var scrollHeight = main.scrollHeight;
+	var startPosition = main.scrollTop;
+	var startTime = performance.now();
+
+	function scrollAnimation(currentTime) {
+		var elapsed = currentTime - startTime;
+		var progress = elapsed / duration;
+
+		main.scrollTop = startPosition + progress * (scrollHeight - startPosition);
+
+		if (progress < 1) {
+			requestAnimationFrame(scrollAnimation);
+		}
+	}
+
+	requestAnimationFrame(scrollAnimation);
+}
+
+
+
+/**
+ * home画面のjavascript
+ * 
+ */
+const server_div = document.getElementById('server');
+const channelsWrapper = document.getElementById('channelsWrapper');
+const flendListWrapper = document.getElementById('flendListWrapper');
+const serverHeaderWrapper = document.getElementById('serverHeaderWrapper');
+const inputField = document.getElementById('inputField');
+const messageContainer = document.getElementById('message-container');
+
+let joinHomeFlag = false;
+function joinHome() {
+	server_div.innerHTML = 'Home';
+	channelsWrapper.classList.add('none');
+	serverHeaderWrapper.classList.add('none');
+	inputField.classList.add('none');
+	messageContainer.classList.add('none');
+	flendListWrapper.classList.remove('none');
+	
+	if(!joinHomeFlag) {
+		joinHomeFlag = true;
+	}
+}
+function toggleHome() {
+		channelsWrapper.classList.remove('none');
+		serverHeaderWrapper.classList.remove('none');
+		inputField.classList.remove('none');
+
+		messageContainer.classList.remove('none');
+		flendListWrapper.classList.add('none');
+		
+		joinHomeFlag = false;
+}
+
+async function getFlendList(){
+		try {
+		const response = await fetch("/ThisCord/fn/getFlendList");
+
+		if (response.ok) {
+			
+		} else {
+			console.error("Failed to fetch room information");
+		}
+	} catch (error) {
+		console.error("Error: " + error);
+	}
+}
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

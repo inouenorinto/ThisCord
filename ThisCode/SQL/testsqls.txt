@@ -132,6 +132,9 @@ INSERT INTO us_relationship (user_id, server_id)
 VALUES (2, 5);
 
 INSERT INTO us_relationship (user_id, server_id) 
+VALUES (1, 5);
+
+INSERT INTO us_relationship (user_id, server_id) 
 VALUES (2, 1);
 
 
@@ -156,6 +159,10 @@ VALUES ('一般', 3);
 INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('一般', 4);
 
+INSERT INTO text_channel (channel_name, server_id) 
+VALUES ('一般', 5);
+
+
 
 INSERT INTO voice_channel (channel_name, server_id) 
 VALUES ('一般', 1);
@@ -168,5 +175,17 @@ VALUES ('グループワーク2', 1);
 
 INSERT INTO voice_channel (channel_name, server_id) 
 VALUES ('グループワーク3', 1);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 2);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 3);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 4);
+
+INSERT INTO voice_channel (channel_name, server_id) 
+VALUES ('一般', 5);
 
 commit;

@@ -25,7 +25,6 @@ public class MySqlManager {
 			URL = prop.getProperty("url");
 			USER = prop.getProperty("user");
 			PASS = prop.getProperty("pass");
-			System.out.println("unti");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,7 +38,6 @@ public class MySqlManager {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(URL + DATABASE_NAME + PROPERTIES, USER, PASS);
-            System.out.println("unti");
             
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
