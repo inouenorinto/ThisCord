@@ -54,6 +54,9 @@ let selectedChannel = null;
         selectedChannel = element;
    }
    
+
+   
+   
 window.globalFunction = {};
 window.globalFunction.toggleClickedState = toggleClickedState;
 window.globalFunction.toggleChannelState = toggleChannelState;

@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 html,
 body {
 	font-family: 'Noto Sans JP', sans-serif;
@@ -11,15 +10,15 @@ body {
 	background-color: rgb(30 31 34);
 	/*	overflow: hidden;*/
 }
-
-h6 {
-	position: relative;
-	width: 5%;
-	top: 8px;
-	left: 8px;
-	font-weight: 800;
-	font-size: 12px;
+.thiscord-title {
+	margin-bottom: 0px;
+}
+.thiscord-title h6 {
 	color: #b5bac1;
+	font-weight: 800;
+	font-size: 11px;
+	padding: 8px 0px 1px 12px;
+	margin-bottom: 0px;
 }
 
 /***********************画面全体のグリッド**********************/
@@ -34,7 +33,8 @@ h6 {
 .container-fluid {
 	font-family: 'Noto Sans JP', sans-serif;
 	display: grid;
-	grid-template-columns: 72px 240px 984px 240px;
+/*	画面サイズが変更されたらチャットフィールドのサイズがうごく*/
+	grid-template-columns: 72px 240px calc(100% - 552px) 240px;
 	grid-template-rows: 48px 1fr 1fr 1fr;
 	gap: 0px 0px;
 	grid-auto-flow: row;
@@ -43,7 +43,7 @@ h6 {
 		"server-list channel-list chat-field member-list"
 		"server-list channel-list chat-field member-list"
 		"server-list channel-list chat-field member-list";
-	height: 96%;
+	height: calc(100% - 22px);
 	padding: 0%;
 
 }
@@ -364,6 +364,8 @@ h6 {
 }
 
 .text-channels {
+	display: flex;
+	justify-content: space-between;
 	font-size: 1em;
 	font-weight: 500;
 	height: 34px;
@@ -375,7 +377,9 @@ h6 {
 	border-radius: 5px;
 }
 
+
 .text-channels:hover {
+	
 	background-color: #404249;
 }
 
@@ -383,20 +387,33 @@ h6 {
 	background-color: #404249;
 }
 
-.text-channels a {
+.textIcon {
+	width: 100%;
 	text-decoration: none;
-	display: block;
 	color: #949ba4;
 }
 
-.text-channels.clicked a {
+.text-channels.clicked textIcon {
 	color: #fff;
 }
 
-.text-channels.clicked a i {
+.text-channels.clicked textIcon i {
+	white-space: nowrap;
 	color: #949ba4;
 }
 
+.invitationIcon{
+
+	color: #949ba4;
+	white-space: nowrap;
+}
+
+.invitationIcon:hover{
+	
+	
+	color: #fff;
+	
+}
 /************ログインしてるユーザーのフィールド*************/
 .user-info {
 	position: absolute;
@@ -722,8 +739,6 @@ h6 {
 
 
 
-
-
 /****************************************** モーダルのcss ******************************************/
 
 /*cropper.jsのcss*/
@@ -783,6 +798,7 @@ h6 {
 }
 
 .plus_button_icon {
+	cursor: pointer;
 	position: relative;
 	background-color: #5865f2;
 	width: 30px;
@@ -805,7 +821,7 @@ h6 {
 	background-color: #caccce;
 	border: none;
 	height: 45px;
-	color: #fff;
+	color: #333;
 }
 
 .input_text:focus {
@@ -816,24 +832,28 @@ h6 {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
 }
 
-.modal-content {
+.modal-content2 {
 	border-radius: 6px;
 	padding: 2em;
 	min-height: 550px;
+	background: linear-gradient(to top, rgb(228, 230, 233) 0%, rgb(228, 230, 233) 13%, #fff 13%, #fff 100%);
 }
 
-.modal-title {
+.modal-title2 {
 	font-size: 2em;
 	font-weight: 700;
 	color: #333;
 	margin-bottom: 10px;
 }
 
-.btn-close {
+.btn-close2 {
 	position: absolute;
 	top: 10px;
 	right: 10px;
 
+}
+.back-botan{
+	cursor: pointer;
 }
 
 .center_content {
@@ -875,11 +895,6 @@ h6 {
 	color: #fff;
 }
 
-.modal-content {
-	background: linear-gradient(to top, rgb(228, 230, 233) 0%, rgb(228, 230, 233) 13%, #fff 13%, #fff 100%);
-}
-
-
 .server_icon {
 	border-radius: 50%;
 	width: 48px;
@@ -901,8 +916,9 @@ h6 {
 	color: rgb(219 222 225);
 }
 
-
-
+.edit-modal{
+	height: 550px;	
+}
 
 /*javascriptで付け足すもの*/
 
@@ -911,11 +927,91 @@ h6 {
 }
 
 
+/******************invitation-content*******************/
+.close {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.close:hover {
+    color: #aaaaaa;
+    text-decoration: none;
+}
+
+.invitation-content {
+    background-color: #313338;
+    color: #fff;
+    padding-bottom: 20px;
+
+}
+
+.invitation-body {
+    padding: 0px 8px 0px 16px;
+    border: none;
+    height: 150px;
+    position: relative;
+}
+
+#invitationIconModal .modal-content {
+    border: none;
+}
+
+#invitationIconModal .modal-header,
+#invitationIconModal .modal-footer {
+    border: none;
+}
+
+.invitation-form {
+    padding: 0px 15px 0px 15px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.invitation-wrapper {
+    position: relative;
+    background-color: #1e1f22;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.invitation-input {
+    position: absolute;
+    left: 5px;
+    border: none;
+    background-color: #1e1f22;
+    color: #fff;
+    width: 80%;
+}
+
+.invitation-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.invitation-button {
+    position: absolute;
+    right: 4px;
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    color: "#fff;";
+    width: 75px;
+    height: 32px;
+}
 
 /******************************ビデオチャットの時の画面**********************************/
 .video-container {
 	display: grid;
-	grid-template-columns: 72px 240px 1224px;
+	grid-template-columns: 72px 240px calc(100% - 312px);
 	grid-template-rows: 48px 1fr 1fr;
 	gap: 0px 0px;
 	grid-auto-flow: row;
@@ -948,12 +1044,13 @@ h6 {
 	align-items: center;
 }
 
-
 .video-element {
-	border-radius: 10px;
-	width: 584px;
-	height: 321.500px;
-	background-color: #202125;
+    border-radius: 10px;
+    width: 584px;
+    height: 321.500px;
+    background-color: #202125;
+    object-fit: cover;
+    margin:0px 5px 0px 5px;
 }
 
 
@@ -967,7 +1064,6 @@ h6 {
 .controller-wrapper {
 	display: flex;
 	justify-content: center;
-	
 	
 }
 
