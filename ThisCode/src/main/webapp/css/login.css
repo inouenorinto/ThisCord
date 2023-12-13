@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+html {
+	background-color: #6666FF;
+	overflow-x: hidden;
+}
+
+body {
+	background-color: #6666FF;
+}
+
+img {
+	margin: auto;
+	display: block;
+	position: relative;
+	top: 15px;
+
+}
+
+.form-singin {
+	background-color: #333333;
+	border-radius: 10px;
+	color: white;
+	margin: auto;
+	width: 750px;
+	height: 500px;
+	margin-top: 50px;
+
+}
+
+h1 {
+	text-align: center;
+	padding: 2px;
+
+}
+
+h4{
+	color: #B5BAC1;
+	text-align: center;
+}
+
+.text-muted{
+	color: #B5BAC1;
+	text-align: center;;
+
+}
+
+.p-position {
+	color: #B5BAC1;
+	text-align: left;
+	margin-left: 15px;
+
+}
+
+p{
+	position: relative;
+	top: 15px;
+
+}
+
+
+button {
+	background-color: #5865F2;
+	color: white;
+	border-radius: 4px;
+	font-size: 20px;
+	border: none;
+	outline: none;
+	display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 50px;
+    position: relative;
+	top: 20px;
+		
+}
+
+.input-color {
+	background-color: #1E1F22;
+	border-radius: 10px;
+	padding: 10px;
+	width: 95%;
+	border: none;
+	outline: none;
+	color: white;
+	margin-left: 15px;
+}
+
+.input-color:focus {
+	background-color: #1E1F22;
+	border: none;
+	outline: none;
+	color: white;
+
+}
+
+
