@@ -32,7 +32,6 @@ public class RegisterCommand extends AbstractCommand {
         } else {
         	System.out.println("not null");
         }
-        System.out.println(dto.getUser_icon());
         userRegister(dto);
         res.setTarget("fn/login");
         

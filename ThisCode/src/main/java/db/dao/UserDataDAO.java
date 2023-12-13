@@ -156,6 +156,10 @@ public class UserDataDAO{
 		Statement st = null;
 		try {
 			
+			System.out.println("insertUser()_"+user_name+":"+password+":"+email);
+			if (cn==null) {
+				System.out.println("cn:null");
+			}
 			st = cn.createStatement();
 			rs = st.executeQuery(select);
 			

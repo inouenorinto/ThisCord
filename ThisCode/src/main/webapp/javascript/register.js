@@ -29,3 +29,14 @@ document.querySelector('#imageInput').addEventListener('change', function(event)
 	reader.readAsDataURL(file);
 	}
 });
+
+	var form = document.forms[0];
+	form.onsubmit = function() {
+	    // エラーメッセージをクリアする
+	    form.password.setCustomValidity("");
+	    // パスワードの一致確認
+	    if (form.password.value != form.confirm.value) {
+	      // 一致していなかったら、エラーメッセージを表示する
+	      form.password.setCustomValidity("パスワードと確認用パスワードが一致しません");
+		}
+  	};

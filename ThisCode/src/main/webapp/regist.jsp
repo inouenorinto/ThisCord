@@ -57,7 +57,7 @@
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">パスワード(確認)</label>
-		    <input type="password" class="form-control input_text" id="exampleInputPassword1" required>
+		    <input type="password" name="confirm" class="form-control input_text" id="exampleInputPassword1" required>
 		  </div>
 		  <div class="mb-3 form-check">
 		    <input type="checkbox" class="form-check-input" id="exampleCheck1">
