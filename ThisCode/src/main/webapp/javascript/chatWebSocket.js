@@ -514,6 +514,8 @@ const flendListWrapper = document.getElementById('flendListWrapper');
 const serverHeaderWrapper = document.getElementById('serverHeaderWrapper');
 const inputField = document.getElementById('inputField');
 const messageContainer = document.getElementById('message-container');
+const homeNav = document.getElementById('home-nav');
+const memberListWrapper = document.getElementById('member-list-wrapper');
 
 let joinHomeFlag = false;
 function joinHome() {
@@ -522,7 +524,9 @@ function joinHome() {
 	serverHeaderWrapper.classList.add('none');
 	inputField.classList.add('none');
 	messageContainer.classList.add('none');
+	memberListWrapper.classList.add('none');
 	flendListWrapper.classList.remove('none');
+	homeNav.classList.remove('none');
 	
 	if(!joinHomeFlag) {
 		joinHomeFlag = true;
@@ -532,10 +536,11 @@ function toggleHome() {
 		channelsWrapper.classList.remove('none');
 		serverHeaderWrapper.classList.remove('none');
 		inputField.classList.remove('none');
-
+		memberListWrapper.classList.remove('none');
 		messageContainer.classList.remove('none');
 		flendListWrapper.classList.add('none');
-		
+		homeNav.classList.add('none');
+
 		joinHomeFlag = false;
 }
 
