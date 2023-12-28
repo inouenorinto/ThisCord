@@ -51,10 +51,8 @@
 <!-- 独自css -->
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/general.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css">
 <!-- 独自javascript -->
-
-
 </head>
 <body>
 	<div class="thiscord-title">
@@ -103,6 +101,10 @@
 			<!-- 一覧 -->
 			<div class="channel-scroll text-box">
 				<div id="flendListWrapper" class="none">
+					<div class="channel-list-friend">
+						<i class="fa-solid fa-user-group fa-sm"></i>
+						<label>フレンド</label>
+					</div>
 					<div class="channel-title-nav">
 						<div class="flexbox">
 							<div class="flex-item title-item">
@@ -223,6 +225,22 @@
 					</div>
 				</div>
 			</div>
+			<!----------------------------------------ホームページヘッダー------------------------------------------->
+			<div id="home-nav" class="none">
+				<div class="home-nav-warper">
+					<div class="friend-warper">
+						<i class="fa-solid fa-user-group fa-sm"></i>
+						<label>フレンド</label>
+					</div>
+					<div class="separator home-item"></div>
+					<div class="home-item">
+						<button class="home-item-all-button focus">全て表示</button>
+					</div>
+					<div class="home-item">
+						<button class="home-item-friend-button">フレンドに追加</button>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<!-------------------------------- チャットフィールド(chat-field) -------------------------------->
@@ -243,9 +261,14 @@
 		</div>
 		<!-------------------------------- メンバーリスト(member-list) -------------------------------->
 		<div id="member-list" class="member-scroll member-list">
-			<div class="text-box">
-				<h3 class="meber-list-title">メンバー</h3>
-				<div id="members-list"></div>
+			<div id="member-list-wrapper">
+				<div class="text-box">
+					<h3 class="meber-list-title">メンバー</h3>
+					<div id="members-list"></div>
+				</div>
+			</div>
+			<div id="info-list">
+				
 			</div>
 		</div>
 
