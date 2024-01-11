@@ -18,12 +18,7 @@ import db.dao.MessageDataDAO;
 @ServerEndpoint("/chat/{server_id}/{channel_id}/{user_id}")
 public class ChatServer {
     @OnOpen
-    public void onOpen(Session session, @PathParam("server_id") String s_server_id, @PathParam("channel_id") String s_channel_id,@PathParam("user_id") String s_user_id) {
-    	System.out.println("接続開始");
-    	System.out.println("user_id" + s_server_id);
-    	System.out.println("channel" + s_channel_id);
-    	System.out.println("user_id" + s_user_id);
-    	
+    public void onOpen(Session session, @PathParam("server_id") String s_server_id, @PathParam("channel_id") String s_channel_id,@PathParam("user_id") String s_user_id) {    	
     	int server_id = Integer.parseInt(s_server_id);
     	int channel_id = Integer.parseInt(s_channel_id);
     	int user_id = Integer.parseInt(s_user_id);

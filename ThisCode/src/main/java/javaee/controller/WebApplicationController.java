@@ -17,6 +17,9 @@ import javaee.context.WebResponseContext;
 
 
 public class WebApplicationController implements ApplicationController {
+	String yellow = "\u001b[00;33m";
+	String end    = "\u001b[00m";
+	
 	public RequestContext getRequest(Object request) {
 		RequestContext reqc = new WebRequestContext();
 		reqc.setRequest(request);
@@ -32,7 +35,7 @@ public class WebApplicationController implements ApplicationController {
 	public void handleRequest(RequestContext req, ResponseContext res) {
 		AbstractCommand command = CommandFactory.getCommand(req);
 
-		System.out.println(req.getCommandPath());
+		System.out.println(yellow+"WebApplicationController.java "+ end +":\t\tコマンドパス="+req.getCommandPath());
 		command.execute(req, res);
 	}
 	

@@ -22,21 +22,37 @@ const ip = 'localhost';
 
 document.addEventListener("DOMContentLoaded", init);
 
+
 //ログインしたらデフォルトで一番上のサーバーを表示する
 async function init() {
 	await getUserInfo();
 
 	const firstServer = roomsMap.entries().next().value;
-	const firstServerId = firstServer[0];
-	registerNotice();
-	await joinRoom(firstServerId);
+	let firstServerId = null;
+	
+	if(firstServer != null) {
+		firstServerId = firstServer[0];
+		registerNotice();
+		await joinRoom(firstServerId);
+	} else {
+		registerNotice();
+	}
+	
 	initform();
 }
 
+// クエリ文字列からidパラメータの値を取得する関数
+var queryString = window.location.search;
+
+function getIdFromQueryString(name) {
+    var urlParams = new URLSearchParams(queryString);
+    return urlParams.get(name);
+}
+console.log(getIdFromQueryString('id'));
 //サーバーからユーザーデータを取得する関数
 async function getUserInfo() {
 	try {
-		const response = await fetch("/ThisCord/fn/getuserinfo");
+		const response = await fetch("/ThisCord/fn/getuserinfo?id=" + getIdFromQueryString('id'));
 
 		if (response.ok) {
 
@@ -57,7 +73,7 @@ async function getUserInfo() {
 	const infoDiv = document.querySelector("#user");
 	infoDiv.innerHTML =
 		'<div class="user-box">' +
-		'<img class="user_icon_img" src="resource/user_icons/' + user_icon + '"></img>' +
+		'<img class="user_icon_img" src="/ThisCord/resource/user_icons/' + user_icon + '"></img>' +
 		'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
 		'<p id="user-name">' + userinfo.user_name + '</p>' +
 		'<p id="user-id">' + userinfo.user_name + '-' + userid + '</p>' +
@@ -96,7 +112,7 @@ function createVoiceChannelIcon(members, channelId) {
 		//videoChannelElement.innerHTML +='<div>'+ member.user +'</div>';
 		videoChannelElement.innerHTML +=
 			'<div class="voice-channel-member">' +
-			'<img class="voice-channel-icon" src="resource/user_icons/' + member.icon + '">' +
+			'<img class="voice-channel-icon" src="/ThisCord/resource/user_icons/' + member.icon + '">' +
 			'<div class="voice-channel-user">' + member.user + '</div>' +
 			'</div>';
 	}
@@ -186,7 +202,7 @@ async function getMessageInfo(channel_id) {
 				chat.innerHTML +=
 					'<div class="message-wrapper">' +
 					'<div>' +
-					'<img class=" chat-icon" src="resource/user_icons/' + message.user_icon + '" >' +
+					'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
 					'</div>' +
 
 					'<div class="wrapper-item">' +
@@ -217,7 +233,7 @@ async function createRoomB(roomInfo) {
 		if (src === defaultSrc) {
 			roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-' + roomId + '" onclick=" joinRoom(\'' + roomId + '\');"  ><div class="server-name">' + roomName[0] + '</div></a></div>';
 		} else {
-			roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-' + roomId + '" onclick=" joinRoom(\'' + roomId + '\');"  ><img id="retryImage" src="' + src + '" onerror="retryImageLoad(this, 10, 1000)"></img></a></div>';
+			roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-' + roomId + '" onclick=" joinRoom(\'' + roomId + '\');"  ><img id="retryImage" src="/ThisCord/' + src + '" onerror="retryImageLoad(this, 10, 1000)"></img></a></div>';
 		}
 
 	}
@@ -276,7 +292,7 @@ function joinChannel(channel_id) {
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<div>' +
-			'<img class=" chat-icon" src="resource/user_icons/' + rep.usericon + '" >' +
+			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + rep.usericon + '" >' +
 			'</div>' +
 
 			'<div class="wrapper-item">' +
@@ -346,14 +362,14 @@ async function getServerInfo(roomId) {
 				if (nowRoomHostId == user_id) {
 					memberListDiv.innerHTML +=
 						'<div class="member-wrapper">' +
-						'<img class="member-icon" src="resource/user_icons/' + user_name[1] + '"></img>' +
+						'<img class="member-icon" src="/ThisCord/resource/user_icons/' + user_name[1] + '"></img>' +
 						'<span class="member-name">' + user_name[0] + '</span>' +
 						'<i class="server-host fa-solid fa-crown fa-xs"></i>' +
 						'</div>';
 				} else {
 					memberListDiv.innerHTML +=
 						'<div class="member-wrapper">' +
-						'<img class="member-icon" src="resource/user_icons/' + user_name[1] + '"></img>' +
+						'<img class="member-icon" src="/ThisCord/resource/user_icons/' + user_name[1] + '"></img>' +
 						'<span class="member-name">' + user_name[0] + '</span>' +
 						'</div>';
 				}
@@ -419,14 +435,21 @@ function getDate() {
 
 function initform(){
 	const serverNameIn = document.getElementById('server_name');
-	
+	console.log(username);
 	if(serverNameIn.value.length == 0) {
 		console.log(serverNameIn.value);
+		
 		serverNameIn.value = username + 'のサーバー';
+	} else {
+		console.log(serverNameIn.value);
 	}
 	
 	const inputServerId = document.getElementById('inputServerId');
 	inputServerId.value = nowRoomId;
+	
+	const MakeServerUserId = document.getElementById('MakeServerUserId');
+	MakeServerUserId.value = userid;
+	console.log('initform: ' + userid);
 }
 
 function form_crea(formId) {
@@ -460,10 +483,10 @@ function retryImageLoad(imgElement, maxRetries, retryInterval) {
 			// 画像の読み込みがエラーの場合
 			if (retries < maxRetries) {
 				retries++;
-				console.log(`Retrying image load, attempt ${retries}`);
+				
 				setTimeout(loadImage, retryInterval);
 			} else {
-				console.error(`Failed to load image after ${maxRetries} attempts.`);
+				//console.error(`Failed to load image after ${maxRetries} attempts.`);
 			}
 		};
 
@@ -513,9 +536,16 @@ const channelsWrapper = document.getElementById('channelsWrapper');
 const flendListWrapper = document.getElementById('flendListWrapper');
 const serverHeaderWrapper = document.getElementById('serverHeaderWrapper');
 const inputField = document.getElementById('inputField');
+const homeChatField = document.getElementById('chat-field');
 const messageContainer = document.getElementById('message-container');
 const homeNav = document.getElementById('home-nav');
 const memberListWrapper = document.getElementById('member-list-wrapper');
+const friendFormWarper = document.getElementById('friend-form-warper');
+const friendListWarpe = document.getElementById('friend-list-warpe');
+
+const homeChannelFlandList = document.getElementById('home-channel-fland-list');
+const homeContainerFluid = document.getElementById('container-fluid');
+const homeInfoList = document.getElementById('home-info-list');
 
 let joinHomeFlag = false;
 function joinHome() {
@@ -527,28 +557,119 @@ function joinHome() {
 	memberListWrapper.classList.add('none');
 	flendListWrapper.classList.remove('none');
 	homeNav.classList.remove('none');
+	friendFormWarper.classList.remove('none');
+	friendListWarpe.classList.remove('none');
+	homeChannelFlandList.classList.remove('none');
+	
+	homeInfoList.classList.remove('none');
+	homeContainerFluid.style.gridTemplateColumns ="72px 240px calc(100% - 729px) 417px";
 	
 	if(!joinHomeFlag) {
 		joinHomeFlag = true;
 	}
+	getFriendList();
+	showInfo();
 }
 function toggleHome() {
-		channelsWrapper.classList.remove('none');
-		serverHeaderWrapper.classList.remove('none');
-		inputField.classList.remove('none');
-		memberListWrapper.classList.remove('none');
-		messageContainer.classList.remove('none');
-		flendListWrapper.classList.add('none');
-		homeNav.classList.add('none');
+	channelsWrapper.classList.remove('none');
+	serverHeaderWrapper.classList.remove('none');
+	inputField.classList.remove('none');
+	memberListWrapper.classList.remove('none');
+	messageContainer.classList.remove('none');
+	flendListWrapper.classList.add('none');
+	homeNav.classList.add('none');
+	friendFormWarper.classList.add('none');
+	friendListWarpe.classList.add('none');
 
-		joinHomeFlag = false;
+	homeChannelFlandList.classList.add('none');
+	homeInfoList.classList.add('none');
+	homeContainerFluid.style.gridTemplateColumns ="72px 240px calc(100% - 552px) 240px";
+
+	joinHomeFlag = false;
 }
 
-async function getFlendList(){
-		try {
-		const response = await fetch("/ThisCord/fn/getFlendList");
+//ホームページでユーザ情報を表示する
+function showInfo() {
+	const infoElement = document.getElementById('info-wrapper');
+    const htmlCode = `
+    <div class="info-header"></div>
+    <img class="info-icon-user-img" src="/ThisCord/resource/user_icons/default1.png">
+    <div class="info-card">
+      <div class="info-top">
+        <div id="info-user-name">${username}</div>
+        <div id="info-user-id">${username}-${userid}</div>
+      </div>
+      <div class="info-friend-count">
+        <div style="font-size:14px; font-waight: 700;">Thiscordフレンド数</div>
+        <div style="color: #b5bac1; font-size: 12px;">2人</div>
+      </div>
+      <div class="info-logout">
+        <a>
+          <i class="fa-solid fa-right-from-bracket"></i>
+          ログアウトする
+        </a>
+      </div>
+    </div>
+  `;
+  
+	infoElement.innerHTML = htmlCode;
+}
+
+
+//フレンド申請を送信する
+async function sendFriendRequest() {
+	const friendId = document.getElementById("friendId").value;
+	const friendForm = document.getElementById('friend-form');
+	console.log(friendId);
+	try {
+		const response = await fetch(`/ThisCord/fn/friendRequest?userId=${userid}&friendId=${friendId}`);
 
 		if (response.ok) {
+			console.log("ok");
+			getFriendList();
+			document.getElementById("friendId").value = "";
+			friendForm.classList.toggle('ok');
+		} else {
+			console.error("Failed to fetch room information");
+		}
+	} catch (error) {
+		console.error("Error: " + error);
+	}
+}
+
+//フレンドリストを表示する関数
+async function getFriendList() {
+	const friendListDiv = document.getElementById('friend-list'); 
+	friendListDiv.innerHTML ="";
+	homeChannelFlandList.innerHTML = '';
+	try {
+		const response = await fetch('/ThisCord/fn/getfriendList?userId='+userid);
+		if (response.ok) {
+			const json = await response.json();
+			
+			for (let friend of json.friendList) {
+				friendListDiv.innerHTML += 
+				'<div class="fland-box">' +
+				'<div class="icon-name-wrapper">'+
+				'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
+				'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
+				'<p id="user-name">' + friend.user_name + '</p>' +
+				'<p id="user-id">' + friend.user_name + '-' + friend.user_id + '</p>' +
+				'</div>' +
+				'</div>' +
+				'<div class="about-button">'+
+				'<i class="fa-solid fa-ellipsis-vertical"></i>'+
+				'</div>'+
+				'</div>';
+				
+				homeChannelFlandList.innerHTML +=
+				'<div class="channel-fland-box">' +
+				'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
+				'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
+				'<p id="user-name">' + friend.user_name + '</p>' +
+				'</div>' +
+				'</div>';
+			}
 			
 		} else {
 			console.error("Failed to fetch room information");
@@ -560,12 +681,6 @@ async function getFlendList(){
 
 
 
-
-
- 
- 
- 
- 
  
  
  

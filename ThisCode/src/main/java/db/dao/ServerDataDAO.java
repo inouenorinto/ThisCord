@@ -122,6 +122,7 @@ public class ServerDataDAO { //server表
 			pstmt.setInt(2, user_id);
 			pstmt.setString(3, path);
 			pstmt.executeUpdate();
+		
 			
 		} catch (Exception e) {
 			e.printStackTrace();

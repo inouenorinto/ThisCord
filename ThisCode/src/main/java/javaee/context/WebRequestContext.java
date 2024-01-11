@@ -8,6 +8,9 @@ import javax.servlet.http.HttpSession;
 import framework.context.RequestContext;
 
 public class WebRequestContext implements RequestContext {
+	String yellow = "\u001b[00;33m";
+	String end    = "\u001b[00m";
+	
 	private Map<String, String[]> parameters;
 	private HttpServletRequest request;
 	private HttpSession session;
@@ -36,9 +39,16 @@ public class WebRequestContext implements RequestContext {
 	@Override
 	public void setRequest(Object request) {
 		this.request = (HttpServletRequest) request;
-		parameters = this.request.getParameterMap();
-		session = this.request.getSession();
+		this.parameters = this.request.getParameterMap();
+		this.session = this.request.getSession(true);
+		System.out.println(yellow+"WebRequestContext.java "+end+":\t\tセッションID="+ this.session.getId());
 	}
+	
+	@Override
+	public void setAttribute(String param, Object obj) {
+		this.request.setAttribute(param, obj);
+	}
+	
 	
 	@Override
 	public void setSession(Object session) {

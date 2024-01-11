@@ -142,7 +142,6 @@ public class UserServerRelationshipDAO {
 			
 			if(rs != null) {
 				while(rs.next()) {
-					System.out.println("getServers: "+rs.getInt("server_id"));
 					result.add(rs.getInt("server_id"));
 				}
 			}
