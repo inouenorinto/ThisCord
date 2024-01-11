@@ -9,6 +9,7 @@ import db.mysql.MySqlManager;
 
 public class FriendRelationshipDAO {
     private final String SELECT_FRIEND_LIST = "SELECT user_id1, user_id2 FROM friend_relationship WHERE user_id1 = ? OR user_id2 = ?";
+    private final String INSERT_FRIEND = "INSERT INTO friend_relationship (user_id1, user_id2, flag) VALUES (?, ?, true);";
     
 	private static FriendRelationshipDAO dao = null;
 	static{
@@ -47,5 +48,19 @@ public class FriendRelationshipDAO {
 		}
 		return result;
     }
+	
+	//フレンドを登録する
+	public void insertFriend(int userId, int friendId) {
+		try(	Connection cn = MySqlManager.getConnection();
+				PreparedStatement ps = cn.prepareStatement(INSERT_FRIEND); ){
+			ps.setInt(1, userId);
+			ps.setInt(2, friendId);
+			
+			ps.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

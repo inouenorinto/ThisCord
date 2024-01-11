@@ -91,12 +91,12 @@
 			</div>
 		</div>
 
-		<!-------------------------------- チャンネルメヘッダー(channel-header) -------------------------------->
+		<!---------------------------- チャンネルメヘッダー(channel-header) --------------------------->
 		<div class="radius-lefttop text-center channel-header text-color">
 			<div id="server"></div>
 			<i class="fa-solid fa-angle-down fa-xs"></i>
 		</div>
-		<!-------------------------------- チャンネル一覧 (channel-list)-------------------------------->
+		<!-------------------------------- チャンネル一覧 (channel-list)------------------------------->
 		<div class="channel-list">
 			<!-- 一覧 -->
 			<div class="channel-scroll text-box">
@@ -119,6 +119,9 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="none" id="home-channel-fland-list"></div>
+				
 				<div id="channelsWrapper" class="channelsWrapper">
 					<div class="channel-title-nav">
 						<div class="flexbox">
@@ -149,7 +152,9 @@
 							</div>
 						</div>
 					</div>
+					
 					<div id="voice-channels-list"></div>
+					
 				</div>
 			</div>
 
@@ -197,7 +202,7 @@
 				</div>
 			</div>
 		</div>
-		<!-------------------------------- ビデオフィールド(video-field)-------------------------------->
+		<!-------------------------------- ビデオフィールド(video-field)------------------------------->
 		<div id="video-field" class="video-field none">
 			<div id="video-play-field" class="video-play-field">
 				<video id="local_video" class="video-element" autoplay></video>
@@ -215,7 +220,7 @@
 			</div>
 		</div>
 
-		<!-------------------------------- チャットメニューバー(server-header) -------------------------------->
+		<!---------------------------- チャットメニューバー(server-header) ---------------------------->
 		<div id="server-header" class="text-center server-header">
 			<div class="channle-name">
 				<div id="serverHeaderWrapper" class="flexbox">
@@ -243,9 +248,25 @@
 			</div>
 		</div>
 
-		<!-------------------------------- チャットフィールド(chat-field) -------------------------------->
+		<!------------------------------- チャットフィールド(chat-field) ------------------------------>
 		<div id="chat-field" class="chat-field text-box text-color">
 			<div id="chat-scroll" class="chat-scroll">
+				<div id="friend-form-warper" class="none">
+					<h1 style="font-size: 1.2em;">フレンドに追加</h1>
+					<p style="font-size: 0.8em;">ThiscordユーザーIDでフレンドを追加する</p>
+					<div id="friend-form" class="friend-form">
+						<input type="text" id="friendId" placeholder="ThiscordユーザーIDでフレンドを追加できます。">
+						<button onclick="sendFriendRequest()">フレンド申請を送信</button>
+					</div>
+					<div id="ok" class="none" style="color:#2fbb70; font-size:0.8em;">フレンドを登録しました。</div>
+					<div id="ng" class="none" style="color:#f23f42; font-size:0.8em;">フレンド登録に失敗しました。</div>
+				</div>
+				<!-- ホームページ　フレンドリスト -->
+				<div id="friend-list-warpe" class="none">
+					<p style="margin :0; border-bottom: 1px solid #3f4147; padding: 40px 0px 15px 0px; font-size: 0.8em;">すべてのフレンド</p>
+					<div id="friend-list"></div>
+				</div>
+				
 				<div class="d-flex mb-3">
 					<div id="message-container"></div>
 				</div>
@@ -267,8 +288,8 @@
 					<div id="members-list"></div>
 				</div>
 			</div>
-			<div id="info-list">
-				
+			<div id="home-info-list" class="none">
+				<div class="info-wrapper" id="info-wrapper"></div>
 			</div>
 		</div>
 
@@ -320,6 +341,7 @@
 						</small>
 					</p>
 					<input type="hidden" id="editedImageField" name="editedImage">
+					<input type="hidden" id="MakeServerUserId" name="userId">
 					<div class="sub">
 						<button type="button" id="form_submit" class="btn_sub"
 							onclick="form_crea('imageForm')">新規作成</button>
@@ -360,6 +382,7 @@
 			</div>
 		</div>
 	</div>
+
 	<!-- Modal -->
 	<div class="modal fade" id="invitationIconModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

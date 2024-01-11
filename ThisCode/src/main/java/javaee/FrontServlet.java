@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,9 @@ import javaee.controller.WebApplicationController;
 @WebServlet("/fn/*")
 @MultipartConfig
 public class FrontServlet extends HttpServlet {
+	String yellow = "\u001b[00;33m";
+	String end    = "\u001b[00m";
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doAction(req,res);
 	}
@@ -26,7 +30,14 @@ public class FrontServlet extends HttpServlet {
 	
 	public void doAction(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		ApplicationController app = new WebApplicationController();
-		System.out.println("doAction");
+		
+		Cookie cookies[] = req.getCookies();
+		
+		for(Cookie cookie : cookies) {
+			System.out.println(yellow+"FrontServlet.java "+end+":\t\t "+ cookie.getName()+" = " + cookie.getValue());
+		}
+		
+		
 		req.setCharacterEncoding("UTF-8");
 		RequestContext reqc = app.getRequest(req);
 		ResponseContext resc = app.getResponse(res);
