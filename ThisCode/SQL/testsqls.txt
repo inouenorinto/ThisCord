@@ -109,6 +109,18 @@ VALUES ('ojiisan@gmail.com', '$2a$12$quq.W9rYTGbGUxOV/jZpr.7/opaSv3ZSuXsM.kJisxD
 INSERT INTO account (mailaddress, password, user_name, user_icon)
 VALUES ('saigou@gmail.com', '$2a$12$gK.sIMj/1zrkcJ0gQFbojObwfqPiYc5aMafILg7krUBwN1UKyeJiG', 'saigou', 'default3.png');
 
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('kakuei@gmail.com', '$2a$12$9r6dzyrHD3SzQDhFWJsfve46c9pEDid10VjKa4pOoC2xZQgovngoC', 'kakuei', 'default4.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('yamada@gmail.com', '$2a$12$Pk2pYbyIGuNPPNa1Y83Vzum5LlAGKIWYh4Rwap/2IPg0Mg6JCAteq', 'yamada', 'default3.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('ttc@gmail.com', '$2a$12$gK.sIMj/1zrkcJ0gQFbojObwfqPiYc5aMafILg7krUBwN1UKyeJiG', 'ttc', 'default2.png');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('jp@gmail.com', '$2a$12$gK.sIMj/1zrkcJ0gQFbojObwfqPiYc5aMafILg7krUBwN1UKyeJiG', 'jp', 'default3.png');
+
 INSERT INTO server (server_name, user_id, server_icon)
 VALUES ('勉強サーバー', 1, 'default');
 
@@ -203,6 +215,18 @@ VALUES (1, 2, true);
 
 INSERT INTO friend_relationship (user_id1, user_id2, flag) 
 VALUES (1, 3, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 4, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 5, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 6, true);
+
+INSERT INTO friend_relationship (user_id1, user_id2, flag) 
+VALUES (1, 7, true);
 
 INSERT INTO friend_relationship (user_id1, user_id2, flag) 
 VALUES (3, 2, true);

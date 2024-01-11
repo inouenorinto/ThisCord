@@ -30,7 +30,6 @@ public class GetServerInfoCommand extends AbstractCommand {
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");
 		
-		System.out.println("json: "+ new Gson().toJson(dto));
 		res.getWriter().write(new Gson().toJson(dto));
 	}
 	

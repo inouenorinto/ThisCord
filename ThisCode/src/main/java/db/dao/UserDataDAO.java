@@ -122,19 +122,28 @@ public class UserDataDAO{
 	    return bean;
 	}
 	
-	private boolean isLoginValid(String email, String password) {
-	    String SQL = "select user_name, mailaddress, password from account where mailaddress = ?";
-	    boolean flag = false;
-		try {
+	public UserBean getRecord(int  userId) {
+	    String SQL="select * from account where user_id = ?";
+	    
+	    UserBean bean = new UserBean();
+	    try {
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
-			pstmt.setString(1, email);
+			pstmt.setInt(1, userId);
 			rs = pstmt.executeQuery();
 			
 			if(rs != null && rs.next()) {
-				rs.getString("user_name");
-				if(email.equals(rs.getString("mailaddress")) && password.equals(rs.getString("password"))) {
-					flag =true;
+				
+				bean.setUser_id(rs.getInt("user_id"));
+				bean.setMailaddress(rs.getString("mailaddress"));
+				bean.setPassword(rs.getString("password"));
+				bean.setUser_name(rs.getString("user_name"));
+				bean.setUser_icon(rs.getString("user_icon"));
+				
+				for(int num : usrdao.getServers(bean.getUser_id())) {
+					
+					String info[] = sddao.getServerNameAndIcon(num);
+					bean.addRooms(num, info[0], info[1]);
 				}
 			}
 			if (cn != null) {
@@ -145,13 +154,15 @@ public class UserDataDAO{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return flag;
+	    return bean;
 	}
+	
 	
 	public int insertUser(String user_name, String password, String email) {
 		String insert = "INSERT INTO account (mailaddress, password, user_name ) VALUES (?, ?, ?)";
 		String select = "select mailaddress from account";
 		String select_id ="select user_id from account where mailaddress=?"; 
+		cn = MySqlManager.getConnection();
 		int flag = -1;
 		Statement st = null;
 		try {
@@ -172,7 +183,6 @@ public class UserDataDAO{
 					pstmt.setString(1, email);
 					rs = pstmt.executeQuery();
 					if(rs.next()) {
-						System.out.println("userid"+ rs.getInt("user_id"));
 						flag = rs.getInt("user_id");
 					}
 				}
