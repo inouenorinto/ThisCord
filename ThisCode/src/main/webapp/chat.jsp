@@ -204,9 +204,11 @@
 		</div>
 		<!-------------------------------- ビデオフィールド(video-field)------------------------------->
 		<div id="video-field" class="video-field none">
-			<div id="video-play-field" class="video-play-field">
+			
+			<div id="video-play-field" class="video-play-field container">
 				<video id="local_video" class="video-element" autoplay></video>
 			</div>
+			
 			<div class="video-controller">
 				<div class="controller-wrapper">
 					<button class="contoroller-item">
@@ -397,11 +399,13 @@
                         <form class="invitation-form" action="fn/invite" method="post">
                             <label>ユーザーIDを入力してフレンドを追加</label>
                             <div class="invitation-wrapper">
-                                <input class="invitation-input" type="text" name="userId">
+                                <input class="invitation-input" type="text" name="userId" id="invitationInput">
                                 <input id="inputServerId" type="hidden" name="serverId">
+                                <input id="formUserId" type="hidden" name="id">
                                 <button class="invitation-button" type="submit">送信</button>
                             </div>
                         </form>
+                        <div id="invFriendList"></div>
                     </div>
                 </div>
             </div>

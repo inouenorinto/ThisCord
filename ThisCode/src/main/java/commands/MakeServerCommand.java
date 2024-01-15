@@ -51,19 +51,14 @@ public class MakeServerCommand extends AbstractCommand {
         
         VoiceChannelDAO voiceDao = VoiceChannelDAO.getInstance();
         voiceDao.addVoiceChannel("一般", maxServerId);
-        
-		//res.setTarget("fn/chat");
 		
 		UserDataDAO account = UserDataDAO.getInstance();
 		UserBean userBean = account.getRecord(userid);
 		
 		UserBean sessionUserBean = (UserBean)req.getAttributeInSession("bean"+userid);
-		System.out.println("MakeServerCommand.java :\t\tユーザーID="+ userid);
-		System.out.println("MakeServerCommand.java :\t\tbeanユーザーID="+ sessionUserBean.getUser_id());
 		sessionUserBean = userBean;
 		
 		req.setAttributeInSession("bean"+userid, userBean);
-		//res.setTarget("/chat.jsp");
 		res.setRedirect("/chat.jsp?id="+userid);
 	}
 	

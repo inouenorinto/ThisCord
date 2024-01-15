@@ -141,9 +141,6 @@ public class NoticeServer {
 	        try {
 	            if (session.isOpen()) {
 	                session.getBasicRemote().sendText(json);
-	                System.out.println("NoticeServer.java :\t\topen");
-	            } else {
-	            	System.out.println("NoticeServer.java :\t\tno open");
 	            }
 	        } catch (IOException e) {
 	            e.printStackTrace();
