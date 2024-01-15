@@ -41,7 +41,6 @@ public class WebRequestContext implements RequestContext {
 		this.request = (HttpServletRequest) request;
 		this.parameters = this.request.getParameterMap();
 		this.session = this.request.getSession(true);
-		System.out.println(yellow+"WebRequestContext.java "+end+":\t\tセッションID="+ this.session.getId());
 	}
 	
 	@Override

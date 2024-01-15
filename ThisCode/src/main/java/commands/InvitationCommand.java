@@ -10,20 +10,24 @@ import framework.context.RequestContext;
 import framework.context.ResponseContext;
 
 public class InvitationCommand extends AbstractCommand {
-
+	String yellow = "\u001b[00;33m";
+	String end    = "\u001b[00m";
+	
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
 		int user_id = Integer.parseInt(req.getParameter("userId")[0]);
 		int server_id = Integer.parseInt(req.getParameter("serverId")[0]);
-		System.out.println("InvitationCommnd.java : userid "+ user_id + " server_id" + server_id);
-		res.setTarget("fn/chat");
+		int id = Integer.parseInt(req.getParameter("id")[0]);
+		System.out.println(yellow+"InvitationCommnd.java "+ end +": userid "+ user_id + " server_id" + server_id);
+		invaite(server_id, user_id);
+		res.setRedirect("/chat.jsp?id="+ id);
 	}
 	
 	private void invaite(int server_id, int user_id) {
 		Connection cn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO user_server_relationship (user_id, server_id) VALUES (?, ?);";
+		String SQL = "INSERT INTO us_relationship (user_id, server_id) VALUES (?, ?);";
 
 		try {
 			cn = MySqlManager.getConnection();

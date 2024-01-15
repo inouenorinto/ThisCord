@@ -12,7 +12,6 @@ public class GetUaserInfoCommand extends AbstractCommand {
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
 		int userId = Integer.parseInt(req.getParameter("id")[0]);
-		System.out.println(userId);
 		UserBean bean = (UserBean)req.getAttributeInSession("bean"+userId);
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");

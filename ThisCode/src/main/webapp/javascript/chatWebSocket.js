@@ -29,15 +29,15 @@ async function init() {
 
 	const firstServer = roomsMap.entries().next().value;
 	let firstServerId = null;
-	
-	if(firstServer != null) {
+
+	if (firstServer != null) {
 		firstServerId = firstServer[0];
 		registerNotice();
 		await joinRoom(firstServerId);
 	} else {
 		registerNotice();
 	}
-	
+
 	initform();
 }
 
@@ -45,8 +45,8 @@ async function init() {
 var queryString = window.location.search;
 
 function getIdFromQueryString(name) {
-    var urlParams = new URLSearchParams(queryString);
-    return urlParams.get(name);
+	var urlParams = new URLSearchParams(queryString);
+	return urlParams.get(name);
 }
 console.log(getIdFromQueryString('id'));
 //サーバーからユーザーデータを取得する関数
@@ -73,7 +73,7 @@ async function getUserInfo() {
 	const infoDiv = document.querySelector("#user");
 	infoDiv.innerHTML =
 		'<div class="user-box">' +
-		'<img class="user_icon_img" src="/ThisCord/resource/user_icons/' + user_icon + '"></img>' +
+		'<img class="user_icon_img" src="/ThisCord/resource/user_icons/' + user_icon + '" onerror="retryImageLoad(this, 10, 1000)"></img>' +
 		'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
 		'<p id="user-name">' + userinfo.user_name + '</p>' +
 		'<p id="user-id">' + userinfo.user_name + '-' + userid + '</p>' +
@@ -104,8 +104,8 @@ function registerNotice() {
 function createVoiceChannelIcon(members, channelId) {
 	const videoChannelElement = document.getElementById('channelMember-' + channelId);
 	console.log(videoChannelElement);
-	
-	console.log("メンバーの人数："+members.length);
+
+	console.log("メンバーの人数：" + members.length);
 	videoChannelElement.innerHTML = "";
 	for (let member of members) {
 
@@ -123,46 +123,54 @@ function closeVoiceChannel() {
 	joinVoiceChannel(nowVcId, nowUser, nowIcon);
 }
 
-//通知サーバーにボイスチャンネルに参加したことを通知する
+const homeContainerFluid = document.getElementById('container-fluid');
 let joinVoiceFlag = false;
 let nowVcId = null;
 let nowUser = null;
 let nowIcon = null;
+
+function closeVoiceChannel() {
+  joinVoiceChannel(nowVcId, nowUser, nowIcon);
+}
+
 function joinVoiceChannel(channelId, user, icon) {
-	//共通の通話終了ボタンからチャンネル切断できるように変数を保存する
-	if (joinVoiceFlag) {
-		sendDisconnectVoiceChannel(nowVcId, user);
+  if (joinVoiceFlag) { // 既に参加している場合は切断
+    homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
+    sendDisconnectVoiceChannel(nowVcId, user);
 
-		window.multi.stopVideo();
-		window.globalFunction.videoChat();
-		window.multi.hangUp();
+    window.multi.stopVideo();
+    window.globalFunction.videoChat();
+    window.multi.hangUp();
 
-		if (channelId === nowVcId) {
-			joinVoiceFlag = false;
-			nowVcId = null;
-		} else {
-			sendJoinVoiceChannel(channelId, user, icon);
-			joinVoiceFlag = true;
-			nowVcId = channelId;
+    if (channelId === nowVcId) { // 同じチャンネルの場合は切断
+      joinVoiceFlag = false;
+      nowUser = null;
+      nowVcId = null;
+      nowIcon = null;
+    } else { // 別のチャンネルに参加
+      homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+      sendJoinVoiceChannel(channelId, user, icon);
+      joinVoiceFlag = true;
+      nowVcId = channelId;
 
-			window.globalFunction.videoChat();
-			window.multi.connect(channelId);
-		}
+      window.globalFunction.videoChat();
+      window.multi.connect(channelId);
+    }
+  } else { // 参加
+    homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+    sendJoinVoiceChannel(channelId, user, icon);
+    joinVoiceFlag = true;
+    nowVcId = channelId;
 
-	} else {
-		sendJoinVoiceChannel(channelId, user, icon);
-		joinVoiceFlag = true;
-		nowVcId = channelId;
+    window.globalFunction.videoChat();
+    window.multi.connect(channelId);
 
-		window.globalFunction.videoChat();
-		window.multi.connect(channelId);
-
-		console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
-	}
+    console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
+  }
 }
 
 //通知サーバーにボイスチャンネルに参加したことを通知するJSON
-function sendJoinVoiceChannel(voiceChannelId, user, icon) {
+async function sendJoinVoiceChannel(voiceChannelId, user, icon) {
 	let json =
 	{
 		type: 'joinVoiceChannel',
@@ -245,14 +253,14 @@ function createChannelButton(channelInfo) {
 	channelsListDiv.innerHTML = "";
 
 	for (const [channel_id, channel_name] of channelInfo) {
- 		channelsListDiv.innerHTML += 
-		'<div class="text-channels" id="channel-id-' + channel_id + '">'+
-		    '<a class="textIcon" href="javascript:joinChannel(\'' + channel_id + '\')">'+
-		        '<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>'+
-		        channel_name +
-		    '</a>'+
-		    '<a class="invitationIcon"  data-bs-toggle="modal" data-bs-target="#invitationIconModal"><i class="fa-solid fa-user-plus fa-xs"></i></a>	'+
-		'</div>';
+		channelsListDiv.innerHTML +=
+			'<div class="text-channels" id="channel-id-' + channel_id + '">' +
+			'<a class="textIcon" href="javascript:joinChannel(\'' + channel_id + '\')">' +
+			'<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>' +
+			channel_name +
+			'</a>' +
+			'<a class="invitationIcon"  data-bs-toggle="modal" data-bs-target="#invitationIconModal"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
+			'</div>';
 	}
 }
 
@@ -263,7 +271,7 @@ function createVoiceChannelButton(channelInfo) {
 	channelsListDiv.innerHTML = "";
 
 	for (const [channel_id, channel_name] of channelInfo) {
-		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a onclick="joinVoiceChannel(\'' + channel_id + '\', \'' + username + '\',\'' + user_icon + '\')"><i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ' + channel_name + '</a></div><div id="channelMember-' + channel_id + '"></div>';
+		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a class="voice-channel-linc" onclick="joinVoiceChannel(\'' + channel_id + '\', \'' + username + '\',\'' + user_icon + '\')"><i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ' + channel_name + '</a></div><div id="channelMember-' + channel_id + '"></div>';
 	}
 }
 
@@ -433,23 +441,62 @@ function getDate() {
 	return year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
 }
 
-function initform(){
+function initform() {
 	const serverNameIn = document.getElementById('server_name');
 	console.log(username);
-	if(serverNameIn.value.length == 0) {
+	if (serverNameIn.value.length == 0) {
 		console.log(serverNameIn.value);
-		
+
 		serverNameIn.value = username + 'のサーバー';
 	} else {
 		console.log(serverNameIn.value);
 	}
-	
+
 	const inputServerId = document.getElementById('inputServerId');
 	inputServerId.value = nowRoomId;
-	
+
 	const MakeServerUserId = document.getElementById('MakeServerUserId');
 	MakeServerUserId.value = userid;
-	console.log('initform: ' + userid);
+	
+
+	invFriendList
+	getFriend('invFriendList');
+	
+	const formUserId = document.getElementById('formUserId');
+	formUserId.value = userid;
+
+}
+
+//フレンド追加モーダルにフレンドリストを表示する関数
+async function getFriend(element) {
+	const elm = document.getElementById(element);
+
+	try {
+		const response = await fetch('/ThisCord/fn/getfriendList?userId=' + userid);
+		if (response.ok) {
+			const json = await response.json();
+
+			for (let friend of json.friendList) {
+				elm.innerHTML +=
+					`<div class="fland-box">
+					  <button class="inv-friend-button" onclick="invFriendForm(${friend.user_id})">
+					    <div class="icon-name-wrapper">
+					      <img class="fland_icon_img" src="/ThisCord/resource/user_icons/${friend.user_icon}" />
+					      <div style="line-height: 17px; padding:4px 0px 4px 8px;">
+					        <p id="user-name">${friend.user_name}</p>
+					        <p id="user-id">${friend.user_name}-${friend.user_id}</p>
+					      </div>
+					    </div>
+					  </button>
+					</div>`;
+			}
+
+		} else {
+			console.error("Failed to fetch room information");
+		}
+	} catch (error) {
+		console.error("Error: " + error);
+	}
 }
 
 function form_crea(formId) {
@@ -468,45 +515,35 @@ function handleKeyPress(event) {
 	}
 }
 
-
-//画像を非同期でとってくる
 function retryImageLoad(imgElement, maxRetries, retryInterval) {
 	let retries = 0;
 
 	function loadImage() {
 		imgElement.onload = function() {
-			// 画像の読み込みが成功した場合
 			console.log('Image loaded successfully.');
 		};
 
 		imgElement.onerror = function() {
-			// 画像の読み込みがエラーの場合
 			if (retries < maxRetries) {
 				retries++;
-				
+
 				setTimeout(loadImage, retryInterval);
-			} else {
-				//console.error(`Failed to load image after ${maxRetries} attempts.`);
 			}
 		};
-
-		// 画像の読み込みを開始
 		imgElement.src = imgElement.src;
 	}
-
-	// 初回の画像読み込みを開始
 	loadImage();
 }
 
 
 //自動スクロール
 const main = document.getElementById('chat-scroll');
-function scrollEndfast(){
+function scrollEndfast() {
 	main.scrollTop = main.scrollHeight;
 	scrollEndfast();
 }
 
-function  scrollEnd(duration) {
+function scrollEnd(duration) {
 	var scrollHeight = main.scrollHeight;
 	var startPosition = main.scrollTop;
 	var startTime = performance.now();
@@ -544,7 +581,7 @@ const friendFormWarper = document.getElementById('friend-form-warper');
 const friendListWarpe = document.getElementById('friend-list-warpe');
 
 const homeChannelFlandList = document.getElementById('home-channel-fland-list');
-const homeContainerFluid = document.getElementById('container-fluid');
+//const homeContainerFluid = document.getElementById('container-fluid');
 const homeInfoList = document.getElementById('home-info-list');
 
 let joinHomeFlag = false;
@@ -560,11 +597,11 @@ function joinHome() {
 	friendFormWarper.classList.remove('none');
 	friendListWarpe.classList.remove('none');
 	homeChannelFlandList.classList.remove('none');
-	
+
 	homeInfoList.classList.remove('none');
-	homeContainerFluid.style.gridTemplateColumns ="72px 240px calc(100% - 729px) 417px";
-	
-	if(!joinHomeFlag) {
+	homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 729px) 417px";
+
+	if (!joinHomeFlag) {
 		joinHomeFlag = true;
 	}
 	getFriendList();
@@ -583,7 +620,7 @@ function toggleHome() {
 
 	homeChannelFlandList.classList.add('none');
 	homeInfoList.classList.add('none');
-	homeContainerFluid.style.gridTemplateColumns ="72px 240px calc(100% - 552px) 240px";
+	homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
 
 	joinHomeFlag = false;
 }
@@ -591,7 +628,7 @@ function toggleHome() {
 //ホームページでユーザ情報を表示する
 function showInfo() {
 	const infoElement = document.getElementById('info-wrapper');
-    const htmlCode = `
+	const htmlCode = `
     <div class="info-header"></div>
     <img class="info-icon-user-img" src="/ThisCord/resource/user_icons/default1.png">
     <div class="info-card">
@@ -611,7 +648,7 @@ function showInfo() {
       </div>
     </div>
   `;
-  
+
 	infoElement.innerHTML = htmlCode;
 }
 
@@ -637,40 +674,45 @@ async function sendFriendRequest() {
 	}
 }
 
+function invFriendForm(id){
+	const invitationInput = document.getElementById('invitationInput');
+	invitationInput.value = id;
+}
+
 //フレンドリストを表示する関数
 async function getFriendList() {
-	const friendListDiv = document.getElementById('friend-list'); 
-	friendListDiv.innerHTML ="";
+	const friendListDiv = document.getElementById('friend-list');
+	friendListDiv.innerHTML = "";
 	homeChannelFlandList.innerHTML = '';
 	try {
-		const response = await fetch('/ThisCord/fn/getfriendList?userId='+userid);
+		const response = await fetch('/ThisCord/fn/getfriendList?userId=' + userid);
 		if (response.ok) {
 			const json = await response.json();
-			
+
 			for (let friend of json.friendList) {
-				friendListDiv.innerHTML += 
-				'<div class="fland-box">' +
-				'<div class="icon-name-wrapper">'+
-				'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
-				'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
-				'<p id="user-name">' + friend.user_name + '</p>' +
-				'<p id="user-id">' + friend.user_name + '-' + friend.user_id + '</p>' +
-				'</div>' +
-				'</div>' +
-				'<div class="about-button">'+
-				'<i class="fa-solid fa-ellipsis-vertical"></i>'+
-				'</div>'+
-				'</div>';
-				
+				friendListDiv.innerHTML +=
+					'<div class="fland-box">' +
+					'<div class="icon-name-wrapper">' +
+					'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
+					'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
+					'<p id="user-name">' + friend.user_name + '</p>' +
+					'<p id="user-id">' + friend.user_name + '-' + friend.user_id + '</p>' +
+					'</div>' +
+					'</div>' +
+					'<div class="about-button">' +
+					'<i class="fa-solid fa-ellipsis-vertical"></i>' +
+					'</div>' +
+					'</div>';
+
 				homeChannelFlandList.innerHTML +=
-				'<div class="channel-fland-box">' +
-				'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
-				'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
-				'<p id="user-name">' + friend.user_name + '</p>' +
-				'</div>' +
-				'</div>';
+					'<div class="channel-fland-box">' +
+					'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
+					'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
+					'<p id="user-name">' + friend.user_name + '</p>' +
+					'</div>' +
+					'</div>';
 			}
-			
+
 		} else {
 			console.error("Failed to fetch room information");
 		}
@@ -681,14 +723,13 @@ async function getFriendList() {
 
 
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
+
