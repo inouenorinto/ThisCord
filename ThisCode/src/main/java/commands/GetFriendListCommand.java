@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import bean.JsonFriendListBean;
-import bean.UserBean;
 import bean.UserDataBean;
 import db.dao.FriendRelationshipDAO;
 import db.dao.UserDataDAO;
@@ -19,11 +18,9 @@ public class GetFriendListCommand extends AbstractCommand{
 		FriendRelationshipDAO dao = FriendRelationshipDAO.getInstance();
 		int userId = Integer.parseInt(req.getParameter("userId")[0]);
 		ArrayList<Integer> friendList = dao.getFriendList(userId);
-		
 
 		res.setCharacterEncoding("UTF-8");
 		res.getWriter().write(new Gson().toJson(setBean(friendList)));
-		System.out.println("GetFriendList.java: " + new Gson().toJson(setBean(friendList)));
 	}
 
 	public JsonFriendListBean setBean(ArrayList<Integer> friendList) {
