@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Thiscord</title>
 <!-- bootstrap css -->
 <link
@@ -32,11 +31,6 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;900&display=swap"
 	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-	crossorigin="anonymous">
 
 <!-- Googleフォント -->
 <link
@@ -52,6 +46,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/general.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/phoneChatPage.css">
 <!-- 独自javascript -->
 </head>
 <body>

@@ -1,0 +1,125 @@
+.channelList {
+    background-color: #2b2d31;
+    min-width: 65%;
+    border-radius: 15px 5px 0 15px;
+    overflow: auto;
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.channel-header {
+	padding: 0;
+	grid-area: channel-header;
+	background-color: rgb(43 45 49);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: space-between;
+	padding: 12px 16px 12px 16px;
+}
+
+#server {
+	font-weight: 700;
+	font-size: 15px;
+	color: #fff;
+	margin-left: 10px;
+}
+
+.channel-list {
+	grid-area: channel-list;
+	background-color: rgb(43 45 49);
+}
+
+.channel-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 87.5%;
+}
+
+.channel-title-nav {
+	text-decoration: none;
+	color: #949ba4;
+}
+
+.channel-title {
+	display: flex;
+	margin-left: 10px;
+	align-items: center;
+	font-size: 0.8em;
+	font-weight: 700;
+}
+
+.flexbox {
+	padding: 3px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.title-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #949ba4;
+}
+
+.invitation-link {
+	color: #949ba4;
+}
+
+.text-channels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1em;
+	font-weight: 500;
+	height: 34px;
+	width: 220px;
+	align-items: center;
+	padding: 6px 8px 6px 8px;
+
+	margin-top: 2px;
+	border-radius: 5px;
+}
+
+.voice-channel-linc{
+	text-decoration: none;
+	cursor: pointer;
+	color: #909ba4;
+	width: 100%;
+}
+
+
+.text-channels:hover {
+	
+	background-color: #404249;
+}
+
+.text-channels.clicked {
+	background-color: #404249;
+}
+
+.textIcon {
+	width: 100%;
+	text-decoration: none;
+	color: #949ba4;
+}
+
+.text-channels.clicked textIcon {
+	color: #fff;
+}
+
+.text-channels.clicked textIcon i {
+	white-space: nowrap;
+	color: #949ba4;
+}
+
+.invitationIcon{
+
+	color: #949ba4;
+	white-space: nowrap;
+}
+
+.invitationIcon:hover{
+	
+	
+	color: #fff;
+	
+}

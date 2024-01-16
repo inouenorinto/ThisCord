@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./spcss/reset.css">
+    <link rel="stylesheet" href="./spcss/spPage.css">
+    <link rel="stylesheet" href="./spcss/channelList.css">
+    <link rel="stylesheet" href="./spcss/serverList.css">
+    <link rel="stylesheet" href="./spcss/chatField.css">
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
+    <!--独自JS-->
+    <script src="./spjavascript/spFetch.js"></script>
+    
+    <title>Thiscord</title>
+</head>
+
+<body>
+    <div class="mainHeader"></div>
+    <div class="mainContainer">
+        <div class="serverList">
+            <div id="room-list"></div>
+        </div>
+        <div class="channelList">
+
+            <div class="channel-title-nav" style="color: #fff; padding: 0px 15px;">
+                <h3>チャンネル</h3>
+            </div>
+            <div id="channelsWrapper" class="channelsWrapper">
+                <div class="channel-title-nav">
+                    <div class="flexbox">
+                        <div class="flex-item title-item">
+                            <i class="fa-solid fa-angle-down fa-xs"></i> <span class="channel-title">テキストチャンネル</span>
+                        </div>
+                        <div class="flex-item">
+                            <a href="/ThisCord/createChannel.jsp" class="invitation-link">
+                                <i class="fa-solid fa-plus fa-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="channels-list"></div>
+
+                <div class="channel-title-nav">
+                    <div class="flexbox">
+                        <div class="flex-item title-item">
+                            <i class="fa-solid fa-angle-down fa-xs"></i> <span class="channel-title">ボイスチャンネル</span>
+                        </div>
+                        <div class="flex-item">
+                            <a id="videotest" href="/ThisCord/createChannel.jsp" class="invitation-link"> <i
+                                    class="fa-solid fa-plus fa-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="voice-channels-list"></div>
+            </div>
+        </div>
+        <div class="chatField">
+        </div>
+        
+    </div>
+    <div class="footer">
+        <div class="footerItem" class="link-content">
+            <a href="#">
+                <i class="fa-solid fa-server"></i>
+                <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">サーバ</p>
+            </a>
+            
+        </div>
+        <div class="footerItem">
+            <a href="#">
+                <i class="fa-solid fa-comment"></i>
+                <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">メッセージ</p>
+            </a>
+            
+        </div>
+        <div class="footerItem">
+            <a href="#">
+                <i class="fa-solid fa-bell"></i>
+                <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">通知</p>
+            </a>
+        </div>
+        <div class="footerItem">
+            <a href="#">
+                <i class="fa-solid fa-circle-user"></i>
+                <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">あなた</p>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

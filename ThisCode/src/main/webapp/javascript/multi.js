@@ -129,7 +129,8 @@ function getConnectionCount() {
 }
 
 function canConnectMore() {
-	return (getConnectionCount() < MAX_CONNECTION_COUNT);
+	//return (getConnectionCount() < MAX_CONNECTION_COUNT);
+	return true;
 }
 
 function isConnectedWith(id) {

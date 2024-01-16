@@ -135,7 +135,8 @@ function closeVoiceChannel() {
 
 function joinVoiceChannel(channelId, user, icon) {
   if (joinVoiceFlag) { // 既に参加している場合は切断
-    homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
+    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
+    homeContainerFluid.classList.add("video-grid-container");
     sendDisconnectVoiceChannel(nowVcId, user);
 
     window.multi.stopVideo();
@@ -148,7 +149,8 @@ function joinVoiceChannel(channelId, user, icon) {
       nowVcId = null;
       nowIcon = null;
     } else { // 別のチャンネルに参加
-      homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+      //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+      homeContainerFluid.classList.remove("video-grid-container");
       sendJoinVoiceChannel(channelId, user, icon);
       joinVoiceFlag = true;
       nowVcId = channelId;
@@ -157,7 +159,8 @@ function joinVoiceChannel(channelId, user, icon) {
       window.multi.connect(channelId);
     }
   } else { // 参加
-    homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+    homeContainerFluid.classList.remove("video-grid-container");
     sendJoinVoiceChannel(channelId, user, icon);
     joinVoiceFlag = true;
     nowVcId = channelId;
@@ -599,8 +602,9 @@ function joinHome() {
 	homeChannelFlandList.classList.remove('none');
 
 	homeInfoList.classList.remove('none');
-	homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 729px) 417px";
-
+	//homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 729px) 417px";
+	homeContainerFluid.classList.add('homepageGrid');
+	
 	if (!joinHomeFlag) {
 		joinHomeFlag = true;
 	}
@@ -620,7 +624,8 @@ function toggleHome() {
 
 	homeChannelFlandList.classList.add('none');
 	homeInfoList.classList.add('none');
-	homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
+	//homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
+	homeContainerFluid.classList.remove('homepageGrid');
 
 	joinHomeFlag = false;
 }
