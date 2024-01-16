@@ -122,6 +122,7 @@
 	display: flex;
 	align-items: center;
 	padding: 8px 5px;
+	text-decoration: none;
 }
 
 .fland_icon_img {
