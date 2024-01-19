@@ -10,4 +10,5 @@ public interface RequestContext {
 	public void setAttributeInSession(String key, Object obj);
 	public Object getAttributeInSession(String key);
 	public void setAttribute(String param, Object obj);
+	public String getDeviceType();
 }
