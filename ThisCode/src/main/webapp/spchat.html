@@ -69,7 +69,7 @@
                 </div>
 
                 <div id="chat-scroll" class="chat-scroll">
-                    <div id="message-container"></div>
+                    <div id="message-container" id="message-container"></div>
                 </div>
             </div>
             <div id="inputField" class="message-form-wrapper">
@@ -118,27 +118,25 @@
     </div>
 
 <!-- Modal -->
-    <div class="modal fade" id="invitationIconModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content invitation-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">フレンドをサーバーに招待する</h1>
-                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="close"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="modal-body invitation-body">
-                    <div class="invitation-form">
-                        <form class="invitation-form" action="fn/invite" method="post">
-                            <label>ユーザーIDを入力してフレンドを追加</label>
-                            <div class="invitation-wrapper">
-                                <input class="invitation-input" type="text" name="userId" id="invitationInput">
-                                <input id="inputServerId" type="hidden" name="serverId">
-                                <input id="formUserId" type="hidden" name="id">
-                                <button class="invitation-button" type="submit">送信</button>
-                            </div>
-                        </form>
-                        <div id="invFriendList"></div>
-                    </div>
+    <div class="invitation-modal" id="invitation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h3 class="modal-title">ユーザーIDを入力してフレンドを招待</h3>
+            </div>
+            <div class="modal-body invitation-body">
+                <div class="invitation-form">
+                    <form class="invitation-form" action="fn/invite" method="post">
+                        <div class="invitation-wrapper">
+                            <input class="invitation-input" type="text" name="userId" id="invitationInput">
+                            <input id="inputServerId" type="hidden" name="serverId">
+                            <input id="formUserId" type="hidden" name="id">
+                            <button class="invitation-button" type="submit">送信</button>
+                        </div>
+                    </form>
+                    <div id="invFriendList"></div>
                 </div>
             </div>
         </div>

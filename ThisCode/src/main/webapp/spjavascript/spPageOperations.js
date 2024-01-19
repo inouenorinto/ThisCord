@@ -55,6 +55,18 @@ let selectedChannel = null;
    }
    
 
+
+const invitationModal = document.getElementById("invitation-modal");
+
+function modalToggle() {
+    console.log("modalToggle")
+    invitationModal.classList.toggle('open');
+}
+
+function invFriendForm(id){
+	const invitationInput = document.getElementById('invitationInput');
+	invitationInput.value = id;
+}
    
    
 window.globalFunction = {};

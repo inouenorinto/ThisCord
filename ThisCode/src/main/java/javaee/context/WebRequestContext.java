@@ -17,6 +17,25 @@ public class WebRequestContext implements RequestContext {
 	
 	public WebRequestContext() {}
 	
+	
+	@Override
+	public String getDeviceType() {
+		String userAgent = request.getHeader("User-Agent");
+
+        // PCかスマートフォンかを判定
+        String deviceType = "Unknown";
+        if (userAgent != null) {
+            userAgent = userAgent.toLowerCase();
+
+            if (userAgent.contains("mobile") || userAgent.contains("android") || userAgent.contains("iphone")) {
+                deviceType = "Smartphone";
+            } else {
+                deviceType = "PC";
+            }
+        }
+        return deviceType;
+	}
+	
 	@Override
 	public String getCommandPath() {		
 		String path = request.getRequestURI();

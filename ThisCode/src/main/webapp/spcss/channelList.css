@@ -111,15 +111,214 @@
 	color: #949ba4;
 }
 
-.invitationIcon{
 
+
+/* modal */
+#user-name {
+	margin: 0;
+	color: #fff;
+	font-size: 13px;
+}
+
+#user-id {
+	margin: 0;
+	color: #b5bac1;
+	font-size: 11px;
+}
+
+.invitation-modal {
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;	
+}
+
+.invitation-modal.open {
+	top: 0;
+	height: 100%;
+}
+
+.modal-content {
+	bottom: 0;
+	position: absolute;
+	height: 85%;
+	width: 100%;
+	background-color: #27282c;
+	border-radius: 10px;
+	padding: 10px;
+}
+.modal-header {
+	color: #fff;
+	height: 50px;
+}
+
+.modal-title {
+	text-align: center;
+	margin-top: 40px;	
+}
+
+
+.close-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	color: #fff;
+	z-index: 2;
+	font-size: 26px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 35px;
+	height: 35px;
+	background-color: #313338;
+	border-radius: 50%;
+}
+
+.invitationIcon{
 	color: #949ba4;
 	white-space: nowrap;
 }
 
 .invitationIcon:hover{
-	
-	
 	color: #fff;
+}
+
+.modal-body {
+	height: 100%;
+}
+
+.invitation-content {
+    background-color: #313338;
+    color: #fff;
+    padding-bottom: 20px;
+    height: 400px;
+}
+
+.invitation-body {
+    padding: 0px 8px 0px 16px;
+    border: none;
+    height: 150px;
+    position: relative;
+}
+
+#invitationIconModal .modal-content {
+    border: none;
+}
+
+.invitation-form {
+	color:#fff;
+	font-size: 20px;
+    padding: 0px 15px 0px 15px;
+/*    position: absolute;*/
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.invitation-wrapper {
+    position: relative;
+    background-color: #1e1f22;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.invitation-input {
+    position: absolute;
+    left: 5px;
+    border: none;
+    background-color: #1e1f22;
+    color: #fff;
+    width: 80%;
+}
+
+.invitation-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.invitation-button {
+    position: absolute;
+    right: 4px;
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    color: "#fff;";
+    width: 75px;
+    height: 32px;
+}
+
+.inv-friend-button{
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	width: 100%;
+}
+
+
+#invFriendList {
+	border-radius:15px;
+	margin-top: 20px;
+	height: 100%;
+	overflow-y: scroll;
+	background-color: #2b2d31;
+	padding: 10px 20px;
+}
+
+/*フレンドリスト*/
+#friend-list-warpe{
+	padding: 0px 30px;
+}
+
+.fland-box {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px solid #656871;
+}
+.icon-name-wrapper{
+	display: flex;
+	align-items: center;
 	
+	padding: 5px 0px;
+}
+
+.channel-fland-box{
+	display: flex;
+	align-items: center;
+	padding: 8px 5px;
+}
+
+.fland_icon_img {
+	border-radius: 50%;
+	height: 32px;
+	width: 32px;
+}
+
+.about-button{
+	width:35px;
+	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #2b2d31;
+	border-radius:50%;
+	
+}
+
+.inv-button {
+	position: absolute;
+	right: 42px;
+	padding: 2px 16px;
+	border-radius: 5px;
+	border:1px solid #23a55a;
+	color: #23a55a;
 }

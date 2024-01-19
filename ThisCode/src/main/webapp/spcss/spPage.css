@@ -17,7 +17,6 @@ html body {
     display: flex;
     height: calc(100% - 40px);
     z-index: 1;
-    transition: transform 0.3s ease-in-out;
 }
 
  .container {
@@ -64,5 +63,68 @@ html body {
 }
 
 
+/*modal*/
 
+
+.invitation-form {
+    padding: 0px 15px 0px 15px;
+/*    position: absolute;*/
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.invitation-wrapper {
+    position: relative;
+    background-color: #1e1f22;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.invitation-input {
+    position: absolute;
+    left: 5px;
+    border: none;
+    background-color: #1e1f22;
+    color: #fff;
+    width: 80%;
+}
+
+.invitation-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.invitation-button {
+    position: absolute;
+    right: 4px;
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    color: "#fff;";
+    width: 75px;
+    height: 32px;
+}
+
+.inv-friend-button{
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	width: 100%;
+}
+.inv-friend-button:hover {
+	border-radius: 5px;
+	background-color: #404249;
+}
+
+#invFriendList {
+	margin-top: 20px;
+	height: 200px;
+	overflow-y: scroll;
+}
 

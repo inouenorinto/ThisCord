@@ -19,8 +19,16 @@ public class LoginCommand extends AbstractCommand {
 		
 		if(userBean != null && Encryption.check(password, userBean.getPassword())) {
 			
+			String deviceType = req.getDeviceType();
+			String target = null;
+			if(deviceType == "Smartphone") {
+				target = "spchat.html";
+			} else {
+				target ="chat.html";
+			} 
+			
         	req.setAttributeInSession("bean"+userBean.getUser_id(), userBean);
-			res.setRedirect("/chat.jsp?id="+userBean.getUser_id());
+			res.setRedirect("/"+target+"?id="+userBean.getUser_id());
 		} else {
 			res.setTarget("/login.html");
 		}

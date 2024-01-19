@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,9 +42,9 @@
 
 <!-- 独自css -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/general.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/phoneChatPage.css">
+	href="./css/general.css">
+<link rel="stylesheet" href="./css/homepage.css">
+<link rel="stylesheet" href="./css/phoneChatPage.css">
 <!-- 独自javascript -->
 </head>
 <body>
@@ -56,7 +54,7 @@
 
 	<div id="container-fluid" class="container-fluid">
 
-		<!---------------------------------- サーバー一覧(server-list) -------------------------------->
+		<!--*************************************** サーバー一覧(server-list) ***************************************-->
 		<div id="server-list" class="server-scroll server-list">
 
 			<!-- ホームボタン -->
@@ -86,12 +84,12 @@
 			</div>
 		</div>
 
-		<!---------------------------- チャンネルメヘッダー(channel-header) --------------------------->
+		<!--*************************************** チャンネルメヘッダー(channel-header)***************************************-->
 		<div class="radius-lefttop text-center channel-header text-color">
 			<div id="server"></div>
 			<i class="fa-solid fa-angle-down fa-xs"></i>
 		</div>
-		<!-------------------------------- チャンネル一覧 (channel-list)------------------------------->
+		<!--*************************************** チャンネル一覧 (channel-list)***************************************-->
 		<div class="channel-list">
 			<!-- 一覧 -->
 			<div class="channel-scroll text-box">
@@ -197,7 +195,7 @@
 				</div>
 			</div>
 		</div>
-		<!-------------------------------- ビデオフィールド(video-field)------------------------------->
+		<!--*************************************** ビデオフィールド(video-field)***************************************-->
 		<div id="video-field" class="video-field none">
 			
 			<div id="video-play-field" class="video-play-field container">
@@ -217,7 +215,7 @@
 			</div>
 		</div>
 
-		<!---------------------------- チャットメニューバー(server-header) ---------------------------->
+		<!--***************************************チャットメニューバー(server-header)***************************************-->
 		<div id="server-header" class="text-center server-header">
 			<div class="channle-name">
 				<div id="serverHeaderWrapper" class="flexbox">
@@ -227,7 +225,7 @@
 					</div>
 				</div>
 			</div>
-			<!----------------------------------------ホームページヘッダー------------------------------------------->
+			<!--***************************************ホームページヘッダー***************************************-->
 			<div id="home-nav" class="none">
 				<div class="home-nav-warper">
 					<div class="friend-warper">
@@ -245,7 +243,7 @@
 			</div>
 		</div>
 
-		<!------------------------------- チャットフィールド(chat-field) ------------------------------>
+		<!--*************************************** チャットフィールド(chat-field) ***************************************-->
 		<div id="chat-field" class="chat-field text-box text-color">
 			<div id="chat-scroll" class="chat-scroll">
 				<div id="friend-form-warper" class="none">
@@ -277,7 +275,7 @@
 				</div>
 			</div>
 		</div>
-		<!-------------------------------- メンバーリスト(member-list) -------------------------------->
+		<!--*************************************** メンバーリスト(member-list) ***************************************-->
 		<div id="member-list" class="member-scroll member-list">
 			<div id="member-list-wrapper">
 				<div class="text-box">
@@ -289,12 +287,6 @@
 				<div class="info-wrapper" id="info-wrapper"></div>
 			</div>
 		</div>
-
-		<!--
-		<div class="col-md">
-		スマホ用画面
-		</div>
-		-->
 
 	</div>
 
@@ -408,12 +400,12 @@
     </div>
 	
 	<script
-		src="${pageContext.request.contextPath}/javascript/chatWebSocket.js"></script>
+		src="./javascript/chatWebSocket.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/javascript/createServer.js"></script>
-	<script src="${pageContext.request.contextPath}/javascript/multi.js"></script>
+		src="./javascript/createServer.js"></script>
+	<script src="./javascript/multi.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/javascript/chatPageOperations.js"></script>
+		src="./javascript/chatPageOperations.js"></script>
 	<script src="https://kit.fontawesome.com/c82cac4dcf.js"
 		crossorigin="anonymous"></script>
 	<script

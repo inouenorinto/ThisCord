@@ -20,7 +20,16 @@ public class InvitationCommand extends AbstractCommand {
 		int id = Integer.parseInt(req.getParameter("id")[0]);
 		System.out.println(yellow+"InvitationCommnd.java "+ end +": userid "+ user_id + " server_id" + server_id);
 		invaite(server_id, user_id);
-		res.setRedirect("/chat.jsp?id="+ id);
+		
+		String deviceType = req.getDeviceType();
+		String target = null;
+		if(deviceType == "Smartphone") {
+			target = "spchat.html";
+		} else {
+			target ="chat.html";
+		} 
+		
+		res.setRedirect("/"+target+"?id="+ id);
 	}
 	
 	private void invaite(int server_id, int user_id) {

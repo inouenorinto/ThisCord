@@ -25,8 +25,8 @@ function disableScroll(event) {
 	event.preventDefault();
 }
 async function init() {
-	document.addEventListener('touchmove', disableScroll, { passive: false });
-	document.addEventListener('mousewheel', disableScroll, { passive: false });
+	//document.addEventListener('touchmove', disableScroll, { passive: false });
+	//document.addEventListener('mousewheel', disableScroll, { passive: false });
 
 	await getUserInfo();
 
@@ -42,32 +42,50 @@ async function init() {
 	}
 	setSwipe(".fieldWrapper");
 	//initform();
+	getFriend('invFriendList');
+
 }
 
 //スワイプイベントの設定
 function setSwipe(elem) {
 	let t = document.querySelector(elem);
-	let startX; // タッチ開始 x座標
-	let startY; // タッチ開始 y座標
-	let moveX; // スワイプ中の x座標
-	let moveY; // スワイプ中の y座標
-	let dist = 30; // スワイプを感知する最低距離（ピクセル単位）
+	let startX;
+	let startY;
+	let moveX;
+	let moveY;
+	let dist = 50;
+	let oldX = 0;
+	let oldY = 0;
 
-	// タッチ開始時： xy座標を取得
 	t.addEventListener("touchstart", function (e) {
 		e.preventDefault();
-		startX = e.touches[0].pageX;
-		startY = e.touches[0].pageY;
+		oldX = startX = e.touches[0].pageX;
+		oldY = startY = e.touches[0].pageY;
 	});
 
-	// スワイプ中： xy座標を取得
 	t.addEventListener("touchmove", function (e) {
-		e.preventDefault();
+
 		moveX = e.changedTouches[0].pageX;
 		moveY = e.changedTouches[0].pageY;
+		console.log("X:" + moveX + " Y:" + moveY)
+
+		var chatScrollElement = document.getElementById("chat-scroll");
+		console.log(oldY - moveY);
+		console.log(chatScrollElement.scrollTop);
+		let sum = chatScrollElement.scrollTop + (oldY - moveY);
+		if (sum < 0) {
+			chatScrollElement.scrollTop = 0;
+		} else if (sum > chatScrollElement.scrollHeight - chatScrollElement.clientHeight) {
+			chatScrollElement.scrollTop = chatScrollElement.scrollHeight - chatScrollElement.clientHeight;
+		} else {
+			chatScrollElement.scrollTop = sum;
+		}
+
+		oldX = moveX;
+		oldY = moveY;
 	});
 
-	// タッチ終了時： スワイプした距離から左右どちらにスワイプしたかを判定する
+
 	t.addEventListener("touchend", function (e) {
 		let footer = document.getElementById("footer");
 		if (startX > moveX && startX > moveX + dist) {
@@ -90,9 +108,52 @@ function toggleFooter() {
 	}
 }
 
+//フレンド追加モーダルにフレンドリストを表示する関数
+async function getFriend(element) {
+	const elm = document.getElementById(element);
+
+	try {
+		const response = await fetch('/ThisCord/fn/getfriendList?userId=' + userid);
+		if (response.ok) {
+			const json = await response.json();
+
+			for (let friend of json.friendList) {
+				elm.innerHTML +=
+					`<div class="fland-box">
+					  <div class="inv-friend-button">
+					    <div class="icon-name-wrapper">
+					      <img class="fland_icon_img" src="/ThisCord/resource/user_icons/${friend.user_icon}" />
+					      <div style="line-height: 17px; padding:4px 0px 4px 8px;">
+					        <p id="user-name">${friend.user_name}</p>
+					        <p id="user-id">${friend.user_name}-${friend.user_id}</p>
+					      </div>
+						  <button class="inv-button" value="招待" onclick="invFriendForm(${friend.user_id})">
+							<p>招待</p>
+						</button>
+					    </div>
+					  </div>
+					</div>`;
+			}
+
+		} else {
+			console.error("Failed to fetch room information");
+		}
+	} catch (error) {
+		console.error("Error: " + error);
+	}
+}
+
+// クエリ文字列からidパラメータの値を取得する関数
+var queryString = window.location.search;
+
+function getIdFromQueryString(name) {
+	var urlParams = new URLSearchParams(queryString);
+	return urlParams.get(name);
+}
+
 async function getUserInfo() {
 	try {
-		const response = await fetch("/ThisCord/fn/getuserinfo?id=1");
+		const response = await fetch("/ThisCord/fn/getuserinfo?id=" + getIdFromQueryString('id'));
 
 		if (response.ok) {
 
@@ -137,7 +198,7 @@ function createChannelButton(channelInfo) {
 			'<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>' +
 			channel_name +
 			'</a>' +
-			'<a class="invitationIcon"  data-bs-toggle="modal" data-bs-target="#invitationIconModal"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
+			'<a class="invitationIcon" onclick="modalToggle()"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
 			'</div>';
 	}
 }
