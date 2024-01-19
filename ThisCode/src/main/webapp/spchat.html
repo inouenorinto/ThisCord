@@ -13,9 +13,9 @@
     <!-- icon -->
     <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
     <!--独自JS-->
-    
-    
-    
+
+
+
     <title>Thiscord</title>
 </head>
 
@@ -28,7 +28,9 @@
         <div class="channelList">
 
             <div class="channel-title-nav" style="color: #fff; padding: 0px 15px;">
-                <h3><div id="server"></div></h3>
+                <h3>
+                    <div id="server"></div>
+                </h3>
             </div>
             <div id="channelsWrapper" class="channelsWrapper">
                 <div class="channel-title-nav">
@@ -73,20 +75,20 @@
                 </div>
             </div>
             <div id="inputField" class="message-form-wrapper">
-				<div id="chat" class="message_div">
-					<i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i>
-                    <input type="text"id="message-input" class="message_input" placeholder="メッセージを送信">
-				</div>
+                <div id="chat" class="message_div">
+                    <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i>
+                    <input type="text" id="message-input" class="message_input" placeholder="メッセージを送信">
+                </div>
                 <button class="send-button" onclick="sendMessage()" id="send-button">
                     <i class="fa-solid fa-paper-plane" style="color: #fff;"></i>
                 </button>
-			</div>
+            </div>
         </div>
 
         <div class="memberList" id="members-list">
             <div id="members-lists"></div>
         </div>
-        
+
     </div>
     <div class="footer open-footer" id="footer">
         <div class="footerItem" class="link-content">
@@ -94,14 +96,14 @@
                 <i class="fa-solid fa-server"></i>
                 <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">サーバ</p>
             </a>
-            
+
         </div>
         <div class="footerItem">
             <a href="#">
                 <i class="fa-solid fa-comment"></i>
                 <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">メッセージ</p>
             </a>
-            
+
         </div>
         <div class="footerItem">
             <a href="#">
@@ -117,11 +119,11 @@
         </div>
     </div>
 
-<!-- Modal -->
+    <!-- Modal -->
     <div class="invitation-modal" id="invitation-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <button id="modalToggle" class="close-button" onclick="modalToggle()">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('invitation-modal')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
                 <h3 class="modal-title">ユーザーIDを入力してフレンドを招待</h3>
@@ -142,8 +144,29 @@
         </div>
     </div>
 
+    <!--video modal-->
+
+    <div class="video_modal open" id="video_modal">
+        <div class="video_modal_content">
+            <div class="video_modal_header">
+                <button id="modalToggle" class="video-close-button" onclick="modalToggle('video_modal')">
+                    <i class="fa-solid fa-angle-down" style="padding: 0;"></i>
+                </button>
+            </div>
+            <div class="video_modal_body">
+                <div class="video_play">
+                    <div id="video-play-field" class="video-play-field">
+                        <video id="local_video" class="video-element" autoplay></video>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <script src="./spjavascript/spPageOperations.js"></script>
     <script src="./spjavascript/spFetch.js"></script>
+    <script src="./spjavascript/spmulti.js"></script>
 </body>
 
 </html>

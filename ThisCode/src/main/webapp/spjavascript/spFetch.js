@@ -198,7 +198,7 @@ function createChannelButton(channelInfo) {
 			'<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>' +
 			channel_name +
 			'</a>' +
-			'<a class="invitationIcon" onclick="modalToggle()"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
+			'<a class="invitationIcon" onclick="modalToggle(\'invitation-modal\')"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
 			'</div>';
 	}
 }
@@ -332,7 +332,7 @@ function createVoiceChannelButton(channelInfo) {
 	channelsListDiv.innerHTML = "";
 
 	for (const [channel_id, channel_name] of channelInfo) {
-		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a class="voice-channel-linc" onclick="joinVoiceChannel(\'' + channel_id + '\', \'' + username + '\',\'' + user_icon + '\')"><i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ' + channel_name + '</a></div><div id="channelMember-' + channel_id + '"></div>';
+		channelsListDiv.innerHTML += '<div class="text-channels" id="channel-id-' + channel_id + '"><a class="voice-channel-linc" onclick="modalToggle(\'video_modal\'); joinVoiceChannel(\'' + channel_id + '\', \'' + username + '\',\'' + user_icon + '\')"><i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ' + channel_name + '</a></div><div id="channelMember-' + channel_id + '"></div>';
 	}
 }
 
@@ -395,6 +395,23 @@ function registerNotice() {
 	noticeSocket.onclose = event => {
 		console.log("通知サーバー切断 :", event);
 	};
+}
+
+function createVoiceChannelIcon(members, channelId) {
+	const videoChannelElement = document.getElementById('channelMember-' + channelId);
+	console.log(videoChannelElement);
+
+	console.log("メンバーの人数：" + members.length);
+	videoChannelElement.innerHTML = "";
+	for (let member of members) {
+
+		//videoChannelElement.innerHTML +='<div>'+ member.user +'</div>';
+		videoChannelElement.innerHTML +=
+			'<div class="voice-channel-member">' +
+			'<img class="voice-channel-icon" src="/ThisCord/resource/user_icons/' + member.icon + '">' +
+			'<div class="voice-channel-user">' + member.user + '</div>' +
+			'</div>';
+	}
 }
 
 async function getMessageInfo(channel_id) {
@@ -478,3 +495,80 @@ function scrollEnd(duration) {
 	requestAnimationFrame(scrollAnimation);
 }
 
+function closeVoiceChannel() {
+	joinVoiceChannel(nowVcId, nowUser, nowIcon);
+}
+
+const homeContainerFluid = document.getElementById('container-fluid');
+let joinVoiceFlag = false;
+let nowVcId = null;
+let nowUser = null;
+let nowIcon = null;
+
+function closeVoiceChannel() {
+  joinVoiceChannel(nowVcId, nowUser, nowIcon);
+}
+
+function joinVoiceChannel(channelId, user, icon) {
+  if (joinVoiceFlag) { // 既に参加している場合は切断
+    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
+    //homeContainerFluid.classList.add("video-grid-container");
+    sendDisconnectVoiceChannel(nowVcId, user);
+
+    window.multi.stopVideo();
+    window.globalFunction.videoChat();
+    window.multi.hangUp();
+
+    if (channelId === nowVcId) { // 同じチャンネルの場合は切断
+      joinVoiceFlag = false;
+      nowUser = null;
+      nowVcId = null;
+      nowIcon = null;
+    } else { // 別のチャンネルに参加
+      //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+      //homeContainerFluid.classList.remove("video-grid-container");
+      sendJoinVoiceChannel(channelId, user, icon);
+      joinVoiceFlag = true;
+      nowVcId = channelId;
+
+      window.globalFunction.videoChat();
+      window.multi.connect(channelId);
+    }
+  } else { // 参加
+    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
+    //homeContainerFluid.classList.remove("video-grid-container");
+    sendJoinVoiceChannel(channelId, user, icon);
+    joinVoiceFlag = true;
+    nowVcId = channelId;
+
+    window.globalFunction.videoChat();
+    window.multi.connect(channelId);
+
+    console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
+  }
+}
+
+//通知サーバーにボイスチャンネルに参加したことを通知するJSON
+async function sendJoinVoiceChannel(voiceChannelId, user, icon) {
+	let json =
+	{
+		type: 'joinVoiceChannel',
+		serverId: nowRoomId,
+		voiceChannelid: voiceChannelId,
+		user: user,
+		icon: icon
+	};
+	noticeSocket.send(JSON.stringify(json));
+}
+
+//通知サーバーにボイスチャンネルから切断したことを通知するJSON
+function sendDisconnectVoiceChannel(voiceChannelId, user) {
+	let json =
+	{
+		type: 'disconnectVoiceChannel',
+		serverId: nowRoomId,
+		voiceChannelid: voiceChannelId,
+		user: user,
+	};
+	noticeSocket.send(JSON.stringify(json));
+}

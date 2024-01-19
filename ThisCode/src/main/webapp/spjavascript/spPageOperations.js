@@ -13,12 +13,12 @@ function videoChat(){
 	} else {
 		videoDisplay = false;
 	}
-    videoField.classList.toggle('none');
-    serverHeader.classList.toggle('none');
-    chatField.classList.toggle('none');
-    memberList.classList.toggle('none');
-    mediaInterface.classList.toggle('none');
-    containerFluid.classList.toggle('video-container');
+    //videoField.classList.toggle('none');
+    //serverHeader.classList.toggle('none');
+    //chatField.classList.toggle('none');
+    //memberList.classList.toggle('none');
+    //mediaInterface.classList.toggle('none');
+    //containerFluid.classList.toggle('video-container');
 }
 
 // const micro = document.getElementById('microphone');
@@ -54,13 +54,10 @@ let selectedChannel = null;
         selectedChannel = element;
    }
    
-
-
-const invitationModal = document.getElementById("invitation-modal");
-
-function modalToggle() {
-    console.log("modalToggle")
-    invitationModal.classList.toggle('open');
+function modalToggle(element) {
+    const elem = document.getElementById(element);
+    console.log(elem)
+    elem.classList.toggle('open');
 }
 
 function invFriendForm(id){
@@ -73,3 +70,4 @@ window.globalFunction = {};
 window.globalFunction.toggleClickedState = toggleClickedState;
 window.globalFunction.toggleChannelState = toggleChannelState;
 window.globalFunction.videoChat = videoChat;
+
