@@ -358,7 +358,7 @@
 }
 
 .video_modal_content {
-	display: flex;
+	/* display: flex; */
 	bottom: 0;
 	position: absolute;
 	justify-content: center;
@@ -378,6 +378,9 @@
 	height: 100%;
 	width: 100%;
 	padding: 10px;
+
+	overflow: scroll;
+
 }
 
 .video_modal_header {
@@ -390,12 +393,15 @@
 }
 .video_play {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
 }
 
 .video-play-field {
-	
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 	
 }
 
@@ -407,26 +413,29 @@
     background-color: rgba(0, 0, 0, 0.2);
     object-fit: cover;
 	margin-bottom: 10px;
-    
-    
 }
 
-
-
 .video-controller {
+	display: flex;
 	width: 100%;
-	position: relative;
-	bottom: 10%;
-	
+	position: fixed;
+	justify-content: center;
 }
 
 .controller-wrapper {
 	display: flex;
 	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 50px;
+	padding: 10px 0px 10px 0px;
 	
 }
 
 .contoroller-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	background-color: #232428;
 	color: #fff;
 	border-radius: 50%;
@@ -437,6 +446,10 @@
 }
 
 .contoroller-item-phone-slash {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	background-color: #ed4245;
 	color: #fff;
 	border-radius: 50%;
@@ -461,4 +474,16 @@
 .voice-channel-user {
 	color: #9097a0;
 	font-size : 13px;
+}
+
+.over {
+	width: 48.5%;
+}
+
+
+.draggable {
+	position: absolute;
+	cursor: grab;
+	touch-action: none; /* Disable default touch actions to improve touch responsiveness */
+	z-index: 3;
 }

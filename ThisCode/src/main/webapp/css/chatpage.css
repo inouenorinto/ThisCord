@@ -4,6 +4,34 @@ body{
 	font-family: 'Noto Sans JP', sans-serif ;
 }
 
+.server-header {
+	z-index: 1;
+	grid-area: server-header;
+	background-color: rgb(49 51 56);
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
+	padding: 8px;
+}
+
+.server-list {
+	grid-area: server-list;
+	background-color: rgb(30 31 34);
+	padding-top: 12px;
+}
+
+.server-list-item {
+	margin-bottom: 8px;
+}
+
+.server-scroll {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+}
+
+.server-scroll::-webkit-scrollbar {
+	display: none;
+}
+
 .plus_button{
 	position: relative;
 	background-color: #2B2D31;

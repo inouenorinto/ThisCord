@@ -287,6 +287,7 @@ function deleteRemoteVideoElement(id) {
 }
 
 function createVideoElement(elementId) {
+	let video_element = document.querySelectorAll('.video-element');
     let video = document.createElement('video');
     video.width = '584';
     video.height = '321.500';
@@ -294,9 +295,7 @@ function createVideoElement(elementId) {
 
     video.classList.add('video-element');
     video.autoplay = true;
-
     container.appendChild(video);
-
     return video;
 }
 

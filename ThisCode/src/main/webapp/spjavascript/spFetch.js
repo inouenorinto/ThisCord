@@ -67,11 +67,8 @@ function setSwipe(elem) {
 
 		moveX = e.changedTouches[0].pageX;
 		moveY = e.changedTouches[0].pageY;
-		console.log("X:" + moveX + " Y:" + moveY)
 
 		var chatScrollElement = document.getElementById("chat-scroll");
-		console.log(oldY - moveY);
-		console.log(chatScrollElement.scrollTop);
 		let sum = chatScrollElement.scrollTop + (oldY - moveY);
 		if (sum < 0) {
 			chatScrollElement.scrollTop = 0;
@@ -84,7 +81,6 @@ function setSwipe(elem) {
 		oldX = moveX;
 		oldY = moveY;
 	});
-
 
 	t.addEventListener("touchend", function (e) {
 		let footer = document.getElementById("footer");
@@ -106,6 +102,11 @@ function toggleFooter() {
 	} else {
 		footer.classList.add("open-footer");
 	}
+}
+
+function toggleChatField() {
+	document.querySelector(".chatField").classList.toggle("active");
+	document.getElementById("footer").classList.toggle('open-footer');
 }
 
 //フレンド追加モーダルにフレンドリストを表示する関数
@@ -164,7 +165,6 @@ async function getUserInfo() {
 			rooms = userinfo.servers;
 			roomsMap = new Map(Object.entries(rooms));
 			createRoomB(roomsMap);
-			console.log(userinfo);
 		} else {
 			console.error("Failed to fetch room information");
 		}
@@ -230,7 +230,6 @@ async function joinRoom(roomId) {
 		icon: user_icon
 	};
 	noticeSocket.send(JSON.stringify(json));
-	console.log(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
 	toggleHome();
 }
@@ -251,7 +250,6 @@ function joinChannel(channel_id) {
 	};
 
 	chatSocket.onmessage = event => {
-		console.log("Received message: " + event.data);
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
 		//chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
@@ -507,36 +505,21 @@ let nowIcon = null;
 
 function closeVoiceChannel() {
   joinVoiceChannel(nowVcId, nowUser, nowIcon);
+  sendDisconnectVoiceChannel(nowVcId, nowUser);
+
+  window.multi.stopVideo();
+  window.globalFunction.videoChat();
+  window.multi.hangUp();
+
+  joinVoiceFlag = false;
+  nowUser = null;
+  nowVcId = null;
+  nowIcon = null;
 }
 
 function joinVoiceChannel(channelId, user, icon) {
-  if (joinVoiceFlag) { // 既に参加している場合は切断
-    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
-    //homeContainerFluid.classList.add("video-grid-container");
-    sendDisconnectVoiceChannel(nowVcId, user);
+  if (!joinVoiceFlag) { // 既に参加している場合は切断
 
-    window.multi.stopVideo();
-    window.globalFunction.videoChat();
-    window.multi.hangUp();
-
-    if (channelId === nowVcId) { // 同じチャンネルの場合は切断
-      joinVoiceFlag = false;
-      nowUser = null;
-      nowVcId = null;
-      nowIcon = null;
-    } else { // 別のチャンネルに参加
-      //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
-      //homeContainerFluid.classList.remove("video-grid-container");
-      sendJoinVoiceChannel(channelId, user, icon);
-      joinVoiceFlag = true;
-      nowVcId = channelId;
-
-      window.globalFunction.videoChat();
-      window.multi.connect(channelId);
-    }
-  } else { // 参加
-    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
-    //homeContainerFluid.classList.remove("video-grid-container");
     sendJoinVoiceChannel(channelId, user, icon);
     joinVoiceFlag = true;
     nowVcId = channelId;
