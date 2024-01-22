@@ -67,11 +67,8 @@ function setSwipe(elem) {
 
 		moveX = e.changedTouches[0].pageX;
 		moveY = e.changedTouches[0].pageY;
-		console.log("X:" + moveX + " Y:" + moveY)
 
 		var chatScrollElement = document.getElementById("chat-scroll");
-		console.log(oldY - moveY);
-		console.log(chatScrollElement.scrollTop);
 		let sum = chatScrollElement.scrollTop + (oldY - moveY);
 		if (sum < 0) {
 			chatScrollElement.scrollTop = 0;
@@ -84,7 +81,6 @@ function setSwipe(elem) {
 		oldX = moveX;
 		oldY = moveY;
 	});
-
 
 	t.addEventListener("touchend", function (e) {
 		let footer = document.getElementById("footer");
@@ -169,7 +165,6 @@ async function getUserInfo() {
 			rooms = userinfo.servers;
 			roomsMap = new Map(Object.entries(rooms));
 			createRoomB(roomsMap);
-			console.log(userinfo);
 		} else {
 			console.error("Failed to fetch room information");
 		}
@@ -235,7 +230,6 @@ async function joinRoom(roomId) {
 		icon: user_icon
 	};
 	noticeSocket.send(JSON.stringify(json));
-	console.log(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
 	toggleHome();
 }
@@ -256,7 +250,6 @@ function joinChannel(channel_id) {
 	};
 
 	chatSocket.onmessage = event => {
-		console.log("Received message: " + event.data);
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
 		//chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
