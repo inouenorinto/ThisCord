@@ -108,6 +108,11 @@ function toggleFooter() {
 	}
 }
 
+function toggleChatField() {
+	document.querySelector(".chatField").classList.toggle("active");
+	document.getElementById("footer").classList.toggle('open-footer');
+}
+
 //フレンド追加モーダルにフレンドリストを表示する関数
 async function getFriend(element) {
 	const elm = document.getElementById(element);
@@ -507,36 +512,21 @@ let nowIcon = null;
 
 function closeVoiceChannel() {
   joinVoiceChannel(nowVcId, nowUser, nowIcon);
+  sendDisconnectVoiceChannel(nowVcId, nowUser);
+
+  window.multi.stopVideo();
+  window.globalFunction.videoChat();
+  window.multi.hangUp();
+
+  joinVoiceFlag = false;
+  nowUser = null;
+  nowVcId = null;
+  nowIcon = null;
 }
 
 function joinVoiceChannel(channelId, user, icon) {
-  if (joinVoiceFlag) { // 既に参加している場合は切断
-    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 552px) 240px";
-    //homeContainerFluid.classList.add("video-grid-container");
-    sendDisconnectVoiceChannel(nowVcId, user);
+  if (!joinVoiceFlag) { // 既に参加している場合は切断
 
-    window.multi.stopVideo();
-    window.globalFunction.videoChat();
-    window.multi.hangUp();
-
-    if (channelId === nowVcId) { // 同じチャンネルの場合は切断
-      joinVoiceFlag = false;
-      nowUser = null;
-      nowVcId = null;
-      nowIcon = null;
-    } else { // 別のチャンネルに参加
-      //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
-      //homeContainerFluid.classList.remove("video-grid-container");
-      sendJoinVoiceChannel(channelId, user, icon);
-      joinVoiceFlag = true;
-      nowVcId = channelId;
-
-      window.globalFunction.videoChat();
-      window.multi.connect(channelId);
-    }
-  } else { // 参加
-    //homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 312px) 0px";
-    //homeContainerFluid.classList.remove("video-grid-container");
     sendJoinVoiceChannel(channelId, user, icon);
     joinVoiceFlag = true;
     nowVcId = channelId;

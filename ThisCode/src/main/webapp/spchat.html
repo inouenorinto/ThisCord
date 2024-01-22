@@ -12,10 +12,6 @@
     <link rel="stylesheet" href="./spcss/memberList.css">
     <!-- icon -->
     <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
-    <!--独自JS-->
-
-
-
     <title>Thiscord</title>
 </head>
 
@@ -24,6 +20,13 @@
     <div class="mainContainer container">
         <div class="serverList">
             <div id="room-list"></div>
+
+            <div class="server-list-item">
+				<a class="plus_button" data-bs-toggle="modal"
+					data-bs-target="#createServerModal"> <i
+					class="fa-solid fa-plus fa-xl"></i>
+				</a>
+			</div>
         </div>
         <div class="channelList">
 
@@ -92,9 +95,9 @@
     </div>
     <div class="footer open-footer" id="footer">
         <div class="footerItem" class="link-content">
-            <a href="#">
+            <a href="#" onclick="toggleChatField();">
                 <i class="fa-solid fa-server"></i>
-                <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">サーバ</p>
+                <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">チャンネル</p>
             </a>
 
         </div>
@@ -146,7 +149,7 @@
 
     <!--video modal-->
 
-    <div class="video_modal open" id="video_modal">
+    <div class="video_modal" id="video_modal">
         <div class="video_modal_content">
             <div class="video_modal_header">
                 <button id="modalToggle" class="video-close-button" onclick="modalToggle('video_modal')">
@@ -160,6 +163,17 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="video-controller"> -->
+				<div class="controller-wrapper draggable" id="draggableDiv" draggable="true">
+					<button class="contoroller-item">
+						<i class="fa-solid fa-video fa-sm"></i>
+					</button>
+					<button class="contoroller-item-phone-slash"
+						onclick="closeVoiceChannel(); modalToggle('video_modal');">
+						<i class="fa-solid fa-phone-slash fa-lg"></i>
+					</button>
+				</div>
+			<!-- </div> -->
 
         </div>
     </div>
