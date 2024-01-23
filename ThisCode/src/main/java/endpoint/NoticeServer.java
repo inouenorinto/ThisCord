@@ -48,6 +48,7 @@ public class NoticeServer {
 
 	@OnMessage
 	public void onMessage(String message, Session session) {
+		
 		Gson gson = new Gson();
 		JsonNoticeBean bean = null;
 		int serverId = 0;
@@ -58,6 +59,7 @@ public class NoticeServer {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+    	
     	serverId = bean.getServerId();    	
     	voiceChannelId = bean.getVoiceChannelid(); 
     	if(bean.getType().equals("joinServer")) {//サーバーに入ったとき
@@ -66,19 +68,27 @@ public class NoticeServer {
 
     		serverSession.computeIfAbsent(serverId, k -> ConcurrentHashMap.newKeySet()).add(session);
     		System.out.println(pink+"NoticeServer.java "+end+":\t\tサーバーオンライン数:"+serverSession.get(serverId).size());
+    		
+    		for(String str : bean.getChannels()) {
+    			int voiceId = Integer.parseInt(str);
+    			JsonNoticeBean mess = JsonInitChannel(serverId, voiceId);
+    			String json = gson.toJson(mess);
+        		sendServer(serverId, json);
+    		}
+
     	}else if(bean.getType().equals("joinVoiceChannel")) {//ボイスチャンネルに入ったとき
     		System.out.println(pink+"NoticeServer.java "+end+":\t\t type="+bean.getType());
-    		session.getUserProperties().put(pink+"NoticeServer.java "+end+":\t\tボイスチャンネルId", voiceChannelId);
+    		session.getUserProperties().put("voiceChannelId", voiceChannelId);
     		
     		voiceChannelSession.computeIfAbsent(voiceChannelId, k -> ConcurrentHashMap.newKeySet()).add(session);
     		
     		JsonNoticeBean mess = JsonInitChannel(serverId,voiceChannelId );
     		String json = gson.toJson(mess);
     		
-    		//System.out.println("noticeServer サーバーオンライン数:"+serverSession.get(serverId).size());
     		System.out.println(pink+"NoticeServer.java "+end+":\t\tチャンネル内オンライン数 "+voiceChannelSession.get(voiceChannelId).size());
     		
     		sendServer(serverId, json);
+    	
     	}else if(bean.getType().equals("disconnectVoiceChannel")) {//ボイスチャンネルから出るとき
     		System.out.println(pink+"NoticeServer.java "+end+":\t\ttype "+bean.getType());
     		
@@ -100,10 +110,13 @@ public class NoticeServer {
 	    Integer voiceChannelId = (Integer) session.getUserProperties().get("voiceChannelId");
 	    serverSession.getOrDefault(serverId, Collections.emptySet()).remove(session);
 	    voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
-
-	    notices.remove(session);
-
-	    System.out.println("NoticeServer.java :\t\t切断 オンライン数" + serverSession.get(serverId).size());
+	    System.out.println("NoticeServer.java :\t\t切断 サーバーオンライン数" + serverSession.get(serverId).size());
+	    try {
+	    	notices.remove(session);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }
+	    
 	}
 
 	/* 接続エラーが発生したとき */
@@ -147,8 +160,5 @@ public class NoticeServer {
 	        }
 	    }
 	}
-
-
-	
 
 }

@@ -82,7 +82,8 @@ public class UserDataDAO{
 
         } catch (SQLException e){
             e.printStackTrace();
-        } 
+        }
+    	
         return userDataBean;
     }
     
@@ -111,13 +112,10 @@ public class UserDataDAO{
 					bean.addRooms(num, info[0], info[1]);
 				}
 			}
-			if (cn != null) {
-				cn.close();
-			}
-
-            
 		} catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			MySqlManager.close();
 		}
 	    return bean;
 	}
@@ -146,13 +144,11 @@ public class UserDataDAO{
 					bean.addRooms(num, info[0], info[1]);
 				}
 			}
-			if (cn != null) {
-				cn.close();
-			}
-
             
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			MySqlManager.close();
 		}
 	    return bean;
 	}
@@ -189,7 +185,9 @@ public class UserDataDAO{
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			MySqlManager.close();
+		}
 		return flag;
 	}
 	
@@ -207,18 +205,11 @@ public class UserDataDAO{
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			MySqlManager.close();
+		}
+		
 		return flag;
-	}
-	
-	public void close() {
-		try {
-			if (cn != null) {
-				cn.close();
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		} 
 	}
 	
 }

@@ -218,16 +218,21 @@ async function joinRoom(roomId) {
 	infoDiv.innerHTML = roomsMap.get(roomId)[0];
 	createChannelButton(channelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
-
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
+
+	let voiceIds = [];
+	for(const [channel_id, channel_name] of voiceChannelsMap){
+		voiceIds.push(channel_id);
+	}
 
 	let json =
 	{
 		type: 'joinServer',
 		serverId: roomId,
 		user: username,
-		icon: user_icon
+		icon: user_icon,
+		channels: voiceIds
 	};
 	noticeSocket.send(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
