@@ -18,16 +18,14 @@ let userid = null;
 let userinfo = null;
 let user_icon = null;
 
-const ip = 'localhost';
+const ip = constIp;
+const port = constPort;
 
 document.addEventListener("DOMContentLoaded", init);
 function disableScroll(event) {
 	event.preventDefault();
 }
 async function init() {
-	//document.addEventListener('touchmove', disableScroll, { passive: false });
-	//document.addEventListener('mousewheel', disableScroll, { passive: false });
-
 	await getUserInfo();
 
 	const firstServer = roomsMap.entries().next().value;
@@ -41,7 +39,7 @@ async function init() {
 		registerNotice();
 	}
 	setSwipe(".fieldWrapper");
-	//initform();
+	initform();
 	getFriend('invFriendList');
 
 }
@@ -247,8 +245,7 @@ function joinChannel(channel_id) {
 	infoDiv.innerHTML = channelsMap.get(channel_id);
 
 	nowChannelId = channel_id;
-	chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
-
+	chatSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
 	chatSocket.onopen = event => {
 		console.log("接続開始");
 		getMessageInfo(channel_id);
@@ -382,7 +379,7 @@ function fieldClear() {
 }
 
 function registerNotice() {
-	noticeSocket = new WebSocket("ws://localhost:8080/ThisCord/notice/" + userid + "/" + username + "/" + user_icon);
+	noticeSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/notice/${userid}/${username}/${user_icon}`);
 
 	noticeSocket.onopen = event => {
 		console.log("接続開始");
@@ -402,9 +399,6 @@ function registerNotice() {
 
 function createVoiceChannelIcon(members, channelId) {
 	const videoChannelElement = document.getElementById('channelMember-' + channelId);
-	console.log(videoChannelElement);
-
-	console.log("メンバーの人数：" + members.length);
 	videoChannelElement.innerHTML = "";
 	for (let member of members) {
 
@@ -559,4 +553,56 @@ function sendDisconnectVoiceChannel(voiceChannelId, user) {
 		user: user,
 	};
 	noticeSocket.send(JSON.stringify(json));
+}
+
+function invFriendForm(id){
+	const invitationInput = document.getElementById('invitationInput');
+	invitationInput.value = id;
+}
+
+function retryImageLoad(imgElement, maxRetries, retryInterval) {
+	let retries = 0;
+
+	function loadImage() {
+		imgElement.onload = function() {
+			console.log('Image loaded successfully.');
+		};
+
+		imgElement.onerror = function() {
+			if (retries < maxRetries) {
+				retries++;
+
+				setTimeout(loadImage, retryInterval);
+			}
+		};
+		imgElement.src = imgElement.src;
+	}
+	loadImage();
+}
+
+
+function initform() {
+	const serverNameIn = document.getElementById('server_name');
+	console.log(username);
+	if (serverNameIn.value.length == 0) {
+		console.log(serverNameIn.value);
+
+		serverNameIn.value = username + 'のサーバー';
+	} else {
+		console.log(serverNameIn.value);
+	}
+
+	const inputServerId = document.getElementById('inputServerId');
+	inputServerId.value = nowRoomId;
+
+	const MakeServerUserId = document.getElementById('MakeServerUserId');
+	MakeServerUserId.value = userid;
+	
+
+	invFriendList
+	getFriend('invFriendList');
+	
+	const formUserId = document.getElementById('formUserId');
+	formUserId.value = userid;
+
 }

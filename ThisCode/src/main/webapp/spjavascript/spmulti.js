@@ -10,9 +10,8 @@ const MAX_CONNECTION_COUNT = 10;
 
 
 //WebRTCで通信をするためのシグナリングをするWebSocket
-//const ip2 = '192.168.0.11';
-//const ip2 = '172.19.7.203';
-const ip2 = 'localhost';
+const WSip = constIp;
+const WSport = constPort;
 let websocket = null;
 
 // リモートのビデオを表示するコンテナ（HTML）
@@ -25,8 +24,7 @@ RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection |
 RTCSessionDescription = window.RTCSessionDescription || window.webkitRTCSessionDescription || window.mozRTCSessionDescription;
 
 function webSocketManager() {
-	websocket = new WebSocket('ws://' + ip2 + ':8080/ThisCord/signaling_room/' + roomname);
-	console.log('roomname: ' + roomname + 'url: ' + 'ws://' + ip2 + ':8080/ThisCord/signaling_room/' + roomname);
+	websocket = new WebSocket(`ws://${WSip}:${WSport}/ThisCord/signaling_room/${roomname}`);
 	websocket.onopen = (event) => {
 		console.log("WebSocket connection opened:", event);
 	};

@@ -20,7 +20,6 @@ public class MessageDataDAO{
     private static final String INSERT_MESSAGE = "INSERT INTO message (user_id, channel_id, send_date, message) "
     		+ "VALUES(?, ?, ?, ?)";
 
-    Connection cn;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
 
@@ -34,14 +33,13 @@ public class MessageDataDAO{
     	return msdao;
     }
 
-    private MessageDataDAO(){
-        this.cn = MySqlManager.getConnection();
-    }
+    private MessageDataDAO(){}
 
     public ArrayList<MessageBean> findRecord(int channel_id) {
         ArrayList<MessageBean> result = new ArrayList<>();
 
         try {
+        	Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(SELECT_MESSAGE_DATA);
             pstmt.setInt(1, channel_id);
             rs = pstmt.executeQuery();
@@ -61,7 +59,9 @@ public class MessageDataDAO{
         } catch (SQLException e){
             e.printStackTrace();
         
-        }
+        } finally {
+			MySqlManager.close();
+		}
         return result;
     }
 
@@ -69,6 +69,7 @@ public class MessageDataDAO{
         boolean success = false;
 
         try {
+        	Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(UPDATE_MESSAGE);
             pstmt.setString(1, newMessage);
             pstmt.setInt(2, server_id);
@@ -81,11 +82,15 @@ public class MessageDataDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         
-        }
+        } finally {
+			MySqlManager.close();
+		}
+        
         return success;
     }
     public void insertRecord(MessageBean mb) {
     	try {
+    		Connection cn = MySqlManager.getConnection();
             cn.setAutoCommit(false);
 	    	pstmt = cn.prepareStatement(INSERT_MESSAGE);
 	    	
@@ -99,6 +104,8 @@ public class MessageDataDAO{
 	    	cn.commit();
     	} catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			MySqlManager.close();
+		}
     }
 }

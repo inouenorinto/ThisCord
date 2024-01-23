@@ -18,7 +18,8 @@ let userid = null;
 let userinfo = null;
 let user_icon = null;
 
-const ip = 'localhost';
+const ip = constIp;
+const port = constPort;
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -81,7 +82,7 @@ async function getUserInfo() {
 }
 //通知サーバーのコネクションの初期化
 function registerNotice() {
-	noticeSocket = new WebSocket("ws://localhost:8080/ThisCord/notice/" + userid + "/" + username + "/" + user_icon );
+	noticeSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/notice/${userid}/${username}/${user_icon}`);
 
 	noticeSocket.onopen = event => {
 		console.log("接続開始");
@@ -285,8 +286,8 @@ function joinChannel(channel_id) {
 	infoDiv.innerHTML = channelsMap.get(channel_id);
 
 	nowChannelId = channel_id;
-	console.log("url: " + "ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
-	chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
+	chatSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
+	console.log(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
 
 	chatSocket.onopen = event => {
 		console.log("接続開始");

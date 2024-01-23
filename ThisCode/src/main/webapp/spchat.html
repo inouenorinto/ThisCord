@@ -22,11 +22,10 @@
             <div id="room-list"></div>
 
             <div class="server-list-item">
-				<a class="plus_button" data-bs-toggle="modal"
-					data-bs-target="#createServerModal"> <i
-					class="fa-solid fa-plus fa-xl"></i>
-				</a>
-			</div>
+                <a class="plus_button" onclick="modalToggle('createServerModal')">
+                    <i class="fa-solid fa-plus fa-xl"></i>
+                </a>
+            </div>
         </div>
         <div class="channelList">
 
@@ -122,7 +121,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- InvitationModal -->
     <div class="invitation-modal" id="invitation-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -163,21 +162,57 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="video-controller"> -->
-				<div class="controller-wrapper draggable" id="draggableDiv" draggable="true">
-					<button class="contoroller-item">
-						<i class="fa-solid fa-video fa-sm"></i>
-					</button>
-					<button class="contoroller-item-phone-slash"
-						onclick="closeVoiceChannel(); modalToggle('video_modal');">
-						<i class="fa-solid fa-phone-slash fa-lg"></i>
-					</button>
-				</div>
-			<!-- </div> -->
-
+            <div class="controller-wrapper draggable" id="draggableDiv" draggable="true">
+                <button class="contoroller-item">
+                    <i class="fa-solid fa-video fa-sm"></i>
+                </button>
+                <button class="contoroller-item-phone-slash" onclick="closeVoiceChannel(); modalToggle('video_modal');">
+                    <i class="fa-solid fa-phone-slash fa-lg"></i>
+                </button>
+            </div>
         </div>
     </div>
 
+    <!-- CreateServerModal -->
+
+    <div class="createServerModal open" id="createServerModal" >
+        <div class="modal-content">
+            <div class="create_modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('createServerModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h3 class="modal-title">サーバーの作成</h3>
+                <p style="margin: 10px 0 10px 0;">新しいサーバーの名前とアイコンを設定して、個性を出しましょう。設定内容は後から変更できません。</p>
+            </div>
+            <div class="modal-body">
+                <div class="select-icon-container">
+                    <img id='preview' class="select-icon-img" src="/ThisCord/resource/user_icons/default2.png">
+                    <div class="plus_button_icon">
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal"> <i
+                                class="fa-solid fa-plus fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data" onsubmit="return false">
+					<label for="exampleFormControlInput1" class="form-label">サーバー名</label>
+					<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
+
+					<p><small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。</small></p>
+					
+                    <input type="hidden" id="editedImageField" name="editedImage">
+					<input type="hidden" id="MakeServerUserId" name="userId">
+
+					<div class="sub">
+						<button type="button" id="form_submit" class="btn_sub" onclick="form_crea('imageForm')">新規作成</button>
+					</div>
+				</form>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="./javascript/values.js"></script>
     <script src="./spjavascript/spPageOperations.js"></script>
     <script src="./spjavascript/spFetch.js"></script>
     <script src="./spjavascript/spmulti.js"></script>

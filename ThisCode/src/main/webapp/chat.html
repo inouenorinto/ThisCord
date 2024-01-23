@@ -1,52 +1,46 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thiscord</title>
-<!-- bootstrap css -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-	crossorigin="anonymous">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
-	integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.css"
-	integrity="sha512-bs9fAcCAeaDfA4A+NiShWR886eClUcBtqhipoY5DM60Y1V3BbVQlabthUBal5bq8Z8nnxxiyb1wfGX2n76N1Mw=="
-	crossorigin="anonymous" referrerpolicy="noreferrer" />
-<script
-	src=" https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.js"
-	integrity="sha512-Zt7blzhYHCLHjU0c+e4ldn5kGAbwLKTSOTERgqSNyTB50wWSI21z0q6bn/dEIuqf6HiFzKJ6cfj2osRhklb4Og=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
-	integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;900&display=swap"
-	rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Thiscord</title>
+	<!-- bootstrap css -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
+		integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.css"
+		integrity="sha512-bs9fAcCAeaDfA4A+NiShWR886eClUcBtqhipoY5DM60Y1V3BbVQlabthUBal5bq8Z8nnxxiyb1wfGX2n76N1Mw=="
+		crossorigin="anonymous" referrerpolicy="noreferrer" />
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.js"
+		integrity="sha512-Zt7blzhYHCLHjU0c+e4ldn5kGAbwLKTSOTERgqSNyTB50wWSI21z0q6bn/dEIuqf6HiFzKJ6cfj2osRhklb4Og=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
+		integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;900&display=swap"
+		rel="stylesheet">
 
-<!-- Googleフォント -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;900&display=swap"
-	rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@200;300;400;500;600;900&display=swap"
-	rel="stylesheet">
+	<!-- Googleフォント -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;900&display=swap"
+		rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@200;300;400;500;600;900&display=swap"
+		rel="stylesheet">
 
-<!-- 独自css -->
-<link rel="stylesheet" type="text/css"
-	href="./css/general.css">
-<link rel="stylesheet" href="./css/homepage.css">
-<link rel="stylesheet" href="./css/phoneChatPage.css">
-<!-- 独自javascript -->
+	<!-- 独自css -->
+	<link rel="stylesheet" type="text/css" href="./css/general.css">
+	<link rel="stylesheet" href="./css/homepage.css">
+	<link rel="stylesheet" href="./css/phoneChatPage.css">
+	<!-- 独自javascript -->
 </head>
+
 <body>
 	<div class="thiscord-title">
 		<h6>Thiscord</h6>
@@ -63,9 +57,8 @@
 					<span class="item_f9d377 none"></span>
 				</div>
 
-				<a class="home-button"
-					onclick="toggleClickedState(this); joinHome();"> <i
-					class="fa-brands fa-discord fa-xl"></i>
+				<a class="home-button" onclick="toggleClickedState(this); joinHome();"> <i
+						class="fa-brands fa-discord fa-xl"></i>
 				</a>
 			</div>
 
@@ -77,9 +70,8 @@
 
 			<!-- サーバー作成ボタン -->
 			<div class="server-list-item">
-				<a class="plus_button" data-bs-toggle="modal"
-					data-bs-target="#createServerModal"> <i
-					class="fa-solid fa-plus fa-xl"></i>
+				<a class="plus_button" data-bs-toggle="modal" data-bs-target="#createServerModal"> <i
+						class="fa-solid fa-plus fa-xl"></i>
 				</a>
 			</div>
 		</div>
@@ -112,9 +104,9 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="none" id="home-channel-fland-list"></div>
-				
+
 				<div id="channelsWrapper" class="channelsWrapper">
 					<div class="channel-title-nav">
 						<div class="flexbox">
@@ -135,19 +127,18 @@
 					<div class="channel-title-nav">
 						<div class="flexbox">
 							<div class="flex-item title-item">
-								<i class="fa-solid fa-angle-down fa-xs"></i> <span
-									class="channel-title">ボイスチャンネル</span>
+								<i class="fa-solid fa-angle-down fa-xs"></i> <span class="channel-title">ボイスチャンネル</span>
 							</div>
 							<div class="flex-item">
-								<a id="videotest" href="/ThisCord/createChannel.jsp"
-									class="invitation-link"> <i class="fa-solid fa-plus fa-sm"></i>
+								<a id="videotest" href="/ThisCord/createChannel.jsp" class="invitation-link"> <i
+										class="fa-solid fa-plus fa-sm"></i>
 								</a>
 							</div>
 						</div>
 					</div>
-					
+
 					<div id="voice-channels-list"></div>
-					
+
 				</div>
 			</div>
 
@@ -197,18 +188,17 @@
 		</div>
 		<!--*************************************** ビデオフィールド(video-field)***************************************-->
 		<div id="video-field" class="video-field none">
-			
+
 			<div id="video-play-field" class="video-play-field container">
 				<video id="local_video" class="video-element" autoplay></video>
 			</div>
-			
+
 			<div class="video-controller">
 				<div class="controller-wrapper">
 					<button class="contoroller-item">
 						<i class="fa-solid fa-video fa-sm"></i>
 					</button>
-					<button class="contoroller-item-phone-slash"
-						onclick="closeVoiceChannel();">
+					<button class="contoroller-item-phone-slash" onclick="closeVoiceChannel();">
 						<i class="fa-solid fa-phone-slash fa-lg"></i>
 					</button>
 				</div>
@@ -258,10 +248,12 @@
 				</div>
 				<!-- ホームページ　フレンドリスト -->
 				<div id="friend-list-warpe" class="none">
-					<p style="margin :0; border-bottom: 1px solid #3f4147; padding: 40px 0px 15px 0px; font-size: 0.8em;">すべてのフレンド</p>
+					<p
+						style="margin :0; border-bottom: 1px solid #3f4147; padding: 40px 0px 15px 0px; font-size: 0.8em;">
+						すべてのフレンド</p>
 					<div id="friend-list"></div>
 				</div>
-				
+
 				<div class="d-flex mb-3">
 					<div id="message-container"></div>
 				</div>
@@ -269,9 +261,8 @@
 			<!-- メッセージ入力フィールド -->
 			<div id="inputField" class="message-form-wrapper">
 				<div id="chat" class="message_div">
-					<i class="fa-solid fa-hashtag"></i> <input type="text"
-						id="message-input" class="message_input" placeholder="メッセージを送信"
-						onkeydown="handleKeyPress(event)">
+					<i class="fa-solid fa-hashtag"></i> <input type="text" id="message-input" class="message_input"
+						placeholder="メッセージを送信" onkeydown="handleKeyPress(event)">
 				</div>
 			</div>
 		</div>
@@ -293,8 +284,7 @@
 	<!-- ****************************************** モーダル群 ****************************************** -->
 
 	<!-- サーバを作成するモーダル -->
-	<div class="modal fade" id="createServerModal" tabindex="-1"
-		aria-labelledby="createServerModal" aria-hidden="true">
+	<div class="modal fade" id="createServerModal" tabindex="-1" aria-labelledby="createServerModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content modal-content2">
 				<div class="center_content">
@@ -309,21 +299,20 @@
 
 					<div class="select-icon-container">
 						<img id='preview' class="select-icon-img"
-							src="${pageContext.request.contextPath}/resource/user_icons/default2.png">
+							src="/ThisCord/resource/user_icons/default2.png">
 						<div class="plus_button_icon">
 							<a data-bs-toggle="modal" data-bs-target="#exampleModal"> <i
-								class="fa-solid fa-plus fa-lg"></i>
+									class="fa-solid fa-plus fa-lg"></i>
 							</a>
 						</div>
 					</div>
 				</div>
 				<!--サーバーの名入力フォーム-->
-				<form id="imageForm" action="fn/makeserver" method="post"
-					enctype="multipart/form-data" onsubmit="return false">
+				<form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data"
+					onsubmit="return false">
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">サーバー名</label>
-						<input type="text" name="server_name"
-							class="form-control input_text" id="server_name" required>
+						<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
 					</div>
 					<p>
 						<small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。
@@ -347,14 +336,12 @@
 	</div>
 
 	<!-- サーバのアイコンを編集するモーダル -->
-	<div class="modal fade" id="exampleModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content edit-modal" style="padding-bottom: 0px;">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">サーバーアイコン</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<input type="file" id="imageInput" name="image" accept="image/*">
@@ -363,10 +350,10 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-toggle="modal" data-bs-dismiss="modal">閉じる</button>
-					<button type="button" id="cropButton" class="btn btn-primary"
-						data-bs-toggle="modal" data-bs-dismiss="modal">確定</button>
+					<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+						data-bs-dismiss="modal">閉じる</button>
+					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal"
+						data-bs-dismiss="modal">確定</button>
 				</div>
 			</div>
 		</div>
@@ -374,48 +361,45 @@
 
 	<!-- Modal -->
 	<div class="modal fade" id="invitationIconModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content invitation-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">フレンドをサーバーに招待する</h1>
-                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="close"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="modal-body invitation-body">
-                    <div class="invitation-form">
-                        <form class="invitation-form" action="fn/invite" method="post">
-                            <label>ユーザーIDを入力してフレンドを追加</label>
-                            <div class="invitation-wrapper">
-                                <input class="invitation-input" type="text" name="userId" id="invitationInput">
-                                <input id="inputServerId" type="hidden" name="serverId">
-                                <input id="formUserId" type="hidden" name="id">
-                                <button class="invitation-button" type="submit">送信</button>
-                            </div>
-                        </form>
-                        <div id="invFriendList"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-	
-	<script
-		src="./javascript/chatWebSocket.js"></script>
-	<script
-		src="./javascript/createServer.js"></script>
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content invitation-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">フレンドをサーバーに招待する</h1>
+					<button type="button" data-bs-dismiss="modal" aria-label="Close" class="close"><i
+							class="fa-solid fa-xmark"></i></button>
+				</div>
+				<div class="modal-body invitation-body">
+					<div class="invitation-form">
+						<form class="invitation-form" action="fn/invite" method="post">
+							<label>ユーザーIDを入力してフレンドを追加</label>
+							<div class="invitation-wrapper">
+								<input class="invitation-input" type="text" name="userId" id="invitationInput">
+								<input id="inputServerId" type="hidden" name="serverId">
+								<input id="formUserId" type="hidden" name="id">
+								<button class="invitation-button" type="submit">送信</button>
+							</div>
+						</form>
+						<div id="invFriendList"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="./javascript/values.js"></script>
+	<script src="./javascript/chatWebSocket.js"></script>
+	<script src="./javascript/createServer.js"></script>
 	<script src="./javascript/multi.js"></script>
-	<script
-		src="./javascript/chatPageOperations.js"></script>
-	<script src="https://kit.fontawesome.com/c82cac4dcf.js"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+	<script src="./javascript/chatPageOperations.js"></script>
+	<script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
 		integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
 		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
 		crossorigin="anonymous"></script>
 
 </body>
+
 </html>
