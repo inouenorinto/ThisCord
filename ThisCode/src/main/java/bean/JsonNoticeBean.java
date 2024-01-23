@@ -9,6 +9,7 @@ public class JsonNoticeBean {
 	private String user;
 	private String icon;
 	private int userId;
+	private String channels[] ;
 	
 	private ArrayList<NoticeSessionBean> members = new ArrayList<>();
 
@@ -67,4 +68,14 @@ public class JsonNoticeBean {
 	public void setServerId(int serverid) {
 		this.serverId = serverid;
 	}
+
+	public String[] getChannels() {
+		return channels;
+	}
+
+	public void setChannels(String channels[]) {
+		this.channels = channels;
+	}
+
+
 }

@@ -156,7 +156,8 @@
 
 .modal-title {
 	text-align: center;
-	margin-top: 40px;	
+	margin-top: 40px;
+	color: #fff;
 }
 
 
@@ -486,4 +487,65 @@
 	cursor: grab;
 	touch-action: none; /* Disable default touch actions to improve touch responsiveness */
 	z-index: 3;
+}
+
+/* createServerModal */
+.createServerModal {
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;	
+}
+
+.createServerModal.open {
+	top: 0;
+	height: 100%;
+}
+
+.create_modal_header{
+	text-align: center;
+}
+
+.select-icon-img {
+	margin: 0 auto;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+}
+
+.plus_button_icon {
+	cursor: pointer;
+	position: relative;
+	background-color: #5865f2;
+	width: 30px;
+	height: 30px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: -100px;
+	right: -56%;
+}
+
+.plus_button_icon a i {
+	color: #fff;
+	text-decoration: none;
+
+}
+
+.input_text {
+	background-color: #151618;
+	border: none;
+	height: 45px;
+	color: #fff;
+	width: 100%;
+	border-radius: 15px;
+}
+
+.input_text:focus {
+	border: none;
+	outline: none;
 }

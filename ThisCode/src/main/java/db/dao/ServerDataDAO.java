@@ -15,7 +15,7 @@ public class ServerDataDAO { //server表
     private static final String DB_RECORD = "SELECT * FROM server WHERE server_id = ?";
     private static final String INSERT_NEW_SERVER ="INSERT INTO server (server_name, user_id, server_icon) VALUES (?, ?, ?)";
 
-    private Connection cn = null;
+    //private Connection cn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     
@@ -29,13 +29,12 @@ public class ServerDataDAO { //server表
     	return sddao;
     }
     
-    private ServerDataDAO() {
-        this.cn = MySqlManager.getConnection();
-    }
+    private ServerDataDAO() {}
 
     public ArrayList<ServerDataBean> findAll() {
         ArrayList<ServerDataBean> result = new ArrayList<>();
         try {
+        	Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(DB_SELECT);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -48,13 +47,16 @@ public class ServerDataDAO { //server表
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }finally {
+			MySqlManager.close();
+		}
         return result;
     }
     
     public ServerDataBean findRecord(int id) {
     	ServerDataBean serverDataBean = new ServerDataBean();
         try {
+        	Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(DB_RECORD);
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
@@ -67,7 +69,9 @@ public class ServerDataDAO { //server表
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        } finally {
+			MySqlManager.close();
+		}
         return serverDataBean;
     }
     
@@ -87,12 +91,11 @@ public class ServerDataDAO { //server表
 				result[0] = rs.getString("server_name");
 				result[1] = rs.getString("server_icon");
 			}
-			if (cn != null) {
-				cn.close();
-			}
 
 		} catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			MySqlManager.close();
 		}
 		return result;
 	}
@@ -102,6 +105,7 @@ public class ServerDataDAO { //server表
     	Statement st = null;
     	ResultSet rs = null;
     	try {
+    		Connection cn = MySqlManager.getConnection();
     		st = cn.createStatement();
     		rs = st.executeQuery("select max(server_id) AS server_id from server");
     		
@@ -110,12 +114,15 @@ public class ServerDataDAO { //server表
     		}
     	} catch(Exception e) {
     		e.printStackTrace();
-    	}
+    	}finally {
+			MySqlManager.close();
+		}
     	return result;
     }
     
     public void insertNewServer(String server_name, int user_id, String path) {
 		try {
+			Connection cn = MySqlManager.getConnection();
 			cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(INSERT_NEW_SERVER);
 			pstmt.setString(1, server_name);
@@ -123,10 +130,12 @@ public class ServerDataDAO { //server表
 			pstmt.setString(3, path);
 			pstmt.executeUpdate();
 		
-			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			MySqlManager.close();
 		}
+		
 	}
 
 }

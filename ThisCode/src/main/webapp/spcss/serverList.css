@@ -92,3 +92,29 @@
 	color: #f6f7fe;
 	margin: auto;
 }
+
+/*サーバー追加ボタン*/
+.plus_button {
+	cursor: pointer;
+	margin: auto;
+	position: relative;
+	background-color: #2B2D31;
+	width: 48px;
+	height: 48px;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: .3s ease-out;
+	text-decoration: none;
+	color: rgb(41, 117, 75);
+}
+
+.plus_button:hover {
+	border-radius: 35%;
+	background-color: #23a559;
+}
+
+.plus_button:hover i {
+	color: #fff;
+}

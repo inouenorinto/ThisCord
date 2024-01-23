@@ -18,7 +18,8 @@ let userid = null;
 let userinfo = null;
 let user_icon = null;
 
-const ip = 'localhost';
+const ip = constIp;
+const port = constPort;
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -48,7 +49,6 @@ function getIdFromQueryString(name) {
 	var urlParams = new URLSearchParams(queryString);
 	return urlParams.get(name);
 }
-console.log(getIdFromQueryString('id'));
 //サーバーからユーザーデータを取得する関数
 async function getUserInfo() {
 	try {
@@ -63,7 +63,7 @@ async function getUserInfo() {
 			rooms = userinfo.servers;
 			roomsMap = new Map(Object.entries(rooms));
 			createRoomB(roomsMap);
-			console.log(userinfo);
+			console.log('rooms-------------'+roomsMap);
 		} else {
 			console.error("Failed to fetch room information");
 		}
@@ -82,7 +82,7 @@ async function getUserInfo() {
 }
 //通知サーバーのコネクションの初期化
 function registerNotice() {
-	noticeSocket = new WebSocket("ws://localhost:8080/ThisCord/notice/" + userid + "/" + username + "/" + user_icon);
+	noticeSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/notice/${userid}/${username}/${user_icon}`);
 
 	noticeSocket.onopen = event => {
 		console.log("接続開始");
@@ -103,7 +103,6 @@ function registerNotice() {
 //ボイスチャンネルに参加してるユーザーの表示をする関数
 function createVoiceChannelIcon(members, channelId) {
 	const videoChannelElement = document.getElementById('channelMember-' + channelId);
-	console.log(videoChannelElement);
 
 	console.log("メンバーの人数：" + members.length);
 	videoChannelElement.innerHTML = "";
@@ -287,8 +286,8 @@ function joinChannel(channel_id) {
 	infoDiv.innerHTML = channelsMap.get(channel_id);
 
 	nowChannelId = channel_id;
-	console.log("url: " + "ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
-	chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
+	chatSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
+	console.log(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
 
 	chatSocket.onopen = event => {
 		console.log("接続開始");
@@ -299,7 +298,6 @@ function joinChannel(channel_id) {
 		console.log("Received message: " + event.data);
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
-		//chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<div>' +
@@ -338,19 +336,23 @@ async function joinRoom(roomId) {
 	infoDiv.innerHTML = roomsMap.get(roomId)[0];
 	createChannelButton(channelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
-
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
+
+	let voiceIds = [];
+	for(const [channel_id, channel_name] of voiceChannelsMap){
+		voiceIds.push(channel_id);
+	}
 
 	let json =
 	{
 		type: 'joinServer',
 		serverId: roomId,
 		user: username,
-		icon: user_icon
+		icon: user_icon,
+		channels: voiceIds
 	};
 	noticeSocket.send(JSON.stringify(json));
-	console.log(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
 	toggleHome();
 }
@@ -390,9 +392,9 @@ async function getServerInfo(roomId) {
 			const voice_channels = roominfo.voice_channels;
 			channelsMap = new Map(Object.entries(channels));
 			voiceChannelsMap = new Map(Object.entries(voice_channels))
-			createRoomB(roomsMap);
-			createChannelButton(channelsMap);
-			createVoiceChannelButton(voiceChannelsMap);
+			//createRoomB(roomsMap);
+			//createChannelButton(channelsMap);
+			//createVoiceChannelButton(voiceChannelsMap);
 		} else {
 			console.error("Failed to fetch room information");
 		}
