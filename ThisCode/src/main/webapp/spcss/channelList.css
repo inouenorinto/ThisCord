@@ -543,9 +543,20 @@
 	color: #fff;
 	width: 100%;
 	border-radius: 15px;
+	padding: 0px 12px 0px 12px;
 }
 
 .input_text:focus {
 	border: none;
 	outline: none;
+}
+
+.btn_sub{
+	background-color: #5865f2;
+	color: #fff;
+	width: 100%;
+	border-radius: 25px;
+	text-align: center;
+	padding: 8px 0px 8px 0px;
+
 }

@@ -181,7 +181,7 @@
                 <button id="modalToggle" class="close-button" onclick="modalToggle('createServerModal')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-                <h3 class="modal-title">サーバーの作成</h3>
+                <h2 class="modal-title">サーバーの作成</h2>
                 <p style="margin: 10px 0 10px 0;">新しいサーバーの名前とアイコンを設定して、個性を出しましょう。設定内容は後から変更できません。</p>
             </div>
             <div class="modal-body">
@@ -198,17 +198,14 @@
 					<label for="exampleFormControlInput1" class="form-label">サーバー名</label>
 					<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
 
-					<p><small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。</small></p>
+					<p style="margin: 20px 0px 20px 0px;"><small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。</small></p>
 					
                     <input type="hidden" id="editedImageField" name="editedImage">
 					<input type="hidden" id="MakeServerUserId" name="userId">
 
-					<div class="sub">
-						<button type="button" id="form_submit" class="btn_sub" onclick="form_crea('imageForm')">新規作成</button>
-					</div>
+					<button type="button" id="form_submit" class="btn_sub" onclick="modalToggle('createServerModal'); form_crea('imageForm');">新規作成</button>
 				</form>
             </div>
-            
         </div>
     </div>
 
