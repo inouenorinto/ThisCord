@@ -10,6 +10,7 @@ public class JsonNoticeBean {
 	private String icon;
 	private int userId;
 	private String channels[] ;
+	private String inviteUserId;
 	
 	private ArrayList<NoticeSessionBean> members = new ArrayList<>();
 
@@ -75,6 +76,14 @@ public class JsonNoticeBean {
 
 	public void setChannels(String channels[]) {
 		this.channels = channels;
+	}
+
+	public String getInviteUserId() {
+		return inviteUserId;
+	}
+
+	public void setInviteUserId(String inviteUserId) {
+		this.inviteUserId = inviteUserId;
 	}
 
 

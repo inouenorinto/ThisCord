@@ -12,13 +12,26 @@
     <link rel="stylesheet" href="./spcss/memberList.css">
     <!-- icon -->
     <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
+
+
+    <!-- cropperLibrary -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
+        integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.css"
+        integrity="sha512-bs9fAcCAeaDfA4A+NiShWR886eClUcBtqhipoY5DM60Y1V3BbVQlabthUBal5bq8Z8nnxxiyb1wfGX2n76N1Mw=="
+        crossorigin="anonymous" referrerpolicy="noreferrer" />
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.js"
+        integrity="sha512-Zt7blzhYHCLHjU0c+e4ldn5kGAbwLKTSOTERgqSNyTB50wWSI21z0q6bn/dEIuqf6HiFzKJ6cfj2osRhklb4Og=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <title>Thiscord</title>
 </head>
 
 <body class="content">
     <div class="mainHeader"></div>
     <div class="mainContainer container">
-        <div class="serverList">
+        <div class="serverList server-scroll">
             <div id="room-list"></div>
 
             <div class="server-list-item">
@@ -132,12 +145,12 @@
             </div>
             <div class="modal-body invitation-body">
                 <div class="invitation-form">
-                    <form class="invitation-form" action="fn/invite" method="post">
+                    <form class="invitation-form" action="fn/invite" method="post" id="inviteForm">
                         <div class="invitation-wrapper">
                             <input class="invitation-input" type="text" name="userId" id="invitationInput">
                             <input id="inputServerId" type="hidden" name="serverId">
                             <input id="formUserId" type="hidden" name="id">
-                            <button class="invitation-button" type="submit">送信</button>
+                            <button class="invitation-button" type="submit" >送信</button>
                         </div>
                     </form>
                     <div id="invFriendList"></div>
@@ -175,7 +188,7 @@
 
     <!-- CreateServerModal -->
 
-    <div class="createServerModal open" id="createServerModal" >
+    <div class="createServerModal" id="createServerModal">
         <div class="modal-content">
             <div class="create_modal_header">
                 <button id="modalToggle" class="close-button" onclick="modalToggle('createServerModal')">
@@ -188,27 +201,58 @@
                 <div class="select-icon-container">
                     <img id='preview' class="select-icon-img" src="/ThisCord/resource/user_icons/default2.png">
                     <div class="plus_button_icon">
-                        <a data-bs-toggle="modal" data-bs-target="#exampleModal"> <i
-                                class="fa-solid fa-plus fa-lg"></i>
+                        <a onclick="modalToggle('editIconModal')">
+                            <i class="fa-solid fa-plus fa-lg"></i>
                         </a>
                     </div>
                 </div>
 
-                <form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data" onsubmit="return false">
-					<label for="exampleFormControlInput1" class="form-label">サーバー名</label>
-					<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
+                <form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data"
+                    onsubmit="return false">
+                    <label for="exampleFormControlInput1" class="form-label">サーバー名</label>
+                    <input type="text" name="server_name" class="form-control input_text" id="server_name" required>
 
-					<p style="margin: 20px 0px 20px 0px;"><small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。</small></p>
-					
+                    <p style="margin: 20px 0px 20px 0px;"><small>サーバーを作成すると、Thiscordの<a
+                                href="">コミュニティガイドライン</a>に同意したことになります。</small></p>
+
                     <input type="hidden" id="editedImageField" name="editedImage">
-					<input type="hidden" id="MakeServerUserId" name="userId">
+                    <input type="hidden" id="MakeServerUserId" name="userId">
 
-					<button type="button" id="form_submit" class="btn_sub" onclick="modalToggle('createServerModal'); form_crea('imageForm');">新規作成</button>
-				</form>
+                    <button type="button" id="form_submit" class="btn_sub"
+                        onclick="modalToggle('createServerModal'); form_clear('imageForm');">新規作成</button>
+                </form>
             </div>
         </div>
     </div>
 
+    <!-- editIconModal -->
+
+    <div class="editIconModal" id="editIconModal">
+        <div class="modal-content">
+            <div class="modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('editIconModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 class="modal-title">アイコンの変更</h2>
+            </div>
+            <div class="modal-body" style="display: flex; justify-content: center;">
+                <div style="margin-top: 20px;">
+                    <label for="imageInput" class="custom-file-upload">
+                        ファイルを選択
+                    </label>
+                    <input type="file" id="imageInput" name="image" accept="image/*" style="display:none;">
+                    
+                    <div style="width: 300px; height: 300px; margin: 0 0 20px 0;">
+                        <img id="cropper-tgt" style="width: 300px; height: 300px;">
+                    </div>
+                
+                    <button class="cropButton" type="button" id="cropButton" onclick="modalToggle('editIconModal')">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./javascript/createServer.js"></script>
     <script src="./javascript/values.js"></script>
     <script src="./spjavascript/spPageOperations.js"></script>
     <script src="./spjavascript/spFetch.js"></script>

@@ -235,6 +235,7 @@ async function joinRoom(roomId) {
 	noticeSocket.send(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
 	toggleHome();
+	initform();
 }
 
 function joinChannel(channel_id) {
@@ -389,6 +390,13 @@ function registerNotice() {
 		let json = JSON.parse(event.data);
 		let member = json.members;
 		let vcId = json.voiceChannelid;
+		let type = json.type;
+
+		if(type == 'invite'){
+			alert('招待されました');
+			getUserInfo();	
+		}
+		console.log(JSON.stringify(json));
 		createVoiceChannelIcon(member, vcId);
 	};
 
@@ -594,6 +602,7 @@ function initform() {
 
 	const inputServerId = document.getElementById('inputServerId');
 	inputServerId.value = nowRoomId;
+	console.log(nowRoomId);
 
 	const MakeServerUserId = document.getElementById('MakeServerUserId');
 	MakeServerUserId.value = userid;
@@ -606,3 +615,34 @@ function initform() {
 	formUserId.value = userid;
 
 }
+
+function form_clear(formId) {
+	var form = document.getElementById(formId);
+	var submitButton = document.getElementById('form_submit');
+
+	form.setAttribute('data-submitting', 'true');
+	form.submit();
+
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	const inviteForm = document.getElementById('inviteForm');
+
+	inviteForm.addEventListener('submit', (event) => {
+		event.preventDefault();
+		
+		const inviteUserId = document.getElementById('invitationInput').value;
+		let json =
+		{
+			type: 'invite',
+			serverId: nowRoomId,
+			inviteUserId: inviteUserId
+		};
+	
+		console.log(json);
+		noticeSocket.send(JSON.stringify(json));
+	
+		inviteForm.submit();
+	})
+
+});

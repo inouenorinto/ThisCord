@@ -504,7 +504,7 @@ async function getFriend(element) {
 	}
 }
 
-function form_crea(formId) {
+function form_clear(formId) {
 	var form = document.getElementById(formId);
 	var submitButton = document.getElementById('form_submit');
 
