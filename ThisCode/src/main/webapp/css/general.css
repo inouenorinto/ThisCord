@@ -48,6 +48,56 @@ body {
 
 }
 
+.home-container{
+	
+	font-family: 'Noto Sans JP', sans-serif;
+	display: grid;
+/*	画面サイズが変更されたらチャットフィールドのサイズがうごく*/
+	grid-template-columns: 72px 240px calc(100% - 729px) 417px;
+	grid-template-rows: 48px 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"server-list channel-header server-header  server-header"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list";
+	height: calc(100% - 22px);
+	padding: 0%;
+}
+
+.homepageGrid {
+	font-family: 'Noto Sans JP', sans-serif;
+	display: grid;
+	grid-template-columns: 72px 240px calc(100% - 729px) 417px;
+	grid-template-rows: 48px 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"server-list channel-header server-header  server-header"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list";
+	height: calc(100% - 22px);
+	padding: 0%;
+}
+
+.video-grid-container {
+	font-family: 'Noto Sans JP', sans-serif;
+	display: grid;
+	grid-template-columns: 72px 240px calc(100% - 312px) 0px;
+	grid-template-rows: 48px 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"server-list channel-header server-header  server-header"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list"
+		"server-list channel-list chat-field member-list";
+	height: calc(100% - 22px);
+	padding: 0%;
+}
+
 .row {
 	height: 100%;
 }
@@ -1066,21 +1116,10 @@ body {
     height: 100%;
 	padding: 3px;
 	display:flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-}
-@media screen and (max-width: 1550px) {
-
-  .video-play-field {
-	width: 100%;
-	min-width: 600px;
-    height: 100%;
-	padding: 3px;
-	display: flex;
-	flex-flow: column;
-	justify-content: center;
-	align-items: center;
-	}
+	overflow-y: scroll;
 }
 
 .video-element {

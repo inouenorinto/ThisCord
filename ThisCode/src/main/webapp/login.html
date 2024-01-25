@@ -3,6 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<!--画面拡大できない -->
+	<meta name="viewport" content="width=device-width,initial-scale=1,
+		minimum-scale=1,maximum-scale=1,user-scalable=no">
 	
 	<title>login</title>
 </head>
@@ -12,9 +15,11 @@
 
 	<div class="shadow">
 		<form class="form-singin" action="fn/login" method="post">
-			<img class="mb-4 rounded" src="resource/user_icons/default1.png" alt="" width="72" height="72">
-			<h1 class="h5 mb-5 mt-3">おかえりなさい！</h1>
+			<img src="resource/user_icons/default1.png" alt="" width="72" height="72">
+			<h1>おかえりなさい！</h1>
 			<h4>またお会いしましたね！</h4>
+			<!-- スマホ用-->
+			<p class="p-iphone">アカウント情報</p>
 			<p class="p-position">メールアドレスまたは電話番号</p>
 			<input type="email" name="email" id="inputEmail"
 				class="input-color" placeholder="メールアドレス" required autofocus> 
@@ -23,7 +28,7 @@
 				class="input-color" placeholder="パスワード" required>
 			<button type="submit">ログイン</button>
 
-			<p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+			<p class="text-muted">&copy; 2023</p>
 		</form>
 	</div>
 

@@ -10,8 +10,6 @@ const MAX_CONNECTION_COUNT = 10;
 
 
 //WebRTCで通信をするためのシグナリングをするWebSocket
-//const ip2 = '192.168.0.11';
-//const ip2 = '172.19.7.203';
 const WSip = constIp;
 const WSport = constPort;
 let websocket = null;
@@ -287,6 +285,7 @@ function deleteRemoteVideoElement(id) {
 }
 
 function createVideoElement(elementId) {
+	let video_element = document.querySelectorAll('.video-element');
     let video = document.createElement('video');
     video.width = '584';
     video.height = '321.500';
@@ -294,9 +293,7 @@ function createVideoElement(elementId) {
 
     video.classList.add('video-element');
     video.autoplay = true;
-
     container.appendChild(video);
-
     return video;
 }
 

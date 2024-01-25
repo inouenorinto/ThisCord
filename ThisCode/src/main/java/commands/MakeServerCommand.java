@@ -58,8 +58,16 @@ public class MakeServerCommand extends AbstractCommand {
 		UserBean sessionUserBean = (UserBean)req.getAttributeInSession("bean"+userid);
 		sessionUserBean = userBean;
 		
-		req.setAttributeInSession("bean"+userid, userBean);
-		res.setRedirect("/chat.jsp?id="+userid);
+		String deviceType = req.getDeviceType();
+		String target = null;
+		if(deviceType == "Smartphone") {
+			target = "spchat.html";
+		} else {
+			target ="chat.html";
+		} 
+		
+    	req.setAttributeInSession("bean"+userBean.getUser_id(), userBean);
+		res.setRedirect("/"+target+"?id="+userBean.getUser_id());
 	}
 	
 	private void saveBase64Image(String base64Data, String fileName) {

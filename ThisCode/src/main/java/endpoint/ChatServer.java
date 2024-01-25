@@ -20,7 +20,9 @@ import db.dao.PersonalMessageDAO;
 public class ChatServer {
     @OnOpen
     public void onOpen(Session session, @PathParam("server_id") String s_server_id, @PathParam("channel_id") String s_channel_id,@PathParam("user_id") String s_user_id) {    	
+    	System.out.println(s_server_id);
     	int server_id = Integer.parseInt(s_server_id);
+    	
     	int channel_id = Integer.parseInt(s_channel_id);
     	int user_id = Integer.parseInt(s_user_id);
     	

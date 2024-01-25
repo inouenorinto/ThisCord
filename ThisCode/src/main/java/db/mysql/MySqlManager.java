@@ -15,6 +15,9 @@ public class MySqlManager {
     private static String USER;
     private static String PASS;
     
+    private static  Connection conn = null;
+    
+    
     public static void initConnection() {
 		Properties prop = new Properties();
 		
@@ -32,7 +35,6 @@ public class MySqlManager {
 		
     public static Connection getConnection() {
 
-        Connection conn = null;
         try {
         	initConnection();
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -44,5 +46,15 @@ public class MySqlManager {
         }
         return conn;
 
+    }
+    
+    public static void close() {
+    	try {
+    		if(conn != null) {
+    			conn.close();
+    		}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

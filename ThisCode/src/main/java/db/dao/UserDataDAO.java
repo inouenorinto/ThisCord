@@ -15,7 +15,7 @@ import db.mysql.MySqlManager;
 public class UserDataDAO{
     private static final String DB_SELECT = "select * from account where user_id = ?";
 
-    private Connection cn = null;
+    
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     
@@ -30,9 +30,7 @@ public class UserDataDAO{
     }
 
     //Connectionとってくるコンストラクタ
-    private UserDataDAO() {
-        this.cn = MySqlManager.getConnection();
-    }
+    private UserDataDAO() {}
     
     //インスタンスをとってくるクラスメソッドの呼び出し
     ServerDataDAO sddao = ServerDataDAO.getInstance();
@@ -43,6 +41,7 @@ public class UserDataDAO{
         ArrayList<UserDataBean> result = new ArrayList<>();
 
         try {
+        	Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(DB_SELECT);
             pstmt.setInt(1, User_Id);
             rs = pstmt.executeQuery();
@@ -59,7 +58,9 @@ public class UserDataDAO{
 
         } catch (SQLException e){
             e.printStackTrace();
-        } 
+        }finally {
+			MySqlManager.close();
+		}
         return result;
     }
     
@@ -67,7 +68,7 @@ public class UserDataDAO{
     	UserDataBean userDataBean = new UserDataBean();
     	
     	try {
-    		this.cn = MySqlManager.getConnection();
+    		Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(DB_SELECT);
             pstmt.setInt(1, user_id);
             rs = pstmt.executeQuery();
@@ -82,7 +83,10 @@ public class UserDataDAO{
 
         } catch (SQLException e){
             e.printStackTrace();
-        } 
+        }finally {
+			MySqlManager.close();
+		}
+    	
         return userDataBean;
     }
     
@@ -92,7 +96,7 @@ public class UserDataDAO{
 	    
 	    UserBean bean = new UserBean();
 	    try {
-			cn = MySqlManager.getConnection();
+	    	Connection cn =  MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
@@ -111,13 +115,10 @@ public class UserDataDAO{
 					bean.addRooms(num, info[0], info[1]);
 				}
 			}
-			if (cn != null) {
-				cn.close();
-			}
-
-            
 		} catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			MySqlManager.close();
 		}
 	    return bean;
 	}
@@ -127,7 +128,7 @@ public class UserDataDAO{
 	    
 	    UserBean bean = new UserBean();
 	    try {
-			cn = MySqlManager.getConnection();
+	    	Connection cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
 			pstmt.setInt(1, userId);
 			rs = pstmt.executeQuery();
@@ -146,13 +147,11 @@ public class UserDataDAO{
 					bean.addRooms(num, info[0], info[1]);
 				}
 			}
-			if (cn != null) {
-				cn.close();
-			}
-
             
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			MySqlManager.close();
 		}
 	    return bean;
 	}
@@ -162,7 +161,7 @@ public class UserDataDAO{
 		String insert = "INSERT INTO account (mailaddress, password, user_name ) VALUES (?, ?, ?)";
 		String select = "select mailaddress from account";
 		String select_id ="select user_id from account where mailaddress=?"; 
-		cn = MySqlManager.getConnection();
+		Connection cn = MySqlManager.getConnection();
 		int flag = -1;
 		Statement st = null;
 		try {
@@ -193,7 +192,9 @@ public class UserDataDAO{
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			MySqlManager.close();
+		}
 		return flag;
 	}
 	
@@ -202,7 +203,7 @@ public class UserDataDAO{
 	    PreparedStatement ps = null;	    
 	    
 	    int flag = -1;
-	    
+	    Connection cn = MySqlManager.getConnection();
 		try {
 			ps = cn.prepareStatement(update);
 			ps.setString(1, path);
@@ -211,18 +212,11 @@ public class UserDataDAO{
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			MySqlManager.close();
+		}
+		
 		return flag;
-	}
-	
-	public void close() {
-		try {
-			if (cn != null) {
-				cn.close();
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		} 
 	}
 	
 }
