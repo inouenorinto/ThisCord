@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import bean.MessageBean;
 import db.dao.MessageDataDAO;
+import db.dao.PersonalMessageDAO;
 
 @ServerEndpoint("/chat/{server_id}/{channel_id}/{user_id}")
 public class ChatServer {
@@ -22,6 +23,9 @@ public class ChatServer {
     	int server_id = Integer.parseInt(s_server_id);
     	int channel_id = Integer.parseInt(s_channel_id);
     	int user_id = Integer.parseInt(s_user_id);
+    	
+    	System.out.println(server_id+" "+channel_id+" "+user_id);
+    	
         session.getUserProperties().put("server_id", server_id);
         session.getUserProperties().put("channel_id", channel_id);
         session.getUserProperties().put("user_id", user_id);
@@ -77,8 +81,15 @@ public class ChatServer {
         mb.setSend_date((String)message.get("date"));
         mb.setMessage((String)message.get("message"));
 		
-	    MessageDataDAO mdd = MessageDataDAO.getInstance();
-		mdd.insertRecord(mb);
+        //nowRoomIdが-1なら、個人チャット(personal_message表)に書き込む
+        System.out.println("ChatServer個人チャット:"+(double)message.get("nowRoomId"));
+        if (-1.0 == (double)message.get("nowRoomId")) {
+        	PersonalMessageDAO pmd = PersonalMessageDAO.getInstance();
+        	pmd.insertRecord(mb);
+        } else {
+    	    MessageDataDAO mdd = MessageDataDAO.getInstance();
+    		mdd.insertRecord(mb);
+        }
     }
 }
 

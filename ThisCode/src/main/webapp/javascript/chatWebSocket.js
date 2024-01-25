@@ -196,8 +196,14 @@ function sendDisconnectVoiceChannel(voiceChannelId, user) {
 
 async function getMessageInfo(channel_id) {
 	try {
-		const response = await fetch("/ThisCord/fn/getmessageinfo?channel_id=" + channel_id);
-
+		var response;
+		
+		if (nowRoomId == -1) {
+			response = await fetch("/ThisCord/fn/getpersonalmessageinfo?channel_id=" + channel_id);
+		} else {
+			response = await fetch("/ThisCord/fn/getmessageinfo?channel_id=" + channel_id);
+		}
+		
 		if (response.ok) {
 			const jmessage = await response.json();
 			const messages = new Map(Object.entries(jmessage));
@@ -280,9 +286,11 @@ function joinChannel(channel_id) {
 	if (chatSocket) {
 		chatSocket.close();
 	}
-	const infoDiv = document.querySelector("#channel");
-	infoDiv.innerHTML = channelsMap.get(channel_id);
-
+	if (nowRoomId != -1) {
+		const infoDiv = document.querySelector("#channel");
+		infoDiv.innerHTML = channelsMap.get(channel_id);
+	}
+	
 	nowChannelId = channel_id;
 	console.log("url: " + "ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
 	chatSocket = new WebSocket("ws://localhost:8080/ThisCord/chat/" + nowRoomId + "/" + nowChannelId + "/" + userinfo.user_id);
@@ -705,7 +713,7 @@ async function getFriendList() {
 					'</div>';
 
 				homeChannelFlandList.innerHTML +=
-					'<a class="channel-fland-box" href="javascript:joinPersonalChat()">' +
+					'<a class="channel-fland-box" href="javascript:joinPersonalChat('+friend.user_id+')">' +
 					'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
 					'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
 					'<p id="user-name">' + friend.user_name + '</p>' +

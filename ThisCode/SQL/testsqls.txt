@@ -31,6 +31,8 @@ drop table message;
 drop table text_channel;
 drop table voice_channel;
 drop table server;
+drop table personal_message;
+drop table friend_relationship;
 drop table account;
 drop table friend_relationship;
 
@@ -93,11 +95,22 @@ CREATE TABLE admin_user (
 );
 
 CREATE TABLE friend_relationship (
+	relation_id INT AUTO_INCREMENT PRIMARY KEY,
 	user_id1 INT,
 	user_id2 INT,
 	flag BOOLEAN,
 	FOREIGN KEY (user_id1) REFERENCES account(user_id),
 	FOREIGN KEY (user_id2) REFERENCES account(user_id)
+);
+-- 個人チャットのメッセージの履歴
+CREATE TABLE personal_message (
+	message_id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	relation_id INT,
+	send_date VARCHAR(50),
+	message VARCHAR(500),
+	FOREIGN KEY (user_id) REFERENCES account(user_id),
+	FOREIGN KEY (relation_id) REFERENCES friend_relationship(relation_id)
 );
 
 INSERT INTO account (mailaddress, password, user_name, user_icon)
@@ -163,7 +176,7 @@ INSERT INTO text_channel (channel_name, server_id)
 VALUES ('一般', 1);
 
 INSERT INTO text_channel (channel_name, server_id) 
-VALUES ('Java' 1);
+VALUES ('Java', 1);
 
 INSERT INTO text_channel (channel_name, server_id) 
 VALUES ('勉強', 1);
