@@ -1,4 +1,4 @@
-function joinPersonalChat(user_id2) {
+function joinPersonalChat(user_id2, user_name) {
 	console.log("joinPersonalChat_TestMessage");
 	
 	//見た目のリセット＆整え
@@ -7,8 +7,8 @@ function joinPersonalChat(user_id2) {
 	
 	//チャット相手の名前表示
 	//修正中
-//	const infoDiv = document.querySelector("#channel");
-//	infoDiv.innerHTML = channelsMap.get(channel_id);
+	const infoDiv = document.querySelector("#channel");
+	infoDiv.innerHTML = user_name;
 	
 	nowRoomId = -1;
 	

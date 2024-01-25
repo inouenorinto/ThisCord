@@ -84,10 +84,15 @@ public class ChatServer {
         mb.setMessage((String)message.get("message"));
 		
         //nowRoomIdが-1なら、個人チャット(personal_message表)に書き込む
-        System.out.println("ChatServer個人チャット:"+(double)message.get("nowRoomId"));
-        if (-1.0 == (double)message.get("nowRoomId")) {
-        	PersonalMessageDAO pmd = PersonalMessageDAO.getInstance();
-        	pmd.insertRecord(mb);
+        
+        System.out.println(message.get("nowRoomId") instanceof Double);
+        System.out.println(message.get("nowRoomId").getClass());
+        
+        if (message.get("nowRoomId") instanceof Double) {
+        	if (-1.0 == (double)message.get("nowRoomId")) {
+            	PersonalMessageDAO pmd = PersonalMessageDAO.getInstance();
+            	pmd.insertRecord(mb);
+        	}
         } else {
     	    MessageDataDAO mdd = MessageDataDAO.getInstance();
     		mdd.insertRecord(mb);
