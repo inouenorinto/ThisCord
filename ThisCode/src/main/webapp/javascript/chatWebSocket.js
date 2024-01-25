@@ -720,7 +720,7 @@ async function getFriendList() {
 					'</div>';
 
 				homeChannelFlandList.innerHTML +=
-					'<a class="channel-fland-box" href="javascript:joinPersonalChat('+friend.user_id+')">' +
+					'<a class="channel-fland-box" href="javascript:joinPersonalChat('+friend.user_id+",'"+friend.user_name+"'"+')">' +
 					'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
 					'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
 					'<p id="user-name">' + friend.user_name + '</p>' +
