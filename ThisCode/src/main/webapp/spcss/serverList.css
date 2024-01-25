@@ -11,7 +11,7 @@
 .server-scroll {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 100%;
+	height: 90%;
 }
 
 .server-scroll::-webkit-scrollbar {

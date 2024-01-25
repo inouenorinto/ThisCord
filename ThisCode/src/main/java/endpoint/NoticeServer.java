@@ -29,6 +29,7 @@ public class NoticeServer {
 	private static Map<Integer,Set<Session>> serverSession = new HashMap<>();
 	private static Map<Integer,Set<Session>> voiceChannelSession = new HashMap<>();
 	private static Map<Session,NoticeSessionBean> notices = new HashMap<>();
+	private static Map<Integer, Session> members = new HashMap<>();		//Integer=userId Session=WebSocketSession
 	
 	@OnOpen
 	public void onOpen(Session session, @PathParam("userId") int userId, @PathParam("userName") String userName,@PathParam("icon") String icon) {
@@ -42,6 +43,7 @@ public class NoticeServer {
 		bean.setIcon(icon);
 
 		notices.put(session, bean);
+		members.put(userId, session);
 		
 		System.out.println(pink+"NoticeServer.java "+end+":\t\tオンライン "+userName);
 	}
@@ -100,22 +102,55 @@ public class NoticeServer {
     		System.out.println(pink+"NoticeServer.java "+end+":\t\tチャンネル内オンライン数"+voiceChannelSession.get(voiceChannelId).size());
     		
     		sendServer(serverId, json);
+    	
+    	} else if(bean.getType().equals("invite")) {
+    		System.out.println(pink+"NoticeServer.java "+end+":\t\tしょうたいきたよ");
+    		int invUserid = bean.getUserId();
+    		String inviteUserId = bean.getInviteUserId();
+    		Session sess = members.get(Integer.parseInt(inviteUserId));
+    		
+    		JsonNoticeBean mess = new JsonNoticeBean();
+    		mess.setType("invite");
+    		mess.setInviteUserId(inviteUserId);
+    		String json = gson.toJson(mess);
+    		System.out.println(message);
+    		System.out.println(pink+"NoticeServer.java "+end+":\t\tsendJson "+json);
+    		
+    		if(sess != null) {
+    			sendOne(sess, json);
+    		}else {
+    			for(int id: members.keySet()) {
+    				System.out.println(id);
+    			}
+    				
+    			System.out.println(pink+"NoticeServer.java "+end+":\t\tそんなセッションありません message "+message);
+    			
+    		}
+    		
+    	} else {
+    		System.out.println(pink+"NoticeServer.java "+end+":\t\tどのタイプでもありません message "+message);
     	}
 	}
 	
 	@OnClose
 	public void onClose(Session session, CloseReason reason) {
 	    System.out.println("NoticeServer.java :"+reason);
-	    Integer serverId = (Integer) session.getUserProperties().get("serverId");
-	    Integer voiceChannelId = (Integer) session.getUserProperties().get("voiceChannelId");
+	    int userId = (int) session.getUserProperties().get("userId");
+	    int serverId = (int) session.getUserProperties().get("serverId");
+	    int voiceChannelId = (int) session.getUserProperties().get("voiceChannelId");
+	    
 	    serverSession.getOrDefault(serverId, Collections.emptySet()).remove(session);
 	    voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
+	        
 	    System.out.println("NoticeServer.java :\t\t切断 サーバーオンライン数" + serverSession.get(serverId).size());
+	    
 	    try {
 	    	notices.remove(session);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    }
+	    
+	    members.remove(userId);
 	    
 	}
 
@@ -123,14 +158,14 @@ public class NoticeServer {
 	@OnError
 	public void onError(Session session, Throwable t) {
 	    System.out.println("NoticeServer.java :\t\tエラーが発生しました。");
-
+	    int userId = (int) session.getUserProperties().get("userId");
 	    int serverId = (int) session.getUserProperties().get("serverId");
 	    int voiceChannelId = (int) session.getUserProperties().get("voiceChannelId");
 	    serverSession.getOrDefault(serverId, Collections.emptySet()).remove(session);
 	    voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
 
 	    notices.remove(session);
-
+	    members.remove(userId);
 	    t.printStackTrace();
 	}
 
@@ -159,6 +194,14 @@ public class NoticeServer {
 	            e.printStackTrace();
 	        }
 	    }
+	}
+	
+	public void sendOne(Session session, String json) {
+		try {
+			session.getBasicRemote().sendText(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

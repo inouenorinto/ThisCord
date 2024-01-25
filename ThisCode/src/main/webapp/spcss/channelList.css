@@ -543,9 +543,96 @@
 	color: #fff;
 	width: 100%;
 	border-radius: 15px;
+	padding: 0px 12px 0px 12px;
 }
 
 .input_text:focus {
 	border: none;
 	outline: none;
+}
+
+.btn_sub{
+	background-color: #5865f2;
+	color: #fff;
+	width: 100%;
+	border-radius: 25px;
+	text-align: center;
+	padding: 8px 0px 8px 0px;
+
+}
+
+
+/* editIconModal */
+
+/*cropper.jsのcss*/
+.cropper-view-box,
+.cropper-face {
+	border-radius: 50%;
+	cursor: grab;
+	outline: initial;
+}
+
+.cropper-bg {
+
+	background-color: #fff;
+}
+
+.cropper-face:active {
+	cursor: grabbing;
+}
+
+.cropper-dashed {
+	display: none;
+}
+
+.cropper-center {
+	display: none;
+}
+
+.cropper-point {
+	display: none;
+}
+
+.cropper-line {
+	display: none;
+}
+
+
+.editIconModal{
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;	
+}
+
+.editIconModal.open {
+	top: 0;
+	height: 100%;
+	
+}
+
+
+#cropper-tgt{
+	/* border-radius: 50%; */
+	border-style: none; 
+	outline: none;
+}
+
+.cropButton{
+	background-color: #5865f2;
+	color: #fff;
+	width: 100%;
+	border-radius: 25px;
+	text-align: center;
+	padding: 8px 0px 8px 0px;
+}
+
+.custom-file-upload{
+	background-color: #5865f2;
+	padding: 8px 8px 4px 8px;
+	border-radius: 8px 8px 0 0;
+	color: #fff;
 }
