@@ -371,7 +371,7 @@
 				</div>
 				<div class="modal-body invitation-body">
 					<div class="invitation-form">
-						<form class="invitation-form" action="fn/invite" method="post">
+						<form class="invitation-form" action="fn/invite" method="post" id="inviteForm">
 							<label>ユーザーIDを入力してフレンドを追加</label>
 							<div class="invitation-wrapper">
 								<input class="invitation-input" type="text" name="userId" id="invitationInput">
@@ -399,8 +399,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
 		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
 		crossorigin="anonymous"></script>
-	<script
-		src="${pageContext.request.contextPath}/javascript/personalChatWebSocket.js"></script>
+	<script src="./javascript/personalChatWebSocket.js"></script>
 </body>
 
 </html>

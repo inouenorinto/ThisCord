@@ -135,13 +135,18 @@ public class NoticeServer {
 	@OnClose
 	public void onClose(Session session, CloseReason reason) {
 	    System.out.println("NoticeServer.java :"+reason);
+	    
 	    int userId = (int) session.getUserProperties().get("userId");
 	    int serverId = (int) session.getUserProperties().get("serverId");
-	    int voiceChannelId = (int) session.getUserProperties().get("voiceChannelId");
+	    int voiceChannelId = 0;
+	    
+	    if( session.getUserProperties().get("voiceChannelId") != null) {
+	    	voiceChannelId = (int)  session.getUserProperties().get("voiceChannelId");
+	    	voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
+	    }
 	    
 	    serverSession.getOrDefault(serverId, Collections.emptySet()).remove(session);
-	    voiceChannelSession.getOrDefault(voiceChannelId, Collections.emptySet()).remove(session);
-	        
+	    
 	    System.out.println("NoticeServer.java :\t\t切断 サーバーオンライン数" + serverSession.get(serverId).size());
 	    
 	    try {

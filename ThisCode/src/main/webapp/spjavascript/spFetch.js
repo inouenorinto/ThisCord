@@ -625,6 +625,8 @@ function form_clear(formId) {
 
 }
 
+
+//
 document.addEventListener('DOMContentLoaded', function() {
 	const inviteForm = document.getElementById('inviteForm');
 

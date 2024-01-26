@@ -18,7 +18,7 @@ public class InvitationCommand extends AbstractCommand {
 		int user_id = Integer.parseInt(req.getParameter("userId")[0]);
 		int server_id = Integer.parseInt(req.getParameter("serverId")[0]);
 		int id = Integer.parseInt(req.getParameter("id")[0]);
-		System.out.println(yellow+"InvitationCommnd.java "+ end +": userid "+ user_id + " server_id" + server_id);
+		System.out.println(yellow+"InvitationCommnd.java "+ end +": ユーザID:"+ user_id + "が、サーバID" + server_id+"に招待されました。");
 		invaite(server_id, user_id);
 		
 		String deviceType = req.getDeviceType();
@@ -46,12 +46,10 @@ public class InvitationCommand extends AbstractCommand {
 			
 			pstmt.executeUpdate();
 			
-			if (cn != null) {
-				cn.close();
-			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			MySqlManager.close();
 		}
 	}
 
