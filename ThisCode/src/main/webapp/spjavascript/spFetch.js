@@ -610,9 +610,11 @@ function initform() {
 
 	invFriendList
 	getFriend('invFriendList');
+	getFriend('singleChatFriendList');
 	
 	const formUserId = document.getElementById('formUserId');
 	formUserId.value = userid;
+
 
 }
 

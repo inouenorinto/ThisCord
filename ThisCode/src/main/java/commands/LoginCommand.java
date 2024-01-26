@@ -17,7 +17,7 @@ public class LoginCommand extends AbstractCommand {
 		UserDataDAO account = UserDataDAO.getInstance();
 		UserBean userBean = account.getRecord(email);
 		
-		if(userBean != null && Encryption.check(password, userBean.getPassword())) {
+		if(userBean.getPassword() != null && Encryption.check(password, userBean.getPassword())) {
 			
 			String deviceType = req.getDeviceType();
 			String target = null;
@@ -30,7 +30,7 @@ public class LoginCommand extends AbstractCommand {
         	req.setAttributeInSession("bean"+userBean.getUser_id(), userBean);
 			res.setRedirect("/"+target+"?id="+userBean.getUser_id());
 		} else {
-			res.setTarget("/login.html");
+			res.setRedirect("/login.html");
 		}
 	}
 
