@@ -228,7 +228,168 @@ VALUES (1, 6, true);
 INSERT INTO friend_relationship (user_id1, user_id2, flag) 
 VALUES (1, 7, true);
 
+INSERT INTO friend_relationship (user_id1, user_id2, flag)
+VALUES 
+  (1, 7, true),
+  (1, 8, true),
+  (1, 9, true),
+  (1, 10, true),
+  (1, 11, true),
+  (1, 12, true),
+  (1, 13, true),
+  (1, 14, true),
+  (1, 15, true),
+  (1, 16, true),
+  (1, 17, true),
+  (1, 22, true),
+  (1, 23, true),
+  (1, 24, true),
+  (1, 25, true),
+  (1, 26, true),
+  (1, 27, true),
+  (1, 28, true),
+  (1, 29, true),
+  (1, 30, true),
+  (1, 31, true),
+  (1, 32, true),
+  (1, 33, true),
+  (1, 34, true),
+  (1, 35, true),
+  (1, 36, true),
+  (1, 37, true),
+  (1, 38, true),
+  (1, 39, true),
+  (1, 40, true),
+  (1, 41, true),
+  (1, 42, true),
+  (1, 43, true),
+  (1, 44, true),
+  (1, 45, true),
+  (1, 46, true),
+  (1, 47, true),
+  (1, 48, true),
+  (1, 49, true),
+  (1, 50, true);
+
+
 INSERT INTO friend_relationship (user_id1, user_id2, flag) 
 VALUES (3, 2, true);
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('rufy@gmail.com', '$2a$12$LuHGl/Y9k6eyAhm6f8oOx.ll3i42kgl41Mc46CGvCiNhd6j8Qykh2', 'rufy', '8.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('zoro@gmail.com', '$2a$12$h2xvAwGkzt0kTa03WNfxq.fJqqXOoEldDtF.IitZNgKBB/vjlPZ9a', 'zoro', '9.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('nami@gmail.com', '$2a$12$ocyVgu8CHWXILuFZhwLgaOyEuE0vDG1IxdSqpeSk2XvNJ6xnZuvHS', 'nami', '10.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('usopp@gmail.com', '$2a$12$9RTVWW54WNIDw6xxJK7QWepUwLcmtiHkolwGxkHexMJOkxfXYr3Mm', 'usopp', '11.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('sanji@gmail.com', '$2a$12$EI7oE0V804uNf1E3hyi2XemNdAlFV2dBSF.lY0We/HeyFvbxjbPBu', 'sanji', '12.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('chopper@gmail.com', '$2a$12$K/b3jQP5tAz05oSHmIRJpuJZSoW4lY0ENYT87xp7pdWmNQXMCbQZS', 'chopper', '13.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('robin@gmail.com', '$2a$12$zqMB/BFFesnEVdhXAHx/nuuS/U7j/580Qzq7vzg3YN7Px9LEPvrEu', 'robin', '14.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('franky@gmail.com', '$2a$12$cx8ymFwhm811HZKAcr3nA.s/1hikr.vIyccXe3LBFHA3wn67Y5MeS', 'franky', '15.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('brukku@gmail.com', '$2a$12$Ydz4WGi4HLgcA86atW0yTOONnOBPfQqWj87lL0ipH6WSZ.sUgY43q', 'brukku', '16.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('linus@gmail.com', '$2a$12$mswB8CafZlD7Rhc6uMLy..b3tfoROIkm6uhLXEmVrkl4kMJyDdN46', 'linus', '17.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('mevius@gmail.com', '$2a$12$2dSrvY45wtb3aqIbjbq6XOUTOdl1vNLB5yzhbetK8b/Gxl.ioAeKO', 'mevius', '22.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('akamaru@gmail.com', '$2a$12$MleUG1R4agiPYU1edQg8vubH8LDlEbfmCZNAyLAdHbjzPnEao/RCG', 'akamaru', '23.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('wakaba@gmail.com', '$2a$12$wr0Gw3TKuQm9/7TM1MGAeudLKCHCiy9M4.DGMWi2gnc3VJVo/MAVS', 'wakaba', '24.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('peace@gmail.com', '$2a$12$vyRKo1WyYiYZFbDIvlIkTOkHk7L6Mx1lyFQ4xggUlnthU2h4ayaZy', 'peace', '25.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hope@gmail.com', '$2a$12$KhLR/cvuurEqCCXe0oGL5ueTDCd24Gorsho/E/g8OAvZBAWUDz5Mq', 'hope', '26.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('camel@gmail.com', '$2a$12$Z50F6HfI.Lch.XFGDdeF/.Jj9JnfNYEboYS4KSScQd07QW5ar5b2y', 'camel', '27.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('winston@gmail.com', '$2a$12$Zgn66x3.5adT9UxYpsDEMuhqKQEi0TXogmcVCnT20n2G1kbbJYi0q', 'winston', '28.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('kuzu@gmail.com', '$2a$12$IhK8NtQ9RkSCZm0DE/scLu.dlyrz1D3t.C282F9UhSBrF88GHelte', 'kuzu', '29.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('mebel@gmail.com', '$2a$12$98C3FSY43QWL6hej93ZKAOc9ncWK/jd5ZgvU99aCg2jAd4fPOGgAm', 'mebel', '30.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('petra@gmail.com', '$2a$12$Ghma0qk.Bw8wHs2jQjc.VOD.LQI/f7cZTRaVuuDK4EY8MtCivpXyO', 'petra', '31.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hero@gmail.com', '$2a$12$HsmIyc4bhPF9m2zyXXWiXeetoSSEBfY0IKm6yPazNFrIy33iY6UpG', 'hero', '32.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('haku@gmail.com', '$2a$12$8dbVAJsoLq9Rz45ZbeZuoOGfjLRAhHkK9EGEqWJTOUPzBajgoTiq6', 'haku', '33.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('suzu@gmail.com', '$2a$12$t83CHzTTIIlXJlLf9RxpueVMyNJtYtHCFppRpieTXlxa6ehi.h/gO', 'suzu', '34.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('naito@gmail.com', '$2a$12$SGMkMI11JhUMwnQ0CMRAz.cx5qJkiHBbbL0sD0f0/AsraRB8EFRMW', 'naito', '35.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('choki@gmail.com', '$2a$12$WLYU5uzSOJY7QBSMW5Ap6e0bd1gspAHYUaelrC1KTinElvuWk1wfG', 'choki', '36.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('megane@gmail.com', '$2a$12$0OJUYFqhwlmc7QjlHHUf3e6llIGvOB1yd.TgjoDxtdPkzBiDjJtdu', 'megane', '37.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hayato@gmail.com', '$2a$12$lgyx.XAwLSlwimCtCjS5Pu70OrbeInk2JeVBkvzlKzLWISkf3CSLa', 'hayato', '38.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('jidori@gmail.com', '$2a$12$Qef2psX/0ra7zkfhh1tyiOOBIlg/hEpVUp731JwMjrC8vxsD0A1Mm', 'jidori', '39.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('daikichi@gmail.com', '$2a$12$0PAwGoVSfZbn2810njQujeF497BSu2QMOi36h5Q7m3rpOFuyZwd5y', 'daikichi', '40.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('chukichi@gmail.com', '$2a$12$5cunMNPDvUC.cOZRjJ.VZ.570f1n48UFgzM/jv0VqRaKE.htiK80i', 'chukichi', '41.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('syokichi@gmail.com', '$2a$12$.rIioEtqIKqM6cXv5DbIKuGnXMQ06zvToA45eTC0PkJFWPCPwzeca', 'syokichi', '42.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('suekichi@gmail.com', '$2a$12$hReBd5k53Eb0KuPe1di1quGvSDlDgATk6lkL//8XmqYoyD2krvdN6', 'suekichi', '43.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('super@gmail.com', '$2a$12$XJ8Jlgplq9Ef8Wu0cdrv5OdAFH99la4qOzeqke2kJCfxF0qygXovG', 'super', '44.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('omikuji@gmail.com', '$2a$12$6GgVJIklJw94zfPUJUnXK.EuuND0/xoqzBKs5aI7VFmGywwYREtUK', 'omikuji', '45.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('back@gmail.com', '$2a$12$BW2ARjuQK5qF2A.lfO56o.x/QHazhF/9XmotIeDLVk3R4805mUowq', 'back', '46.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hunter@gmail.com', '$2a$12$CNsYGjZaJNNIGlIlN249junM7lwM16Q1fcXZzQrdZ2F6W3EyjCKdW', 'hunter', '47.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('kure@gmail.com', '$2a$12$q2k4wXEXarvc54pPWvn3KeYdMwt4alqLWKZvjzt.hGa4mzAsoiVKm', 'kure', '48.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('hasami@gmail.com', '$2a$12$HGz47Aug/y4SfYyOLeQQduFbNwSDhAAafITlMo4cmy5ar0fNxHLiC', 'hasami', '49.jpg');
+
+INSERT INTO account (mailaddress, password, user_name, user_icon)
+VALUES ('neko@gmail.com', '$2a$12$XtleQgGfqbk1bz12b57yf.QyqQnkWOGGhtM7IHEN0h1r3O1b0HDma', 'neko', '50.jpg');
 
 commit;
