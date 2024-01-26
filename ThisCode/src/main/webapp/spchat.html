@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./spcss/serverList.css">
     <link rel="stylesheet" href="./spcss/chatFIeld.css">
     <link rel="stylesheet" href="./spcss/memberList.css">
+    <link rel="stylesheet" href="./spcss/singleChat.css">
     <!-- icon -->
     <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
 
@@ -114,7 +115,7 @@
 
         </div>
         <div class="footerItem">
-            <a href="#">
+            <a href="#" onclick="togglePage('singleChat');">
                 <i class="fa-solid fa-comment"></i>
                 <p style="font-size: 0.7rem; margin: 0px; font-weight: 700;">メッセージ</p>
             </a>
@@ -250,6 +251,15 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!--single cht-->
+
+    <div class="singleChat" id="singleChat">
+        <div class="singleChatHeader">
+            <h2>メッセージ</h2>
+        </div>
+        <div class="singleChatScroll" id="singleChatFriendList"></div>
     </div>
 
     <script src="./javascript/createServer.js"></script>

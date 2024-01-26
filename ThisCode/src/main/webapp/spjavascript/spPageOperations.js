@@ -126,6 +126,11 @@ window.addEventListener('load', () => {
     });
 })
 
+function togglePage(element) {
+    const elem = document.getElementById(element);
+    elem.classList.toggle('openPage');
+}
+
 
 window.globalFunction = {};
 window.globalFunction.toggleClickedState = toggleClickedState;

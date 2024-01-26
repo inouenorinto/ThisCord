@@ -40,7 +40,7 @@ html body {
     padding: 10px;
     border-top: #4c4f56 1px groove;
     display: flex;
-    z-index: 1;
+    z-index: 2;
     justify-content: space-around;
 
     transition: 0.3s;
