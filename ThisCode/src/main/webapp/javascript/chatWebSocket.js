@@ -92,6 +92,13 @@ function registerNotice() {
 		let json = JSON.parse(event.data);
 		let member = json.members;
 		let vcId = json.voiceChannelid;
+		let type = json.type;
+		if(type == 'invite'){
+			alert('招待されました');
+			getUserInfo();	
+		}
+		console.log(JSON.stringify(json));
+
 		createVoiceChannelIcon(member, vcId);
 	};
 
@@ -691,7 +698,10 @@ async function sendFriendRequest() {
 
 function invFriendForm(id){
 	const invitationInput = document.getElementById('invitationInput');
+	const inputServerId = document.getElementById('inputServerId');
 	invitationInput.value = id;
+	inputServerId.value = nowRoomId;
+	console.log(nowRoomId);
 }
 
 //フレンドリストを表示する関数
@@ -736,7 +746,27 @@ async function getFriendList() {
 	}
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+	const inviteForm = document.getElementById('inviteForm');
 
+	inviteForm.addEventListener('submit', (event) => {
+		event.preventDefault();
+		
+		const inviteUserId = document.getElementById('invitationInput').value;
+		let json =
+		{
+			type: 'invite',
+			serverId: nowRoomId,
+			inviteUserId: inviteUserId
+		};
+	
+		console.log(json);
+		noticeSocket.send(JSON.stringify(json));
+	
+		inviteForm.submit();
+	})
+
+});
 
 
 
