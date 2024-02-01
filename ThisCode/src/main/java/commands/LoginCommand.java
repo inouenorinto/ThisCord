@@ -30,7 +30,7 @@ public class LoginCommand extends AbstractCommand {
         	req.setAttributeInSession("bean"+userBean.getUser_id(), userBean);
 			res.setRedirect("/"+target+"?id="+userBean.getUser_id());
 		} else {
-			res.setRedirect("/login.html");
+			res.setRedirect("/login.html?miss");
 		}
 	}
 
