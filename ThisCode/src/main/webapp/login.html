@@ -19,20 +19,31 @@
 			<h1>おかえりなさい！</h1>
 			<h4>またお会いしましたね！</h4>
 			<!-- スマホ用-->
-			<p class="p-iphone">アカウント情報</p>
-			<p class="p-position">メールアドレスまたは電話番号</p>
+			<span class="p-iphone">アカウント情報</span>
+			<!-- PC用-->
+			<span id="color" class="p-position">メールアドレス</span>			
+			<span id="miss" class="none mis">- メールアドレスが無効です。</span>
 			<input type="email" name="email" id="inputEmail"
 				class="input-color" placeholder="メールアドレス" required autofocus> 
-			<p class="p-position">パスワード</p>
+			<span id="colors" class="p-position ">パスワード</span>
+			<span class="p-iphone"></span>
+			<span id="misss" class="none mis">- パスワードが無効です</span>
 			<input type="password" name="password" id="inputPassword"
 				class="input-color" placeholder="パスワード" required>
 			<button type="submit">ログイン</button>
-
 			<p class="text-muted">&copy; 2023</p>
 		</form>
 	</div>
 
 	<!-- Google-login -->
+<script>
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has('miss')) {
+		document.getElementById('miss').classList.remove('none');
+		document.getElementById('misss').classList.remove('none');
+		document.getElementById('color').classList.add('mis');
+		document.getElementById('colors').classList.add('mis');
+    }
+</script>
 </body>
-
 </html>
