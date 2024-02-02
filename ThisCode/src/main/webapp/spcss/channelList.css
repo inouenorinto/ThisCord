@@ -22,6 +22,9 @@
 	font-size: 15px;
 	color: #fff;
 	margin-left: 10px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .channel-list {
@@ -99,6 +102,9 @@
 	width: 100%;
 	text-decoration: none;
 	color: #949ba4;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .text-channels.clicked textIcon {
@@ -489,7 +495,20 @@
 	z-index: 3;
 }
 
+
+
+
 /* createServerModal */
+.create-channel-modal-content{
+	bottom: 0;
+	position: absolute;
+	height: 85%;
+	width: 100%;;
+	border-radius: 10px;
+	background-color: #1c1d22;
+
+}
+
 .createServerModal {
 	position: fixed;
 	z-index: 100;
@@ -635,4 +654,81 @@
 	padding: 8px 8px 4px 8px;
 	border-radius: 8px 8px 0 0;
 	color: #fff;
+}
+
+.create-sever-modal-content {
+	bottom: 0;
+	position: absolute;
+	height: 85%;
+	width: 100%;
+	background-color: #27282c;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.createChannelModal {
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;
+}
+
+.createChannelModal.open{
+	top: 0;
+	height: 100%;
+}
+
+.createChannelServerNameInput{
+	width: 100%;
+	border : none;
+	border-top: 3px solid #2a2a34;
+	border-bottom: 3px solid #2a2a34;
+	background-color: #26262f;
+	color: #fff;
+
+	font-size: 1.5em;
+	padding: 5px 20px;
+
+}
+.formItems {
+	margin-top: 40px;
+}
+
+.radioWrapper {
+	border: none;
+	border-top:3px solid #2a2a34;
+	border-bottom:3px solid #2a2a34;
+
+}
+
+.radioItemsLabel {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 5px;
+}
+
+.radioItemsLabel i {
+	font-size: 1.2em;
+}
+
+.radioItems {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	background-color: #26262f;
+	padding: 5px 0px;
+}
+
+.createChannelRadio {
+	margin-right: 15px;
+}
+
+.radioItemsIcon {
+	color: #c7c8cd;
+
+	padding: 15px;
 }

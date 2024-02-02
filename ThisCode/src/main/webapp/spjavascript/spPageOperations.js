@@ -13,26 +13,7 @@ function videoChat() {
     } else {
         videoDisplay = false;
     }
-    //videoField.classList.toggle('none');
-    //serverHeader.classList.toggle('none');
-    //chatField.classList.toggle('none');
-    //memberList.classList.toggle('none');
-    //mediaInterface.classList.toggle('none');
-    //containerFluid.classList.toggle('video-container');
 }
-
-// const micro = document.getElementById('microphone');
-// let flag = true;
-// micro.addEventListener('click',()=>{
-//     if(flag) {
-//         micro.innerHTML = '<i class="fa-solid fa-microphone-slash fa-sm"></i>';
-//         flag = false;
-//     } else {
-//         micro.innerHTML = '<i class="fa-solid fa-microphone fa-sm"></i>';
-//         flag = true;
-//     }
-
-// });
 
 let selectedElement = null;
 function toggleClickedState(element) {
@@ -126,10 +107,87 @@ window.addEventListener('load', () => {
     });
 })
 
-function togglePage(element) {
+let openPage = false;
+function togglePageAndJoin(element) {
     const elem = document.getElementById(element);
-    elem.classList.toggle('openPage');
+
+    if (openPage) {
+        openPage = false;
+        elem.classList.remove('openPage');
+        joinRoom(oldRoomId);
+    } else {
+        openPage = true;
+        elem.classList.add('openPage');
+    }
+    
 }
+
+function togglePage(elementId) {
+    const elem = document.getElementById(elementId);
+    elem.classList.toggle('openPage');
+
+}
+
+function closePage(element) {
+    openPage = false;
+    const elem = document.getElementById(element);
+    elem.classList.remove('openPage');
+}
+
+function toggleChatField() {
+    document.querySelector(".chatField").classList.toggle("active");
+}
+
+
+//form関係
+window.addEventListener('load', () => {
+    const invForm = document.getElementById('inviteForm');
+    invForm.addEventListener('submit', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+        const url = form.getAttribute('action');
+        fetch(url, option)
+        .then(response => {
+            if (response.ok) {
+                form.reset();
+            }
+        })
+    })
+
+    const form = document.getElementById('createChannelForm');
+
+    form.addEventListener('submit', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+
+        const url = form.getAttribute('action');
+        fetch(url, options)
+        .then(response => {
+            if (response.ok) {
+                joinRoom(nowRoomId);
+                form.reset();
+                modalToggle('createChannelModal')
+            } else {
+                throw new Error('ネットワークエラー');
+            }
+        });
+
+        
+    })
+})
+
 
 
 window.globalFunction = {};

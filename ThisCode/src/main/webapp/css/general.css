@@ -580,6 +580,9 @@ body {
 #channel {
 	font-weight: 500;
 	font-size: 1.2em;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .chat-field {
