@@ -87,4 +87,9 @@ public class WebRequestContext implements RequestContext {
 	public Object getAttributeInSession(String key) {
 		return session.getAttribute(key);
 	}
+	
+	@Override
+	public void invalidate() {
+		session.invalidate();
+	}
 }
