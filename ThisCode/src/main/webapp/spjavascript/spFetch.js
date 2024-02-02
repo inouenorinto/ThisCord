@@ -4,6 +4,7 @@
 let defaultSrc = 'default';
 
 let nowRoomId = null;
+let oldRoomId = null;
 let nowRoomHostId = null;
 let rooms = null;
 let roomsMap = null;
@@ -17,6 +18,8 @@ let username = null;
 let userid = null;
 let userinfo = null;
 let user_icon = null;
+let friendCount = 0;
+let friendIcons = [];
 
 const ip = constIp;
 const port = constPort;
@@ -38,9 +41,10 @@ async function init() {
 	} else {
 		registerNotice();
 	}
-	setSwipe(".fieldWrapper");
+	setSwipe(".chat-scroll");
 	initform();
-	getFriend('invFriendList');
+	await getFriend('invFriendList');
+	initMyPage();
 
 }
 
@@ -102,6 +106,11 @@ function toggleFooter() {
 	}
 }
 
+function toggleActive(elementId) {
+	let element = document.getElementById(elementId);
+	element.classList.toggle("active");
+}
+
 function toggleChatField() {
 	document.querySelector(".chatField").classList.toggle("active");
 	document.getElementById("footer").classList.toggle('open-footer');
@@ -116,7 +125,11 @@ async function getFriend(element) {
 		if (response.ok) {
 			const json = await response.json();
 
+			elm.innerHTML = "";
+			friendCount = 0;
 			for (let friend of json.friendList) {
+				friendCount++;
+				friendIcons.push(friend.user_icon);
 				elm.innerHTML +=
 					`<div class="fland-box">
 					  <div class="inv-friend-button">
@@ -142,6 +155,34 @@ async function getFriend(element) {
 	}
 }
 
+async function setFriendListToSinglePage(element) {
+	const elm = document.getElementById(element);
+
+	try {
+		const response = await fetch('/ThisCord/fn/getfriendList?userId=' + userid);
+		if (response.ok) {
+			const json = await response.json();
+
+			elm.innerHTML = "";
+			for (let friend of json.friendList) {
+				elm.innerHTML +=
+					`<a class="friendListItem" href="javascript:joinPersonalChat(${friend.user_id},'${friend.user_name}')" onclick="toggleChatField();">
+						<img class="singleChatIconImage" src="/ThisCord/resource/user_icons/${friend.user_icon}"  />
+						<div style=" padding:4px 0px 4px 8px;">
+							<p id="single-user-name">${friend.user_name}</p>
+							<p id="single-user-id">${friend.user_name}-${friend.user_id}</p>
+						</div>
+					</a>`;
+
+			}
+
+		} else {
+			console.error("Failed to fetch room information");
+		}
+	} catch (error) {
+		console.error("Error: " + error);
+	}
+}
 // クエリ文字列からidパラメータの値を取得する関数
 var queryString = window.location.search;
 
@@ -220,7 +261,7 @@ async function joinRoom(roomId) {
 	const firstTextChannelId = firstTextChannel[0];
 
 	let voiceIds = [];
-	for(const [channel_id, channel_name] of voiceChannelsMap){
+	for (const [channel_id, channel_name] of voiceChannelsMap) {
 		voiceIds.push(channel_id);
 	}
 
@@ -242,11 +283,16 @@ function joinChannel(channel_id) {
 	if (chatSocket) {
 		chatSocket.close();
 	}
+	if (nowRoomId != -1) {
+		const infoDiv = document.querySelector("#channel");
+		infoDiv.innerHTML = channelsMap.get(channel_id);
+	}
 	const infoDiv = document.querySelector("#channel");
 	infoDiv.innerHTML = channelsMap.get(channel_id);
 
 	nowChannelId = channel_id;
 	chatSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
+	console.log(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
 	chatSocket.onopen = event => {
 		console.log("接続開始");
 		getMessageInfo(channel_id);
@@ -255,7 +301,6 @@ function joinChannel(channel_id) {
 	chatSocket.onmessage = event => {
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
-		//chat.innerHTML += '<img src="'+rep.usericon+'" >'+rep.username + " " + rep.date + "<br>" + rep.message + "<br><br>";
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<div>' +
@@ -392,9 +437,9 @@ function registerNotice() {
 		let vcId = json.voiceChannelid;
 		let type = json.type;
 
-		if(type == 'invite'){
+		if (type == 'invite') {
 			alert('招待されました');
-			getUserInfo();	
+			getUserInfo();
 		}
 		console.log(JSON.stringify(json));
 		createVoiceChannelIcon(member, vcId);
@@ -421,7 +466,13 @@ function createVoiceChannelIcon(members, channelId) {
 
 async function getMessageInfo(channel_id) {
 	try {
-		const response = await fetch("/ThisCord/fn/getmessageinfo?channel_id=" + channel_id);
+		var response;
+
+		if (nowRoomId == -1) {
+			response = await fetch("/ThisCord/fn/getpersonalmessageinfo?channel_id=" + channel_id);
+		} else {
+			response = await fetch("/ThisCord/fn/getmessageinfo?channel_id=" + channel_id);
+		}
 
 		if (response.ok) {
 			const jmessage = await response.json();
@@ -511,31 +562,31 @@ let nowUser = null;
 let nowIcon = null;
 
 function closeVoiceChannel() {
-  joinVoiceChannel(nowVcId, nowUser, nowIcon);
-  sendDisconnectVoiceChannel(nowVcId, nowUser);
+	joinVoiceChannel(nowVcId, nowUser, nowIcon);
+	sendDisconnectVoiceChannel(nowVcId, nowUser);
 
-  window.multi.stopVideo();
-  window.globalFunction.videoChat();
-  window.multi.hangUp();
+	window.multi.stopVideo();
+	window.globalFunction.videoChat();
+	window.multi.hangUp();
 
-  joinVoiceFlag = false;
-  nowUser = null;
-  nowVcId = null;
-  nowIcon = null;
+	joinVoiceFlag = false;
+	nowUser = null;
+	nowVcId = null;
+	nowIcon = null;
 }
 
 function joinVoiceChannel(channelId, user, icon) {
-  if (!joinVoiceFlag) { // 既に参加している場合は切断
+	if (!joinVoiceFlag) { // 既に参加している場合は切断
 
-    sendJoinVoiceChannel(channelId, user, icon);
-    joinVoiceFlag = true;
-    nowVcId = channelId;
+		sendJoinVoiceChannel(channelId, user, icon);
+		joinVoiceFlag = true;
+		nowVcId = channelId;
 
-    window.globalFunction.videoChat();
-    window.multi.connect(channelId);
+		window.globalFunction.videoChat();
+		window.multi.connect(channelId);
 
-    console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
-  }
+		console.log("チャンネルに参加 nowVcChannelId:" + nowVcId + ":" + channelId, ':', user, ':', icon);
+	}
 }
 
 //通知サーバーにボイスチャンネルに参加したことを通知するJSON
@@ -563,7 +614,7 @@ function sendDisconnectVoiceChannel(voiceChannelId, user) {
 	noticeSocket.send(JSON.stringify(json));
 }
 
-function invFriendForm(id){
+function invFriendForm(id) {
 	const invitationInput = document.getElementById('invitationInput');
 	invitationInput.value = id;
 }
@@ -572,11 +623,11 @@ function retryImageLoad(imgElement, maxRetries, retryInterval) {
 	let retries = 0;
 
 	function loadImage() {
-		imgElement.onload = function() {
+		imgElement.onload = function () {
 			console.log('Image loaded successfully.');
 		};
 
-		imgElement.onerror = function() {
+		imgElement.onerror = function () {
 			if (retries < maxRetries) {
 				retries++;
 
@@ -606,16 +657,22 @@ function initform() {
 
 	const MakeServerUserId = document.getElementById('MakeServerUserId');
 	MakeServerUserId.value = userid;
-	
+
 
 	invFriendList
 	getFriend('invFriendList');
-	getFriend('singleChatFriendList');
-	
+	setFriendListToSinglePage('singleChatFriendList');
+
 	const formUserId = document.getElementById('formUserId');
 	formUserId.value = userid;
 
+	const createChannelServerId = document.getElementById('createChannelServerId');
+	createChannelServerId.value = nowRoomId;
 
+
+	const footerUserIcon = document.getElementById('footerUserIcon');
+	footerUserIcon.src = '/ThisCord/resource/user_icons/' + user_icon;
+	footerUserIcon.innerHTML = '<img class="footerUserImage" src="/ThisCord/resource/user_icons/' + user_icon + '"></img>';
 }
 
 function form_clear(formId) {
@@ -629,12 +686,12 @@ function form_clear(formId) {
 
 
 //
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 	const inviteForm = document.getElementById('inviteForm');
 
 	inviteForm.addEventListener('submit', (event) => {
 		event.preventDefault();
-		
+
 		const inviteUserId = document.getElementById('invitationInput').value;
 		let json =
 		{
@@ -642,11 +699,113 @@ document.addEventListener('DOMContentLoaded', function() {
 			serverId: nowRoomId,
 			inviteUserId: inviteUserId
 		};
-	
+
 		console.log(json);
 		noticeSocket.send(JSON.stringify(json));
-	
+
 		inviteForm.submit();
 	})
 
 });
+
+function addOldRoom() {
+	
+	if(nowRoomId != null)
+		oldRoomId = nowRoomId;
+	console.log("oldRoomId "+oldRoomId);
+}
+
+function backToServer() {
+	if(oldRoomId > 0)
+		joinRoom(oldRoomId);
+	else
+		console.log("oldRoomId "+oldRoomId);
+		
+}
+
+// import analyze from "rgbaster";
+async function initMyPage() {
+	const infoUserName = document.getElementById('info-user-name');
+	const infoUserId = document.getElementById('info-user-id');
+	const fCount = document.getElementById('friendCount');
+	const infoIconUserImage = document.getElementById('infoIconUserImage');
+	const myFriends = document.getElementById('myFriends');
+	const infoHeader = document.getElementById('infoHeader');
+
+	infoIconUserImage.src = '/ThisCord/resource/user_icons/' + user_icon;
+	infoUserName.innerHTML = username;
+	infoUserId.innerHTML = `${username}-${userid}`;
+	fCount.innerHTML = friendCount + '人';
+
+	myFriends.innerHTML = '';
+	for (let i = 0; i < friendIcons.length; i++) {
+		myFriends.innerHTML += `<img class="myFriendsIcon" src="resource/user_icons/${friendIcons[i]}" alt="">`;
+		if (i == 4)
+			break;
+	}
+
+	infoHeader.style.backgroundColor = 'rgb(' + await getDominantColor("resource/user_icons/" + user_icon) + ')';
+}
+
+
+// 画像の中で一番使われている色を取得する関数
+async function getDominantColor(src) {
+	try {
+		const dominantColor = async function (src) {
+			return new Promise((resolve, reject) => {
+				var img = new Image();
+				img.crossOrigin = 'Anonymous';
+
+				img.onload = function () {
+					var canvas = document.createElement('canvas');
+					canvas.width = img.width;
+					canvas.height = img.height;
+
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(img, 0, 0);
+
+					var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+					var pixels = imageData.data;
+
+					var colorCount = {};
+
+					for (var i = 0; i < pixels.length; i += 4) {
+						var rgb = pixels.slice(i, i + 3).join(',');
+
+						if (colorCount[rgb]) {
+							colorCount[rgb]++;
+						} else {
+							colorCount[rgb] = 1;
+						}
+					}
+
+					var maxCount = 0;
+					var dominantColor = '';
+					for (var color in colorCount) {
+						if (colorCount[color] > maxCount) {
+							maxCount = colorCount[color];
+							dominantColor = color;
+						}
+					}
+
+					//ここで色を返す
+					resolve(dominantColor);
+				};
+
+				img.onerror = function () {
+					reject('Error loading the image.');
+				};
+
+				img.src = src;
+
+				if (img.complete || img.width + img.height > 0) {
+					img.onload();
+				}
+			});
+		};
+		return await dominantColor(src);
+	} catch (error) {
+		console.error(error);
+	}
+}
+

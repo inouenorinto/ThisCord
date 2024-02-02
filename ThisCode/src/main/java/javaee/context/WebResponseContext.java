@@ -81,4 +81,12 @@ public class WebResponseContext implements ResponseContext {
 	public String getRedirect() {
 		return send_target;
 	}
+
+	@Override
+	public void setStatus(String status) {
+		if(status.equals("ok")) {
+			response.setStatus(HttpServletResponse.SC_OK);
+		}
+		 
+	}
 }

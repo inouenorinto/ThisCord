@@ -7,18 +7,23 @@
 	border-radius: 5px;
 	top: 0;
 	right: 0;
-	z-index: 2;
+	/* z-index: 1; */
 	transform: translateX(86%);
 	transition: transform 0.3s ease-in-out;
 }
 
 .chatField.active {
 	transform: translateX(0);
+	z-index:2;
 }
 
 .fieldWrapper {
 	height: 90%;
 	width: 100%;
+}
+
+.backButton {
+	margin: 0 30px 0 10px;
 }
 
 .chatHeader {
@@ -27,6 +32,10 @@
 	display: flex;
 	padding: 10px;
 	border-bottom: #4c4f56 1px groove;
+
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .chat-scroll {
