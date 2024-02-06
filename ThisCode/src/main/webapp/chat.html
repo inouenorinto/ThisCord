@@ -86,7 +86,7 @@
 			<!-- 一覧 -->
 			<div class="channel-scroll text-box">
 				<div id="flendListWrapper" class="none">
-					<div class="channel-list-friend">
+					<div class="channel-list-friend clicked" onclick="joinHome();">
 						<i class="fa-solid fa-user-group fa-sm"></i>
 						<label>フレンド</label>
 					</div>
@@ -261,8 +261,9 @@
 			<!-- メッセージ入力フィールド -->
 			<div id="inputField" class="message-form-wrapper">
 				<div id="chat" class="message_div">
-					<i class="fa-solid fa-hashtag"></i> <input type="text" id="message-input" class="message_input"
-						placeholder="メッセージを送信" onkeydown="handleKeyPress(event)">
+					<i class="fa-solid fa-hashtag"></i>
+					<textarea id="message-input" class="message_input"
+						placeholder="メッセージを送信" onkeydown="handleKeyPress(event)"></textarea>
 				</div>
 			</div>
 		</div>

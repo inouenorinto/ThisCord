@@ -17,6 +17,7 @@ let username = null;
 let userid = null;
 let userinfo = null;
 let user_icon = null;
+let friendCounter = null;
 
 const ip = constIp;
 const port = constPort;
@@ -220,8 +221,11 @@ async function getMessageInfo(channel_id) {
 			const chat = document.getElementById("message-container");
 
 			chat.innerHTML = "";
+			
+			var convertedText = "";
 
 			for (const [key, message] of messages) {
+				convertedText = message.message.replace(/\n/g, "<br>");
 				chat.innerHTML +=
 					'<div class="message-wrapper">' +
 					'<div>' +
@@ -231,7 +235,7 @@ async function getMessageInfo(channel_id) {
 					'<div class="wrapper-item">' +
 					'<span class="message-user-name">' + message.user_name + '</span>' +
 					'<span class="message-date">' + message.send_date + '</span>' +
-					'<p class="message-text">' + message.message + '</p>' +
+					'<p class="message-text">' + convertedText + '</p>' +
 					'</div>' +
 					'</div>';
 			}
@@ -308,11 +312,14 @@ function joinChannel(channel_id) {
 		console.log("接続開始");
 		getMessageInfo(channel_id);
 	};
-
+	
+	var convertedText = "";
+	
 	chatSocket.onmessage = event => {
 		console.log("Received message: " + event.data);
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
+		convertedText =  rep.message.replace(/\n/g, "<br>");
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<div>' +
@@ -322,7 +329,7 @@ function joinChannel(channel_id) {
 			'<div class="wrapper-item">' +
 			'<span class="message-user-name">' + rep.username + '</span>' +
 			'<span class="message-date">' + rep.date + '</span>' +
-			'<p class="message-text">' + rep.message + '</p>' +
+			'<p class="message-text">' + convertedText + '</p>' +
 			'</div>' +
 			'</div>';
 		scrollEnd(500);
@@ -332,8 +339,14 @@ function joinChannel(channel_id) {
 	chatSocket.onclose = event => {
 		console.log("切断");
 	};
-	const currentElemnt = document.querySelector('#channel-id-' + channel_id);
-	window.globalFunction.toggleChannelState(currentElemnt);
+	
+	if (nowRoomId == -1) {
+		const currentElemnt = document.querySelector('#chat-id-' + nowSelectUserId);
+		window.globalFunction.toggleChannelState(currentElemnt);
+	} else {
+		const currentElemnt = document.querySelector('#channel-id-' + channel_id);
+		window.globalFunction.toggleChannelState(currentElemnt);
+	}
 }
 
 
@@ -423,22 +436,21 @@ async function getServerInfo(roomId) {
 function sendMessage() {
 	const messageInput = document.getElementById("message-input");
 	const message = messageInput.value;
-	if (message) {	//メッセージが空の場合にEnterを押しても処理されなくなる
-		let json =
-		{
-			nowRoomId: nowRoomId,
-			nowRoomName: roomsMap.get(nowRoomId),
-			nowChannelId: nowChannelId,
-			nowChannelName: channelsMap.get(nowChannelId),
-			username: userinfo.user_name,
-			usericon: user_icon,
-			date: getDate(),
-			message: message
-		};
+	
+	let json =
+	{
+		nowRoomId: nowRoomId,
+		nowRoomName: roomsMap.get(nowRoomId),
+		nowChannelId: nowChannelId,
+		nowChannelName: channelsMap.get(nowChannelId),
+		username: userinfo.user_name,
+		usericon: user_icon,
+		date: getDate(),
+		message: message
+	};
 
-		chatSocket.send(JSON.stringify(json));
-		messageInput.value = "";
-	}
+	chatSocket.send(JSON.stringify(json));
+	messageInput.value = null;
 }
 
 function fieldClear() {
@@ -497,6 +509,9 @@ async function getFriend(element) {
 			const json = await response.json();
 
 			for (let friend of json.friendList) {
+				
+				friendCounter++;
+				
 				elm.innerHTML +=
 					`<div class="fland-box">
 					  <button class="inv-friend-button" onclick="invFriendForm(${friend.user_id})">
@@ -530,9 +545,18 @@ function form_clear(formId) {
 }
 
 function handleKeyPress(event) {
-	if (event.key === "Enter") {
-		sendMessage();
+	var textarea = document.getElementById('message-input');
+    if (event.key === "Enter" && event.shiftKey) {
+        // シフト + エンターの場合、改行を挿入せずにデフォルトの挙動を抑制する
+        event.preventDefault();
 
+        // テキストエリアの内容に改行を追加
+        textarea.value += '\n';
+	} else if (event.key === "Enter") {
+		event.preventDefault();
+		if (textarea.value && !/^\s*$/.test(textarea.value)) {	//メッセージが空,改行コード,スペースのみの場合にEnterを押しても処理されなくなる
+			sendMessage();
+		}
 	}
 }
 
@@ -626,6 +650,10 @@ function joinHome() {
 	if (!joinHomeFlag) {
 		joinHomeFlag = true;
 	}
+	var channel_list_friend = document.querySelector('.channel-list-friend');
+	if (channel_list_friend.classList.contains('clicked') == false) {
+		channel_list_friend.classList.add('clicked');
+	}
 	getFriendList();
 	showInfo();
 }
@@ -650,10 +678,11 @@ function toggleHome() {
 
 //ホームページでユーザ情報を表示する
 function showInfo() {
+	
 	const infoElement = document.getElementById('info-wrapper');
 	const htmlCode = `
     <div class="info-header"></div>
-    <img class="info-icon-user-img" src="/ThisCord/resource/user_icons/default1.png">
+    <img class="info-icon-user-img" src="/ThisCord/resource/user_icons/${user_icon}">'
     <div class="info-card">
       <div class="info-top">
         <div id="info-user-name">${username}</div>
@@ -661,7 +690,7 @@ function showInfo() {
       </div>
       <div class="info-friend-count">
         <div style="font-size:14px; font-waight: 700;">Thiscordフレンド数</div>
-        <div style="color: #b5bac1; font-size: 12px;">2人</div>
+        <div style="color: #b5bac1; font-size: 12px;">${friendCounter}人</div>
       </div>
       <div class="info-logout">
         <a>
@@ -714,8 +743,9 @@ async function getFriendList() {
 		const response = await fetch('/ThisCord/fn/getfriendList?userId=' + userid);
 		if (response.ok) {
 			const json = await response.json();
-
+			
 			for (let friend of json.friendList) {
+				
 				friendListDiv.innerHTML +=
 					'<div class="fland-box">' +
 					'<div class="icon-name-wrapper">' +
@@ -731,12 +761,14 @@ async function getFriendList() {
 					'</div>';
 
 				homeChannelFlandList.innerHTML +=
+					'<div class="fland-channels" id="chat-id-' + friend.user_id +'">' +
 					'<a class="channel-fland-box" href="javascript:joinPersonalChat('+friend.user_id+",'"+friend.user_name+"'"+')">' +
 					'<img class="fland_icon_img" src="/ThisCord/resource/user_icons/' + friend.user_icon + '"></img>' +
 					'<div style="line-height: 17px; padding:4px 0px 4px 8px;">' +
 					'<p id="user-name">' + friend.user_name + '</p>' +
 					'</div>' +
-					'</a>';
+					'</a>' +
+					'</div>';
 			}
 
 		} else {
@@ -768,6 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	})
 
 });
+
 
 
 

@@ -1,9 +1,12 @@
+let nowSelectUserId = null;
+
 function joinPersonalChat(user_id2, user_name) {
 	console.log("joinPersonalChat_TestMessage");
 	
 	//見た目のリセット＆整え
 	fieldClear();
 	joinPersonalChatView();
+	friendButtonToggle();
 	
 	//チャット相手の名前表示
 	//修正中
@@ -11,6 +14,7 @@ function joinPersonalChat(user_id2, user_name) {
 	infoDiv.innerHTML = user_name;
 	
 	nowRoomId = -1;
+	nowSelectUserId = user_id2;
 	
 	getFriendRelationId(userid, user_id2).then(function(relationId){
 		console.log(relationId);
@@ -50,3 +54,6 @@ async function getFriendRelationId(userId1, userId2) {
 	}
 }
 
+function friendButtonToggle() {
+	document.querySelector('.channel-list-friend').classList.remove('clicked');
+}
