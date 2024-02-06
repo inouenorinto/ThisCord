@@ -42,16 +42,22 @@
   width: 100%;
   height: 42px;
   padding: 0px 20px;
-  background-color: #404249;
+  background-color: rgb(43 45 49);
   color: #fff;
-
-  border-radius: 5px;
 
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+.channel-list-friend label {
+	cursor: pointer;
 }
 .channel-list-friend i {
     margin-right: 12px;
+}
+.channel-list-friend.clicked {
+	background-color: #404249;
+	border-radius: 5px;
 }
 
 /***************フレンド登録フォーム****************/
@@ -121,8 +127,36 @@
 .channel-fland-box{
 	display: flex;
 	align-items: center;
-	padding: 8px 5px;
 	text-decoration: none;
+	padding: 0px 8px;
+	width: 100%;
+	height: 100%;
+}
+.fland-channels {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1px 0px;
+	margin-left: 8px;
+	border-radius: 5px;
+	width: 210px;
+	height: 42px;
+}
+.fland-channels:hover {
+	
+	background-color: #404249;
+}
+
+.fland-channels.clicked {
+	background-color: #404249;
+}
+.fland-channels.clicked textIcon {
+	color: #fff;
+}
+
+.fland-channels.clicked textIcon i {
+	white-space: nowrap;
+	color: #949ba4;
 }
 
 .fland_icon_img {
