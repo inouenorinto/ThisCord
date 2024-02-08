@@ -695,7 +695,9 @@ function showInfo() {
       <div class="info-logout">
         <a>
           <i class="fa-solid fa-right-from-bracket"></i>
-          ログアウトする
+          <a class="logout" href="/ThisCord/fn/logout">
+          	ログアウトする
+          </a>
         </a>
       </div>
     </div>
