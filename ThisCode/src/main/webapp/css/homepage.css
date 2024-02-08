@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.logout {
+	text-decoration: none;
+	color: red;
+}
+
 .friend-warper label{
     color: #fff;
     font-weight: 700;
