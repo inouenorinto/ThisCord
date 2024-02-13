@@ -298,9 +298,11 @@ function joinChannel(channel_id) {
 		getMessageInfo(channel_id);
 	};
 
+	let convertedText = null;
 	chatSocket.onmessage = event => {
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
+		convertedText = rep.message.replace(/\n/g, "<br>");
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<div>' +
@@ -310,7 +312,7 @@ function joinChannel(channel_id) {
 			'<div class="wrapper-item">' +
 			'<span class="message-user-name">' + rep.username + '</span>' +
 			'<span class="message-date">' + rep.date + '</span>' +
-			'<p class="message-text">' + rep.message + '</p>' +
+			'<p class="message-text">' + convertedText + '</p>' +
 			'</div>' +
 			'</div>';
 		scrollEnd(500);
@@ -482,19 +484,44 @@ async function getMessageInfo(channel_id) {
 
 			chat.innerHTML = "";
 
+			let oldDate = null;
+			let oldUserId = null;
+			let oldMinute = null;
 			for (const [key, message] of messages) {
-				chat.innerHTML +=
-					'<div class="message-wrapper">' +
-					'<div>' +
-					'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
-					'</div>' +
+				convertedText = message.message.replace(/\n/g, "<br>");
 
-					'<div class="wrapper-item">' +
-					'<span class="message-user-name">' + message.user_name + '</span>' +
-					'<span class="message-date">' + message.send_date + '</span>' +
-					'<p class="message-text">' + message.message + '</p>' +
-					'</div>' +
-					'</div>';
+				let sendDate = message.send_date.split(' ');
+				let sendMinute = sendDate[1].split(':')[1];
+				console.log(sendMinute);
+				if (oldDate != sendDate[0]) {
+					chat.innerHTML += '<div class="message-date-section"> ------------------------  ' + sendDate[0] + '  ----------------------</div>';
+				}
+
+				if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute) {
+					chat.innerHTML +=
+						'<div class="message-wrapper">' +
+						'<p class="message-text">' + convertedText + '</p>' +
+						'</div>';
+					oldUserId = message.user_id;
+				} else {
+
+					chat.innerHTML +=
+						'<div class="message-wrapper">' +
+						'<div>' +
+						'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
+						'</div>' +
+
+						'<div class="wrapper-item">' +
+						'<span class="message-user-name">' + message.user_name + '</span>' +
+						'<span class="message-date">' + message.send_date + '</span>' +
+						'<p class="message-text">' + convertedText + '</p>' +
+						'</div>' +
+						'</div>';
+					oldUserId = message.user_id;
+
+				}
+				oldMinute = sendMinute;
+				oldDate = sendDate[0];
 			}
 
 			scrollEndfast()
@@ -504,6 +531,43 @@ async function getMessageInfo(channel_id) {
 	} catch (error) {
 		console.error("Error: " + error);
 	}
+}
+
+function showMessage(message) {
+	convertedText = message.message.replace(/\n/g, "<br>");
+
+				let sendDate = message.send_date.split(' ');
+				let sendMinute = sendDate[1].split(':')[1];
+				console.log(sendMinute);
+				if (oldDate != sendDate[0]) {
+					chat.innerHTML += '<div class="message-date-section"> ------------------------  ' + sendDate[0] + '  ----------------------</div>';
+				}
+
+				if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute) {
+					chat.innerHTML +=
+						'<div class="message-wrapper">' +
+						'<p class="message-text">' + convertedText + '</p>' +
+						'</div>';
+					oldUserId = message.user_id;
+				} else {
+
+					chat.innerHTML +=
+						'<div class="message-wrapper">' +
+						'<div>' +
+						'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
+						'</div>' +
+
+						'<div class="wrapper-item">' +
+						'<span class="message-user-name">' + message.user_name + '</span>' +
+						'<span class="message-date">' + message.send_date + '</span>' +
+						'<p class="message-text">' + convertedText + '</p>' +
+						'</div>' +
+						'</div>';
+					oldUserId = message.user_id;
+
+				}
+				oldMinute = sendMinute;
+				oldDate = sendDate[0];
 }
 
 function toggleHome() {
@@ -673,6 +737,8 @@ function initform() {
 	const footerUserIcon = document.getElementById('footerUserIcon');
 	footerUserIcon.src = '/ThisCord/resource/user_icons/' + user_icon;
 	footerUserIcon.innerHTML = '<img class="footerUserImage" src="/ThisCord/resource/user_icons/' + user_icon + '"></img>';
+
+
 }
 
 function form_clear(formId) {
@@ -709,18 +775,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function addOldRoom() {
-	
-	if(nowRoomId != null)
+
+	if (nowRoomId != null)
 		oldRoomId = nowRoomId;
-	console.log("oldRoomId "+oldRoomId);
+	console.log("oldRoomId " + oldRoomId);
 }
 
 function backToServer() {
-	if(oldRoomId > 0)
+	if (oldRoomId > 0)
 		joinRoom(oldRoomId);
 	else
-		console.log("oldRoomId "+oldRoomId);
-		
+		console.log("oldRoomId " + oldRoomId);
+
 }
 
 // import analyze from "rgbaster";
