@@ -544,6 +544,7 @@ function form_clear(formId) {
 
 }
 
+var lineCount = 0;
 function handleKeyPress(event) {
 	var textarea = document.getElementById('message-input');
     if (event.key === "Enter" && event.shiftKey) {
@@ -552,12 +553,19 @@ function handleKeyPress(event) {
 
         // テキストエリアの内容に改行を追加
         textarea.value += '\n';
-        chatFieldSizeAdjustment()();
-        
+        //改行したら、比を変える
+        lineCount++;
+        chatFieldSizeAdjustment(lineCount);
 	} else if (event.key === "Enter") {
 		event.preventDefault();
 		if (textarea.value && !/^\s*$/.test(textarea.value)) {	//メッセージが空,改行コード,スペースのみの場合にEnterを押しても処理されなくなる
 			sendMessage();
+		}
+	} else if (event.key === "Backspace") {
+		console.log("BackSpaceしたよーーーー");
+		if (!(lineCount == 0)) {
+			lineCount--;
+			chatFieldSizeAdjustment(lineCount);
 		}
 	}
 }
@@ -805,13 +813,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function chatFieldSizeAdjustment() {
-	console.log("textareaSizeAdjustmentうごた");
-    const parent = document.querySelector('.parent');
+function chatFieldSizeAdjustment(i) {
+	console.log("textareaSizeAdjustmentうごた"+i);
+	const ratio = [
+		[0.76209, 0.07873],
+		[0.71, 0.125]
+	];
+    const parent = document.querySelector('.chat-field-container');
     const children = parent.children;
     const screenHeight = window.innerHeight;
-    const child1Height = screenHeight * 0.3; // 30% of screen height
-    const child2Height = screenHeight * 0.7; // 70% of screen height
+    const child1Height = screenHeight * ratio[i][0]; // 30% of screen height
+    const child2Height = screenHeight * ratio[i][1]; // 70% of screen height
     children[0].style.height = child1Height + 'px';
     children[1].style.height = child2Height + 'px';
 }

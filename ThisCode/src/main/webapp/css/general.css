@@ -683,12 +683,13 @@ body {
 .message-form-wrapper{
 	width: 100%;
 	padding: 0px 16px 0px 16px;
+	height: 44px;
 }
 .message_div {
 	display: flex;
 	border-radius: 5px;
 	background-color: #383a40;
-	height: 44px;
+	height: 100%;/*44px;*/
 	padding: 0px 16px 0px 16px;
 	bottom: 0;
 	width: 100%;
