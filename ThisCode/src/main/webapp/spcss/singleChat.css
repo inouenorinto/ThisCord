@@ -35,6 +35,11 @@
 	display: none;
 }
 
+.friendregiststyle {
+	text-align: right;
+	margin: 5px 0px 0px 125px;
+}
+
 .pageBody {
     height: 100%;
     width: 100%;
