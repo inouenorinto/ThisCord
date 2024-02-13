@@ -183,9 +183,30 @@ window.addEventListener('load', () => {
                 throw new Error('ネットワークエラー');
             }
         });
-
-        
     })
+    
+    const textarea = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const messageFormWrapper = document.querySelector('.message-form-wrapper');
+    textarea.addEventListener('keyup', (event) => {
+        
+        let line = textarea.value.split('\n').length;
+
+        if(line > 2) {
+           messageFormWrapper.style.height = `${(line * 24) + 48}px`;
+        } 
+    });
+
+    textarea.addEventListener('blur', (event) => {
+        let line = textarea.value.split('\n').length;
+        messageFormWrapper.style.height = `${(line * 24) + 48}px`;
+    });
+
+    sendButton.addEventListener('click', (event) => {
+        messageFormWrapper.style.height = `75px`;
+    });
+    
+
 })
 
 

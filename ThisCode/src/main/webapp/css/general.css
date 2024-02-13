@@ -431,6 +431,10 @@ body {
 	cursor: pointer;
 	color: #909ba4;
 	width: 100%;
+	
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 
@@ -447,6 +451,10 @@ body {
 	width: 100%;
 	text-decoration: none;
 	color: #949ba4;
+
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .text-channels.clicked textIcon {

@@ -84,7 +84,7 @@
             </div>
         </div>
 
-        <div class="chatField">
+        <div class="chatField active">
             <div class="fieldWrapper">
                 <div class="chatHeader">
                     <a class="backButton" onclick="toggleChatField();">
@@ -101,9 +101,10 @@
             </div>
             <div id="inputField" class="message-form-wrapper">
                 <div id="chat" class="message_div">
-                    <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i>
-                    <input type="text" id="message-input" class="message_input" placeholder="メッセージを送信">
+                    <!-- <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i> -->
+                    <textarea type="text" id="message-input" class="message_input" placeholder="メッセージを送信"></textarea>
                 </div>
+                <div class="buttonBack"></div>
                 <button class="send-button" onclick="sendMessage()" id="send-button">
                     <i class="fa-solid fa-paper-plane" style="color: #fff;"></i>
                 </button>
@@ -115,7 +116,7 @@
         </div>
 
         <!-- footer -->
-        <div class="footer open-footer" id="footer">
+        <div class="footer " id="footer">
             <div class="footerItem" class="link-content">
                 <a onclick="closePage('singleChat'); closePage('myPage'); backToServer();">
                     <i class="fa-solid fa-server"></i>
@@ -142,6 +143,7 @@
         <div class="singleChat" id="singleChat">
             <div class="singleChatHeader">
                 <h2>メッセージ</h2>
+                <a class="friendregiststyle" onclick="modalToggle('friendRegisterModal')">フレンドを追加</a>
             </div>
             <div class="pageBody">
                 <div class="singleChatScroll" id="singleChatFriendList"></div>
@@ -364,6 +366,25 @@
         </div>
     </div>
 
+    <div class="friendRegisterModal" id="friendRegisterModal">
+        <div class="friendRegisterModalContent">
+            <div class="create_modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('friendRegisterModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 class="modal-title">フレンドを招待</h2>
+                <div>
+                    <input type="number" name="userId" id="friendId">
+                    <input id="inputServerId" type="hidden" name="serverId">
+					<input id="formUserId" type="hidden" name="id">
+                    <div>
+                        <button type="submit" onclick="sendFriendRequest();">送信</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="./javascript/createServer.js"></script>
     <script src="./javascript/values.js"></script>
@@ -372,6 +393,7 @@
     <script src="./spjavascript/spFetch.js"></script>
     <script src="./spjavascript/spmulti.js"></script>
     <script src="./spjavascript/spPersonalChatWebSocket.js"></script>
+    <script src="./spjavascript/spFriendRegist.js"></script>
 
 </body>
 

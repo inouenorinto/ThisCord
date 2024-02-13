@@ -87,6 +87,11 @@
 	cursor: pointer;
 	color: #909ba4;
 	width: 100%;
+
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
 }
 
 .text-channels:hover {
@@ -731,4 +736,29 @@
 	color: #c7c8cd;
 
 	padding: 15px;
+}
+
+.friendRegisterModal {
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;
+}
+
+.friendRegisterModal.open{
+	top: 0;
+	height: 100%;
+}
+
+.friendRegisterModalContent {
+	bottom: 0;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: #27282c;
+	border-radius: 10px;
+	padding: 10px;
 }
