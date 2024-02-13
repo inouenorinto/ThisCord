@@ -84,7 +84,7 @@
             </div>
         </div>
 
-        <div class="chatField">
+        <div class="chatField active">
             <div class="fieldWrapper">
                 <div class="chatHeader">
                     <a class="backButton" onclick="toggleChatField();">
@@ -101,9 +101,10 @@
             </div>
             <div id="inputField" class="message-form-wrapper">
                 <div id="chat" class="message_div">
-                    <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i>
-                    <input type="text" id="message-input" class="message_input" placeholder="メッセージを送信">
+                    <!-- <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i> -->
+                    <textarea type="text" id="message-input" class="message_input" placeholder="メッセージを送信"></textarea>
                 </div>
+                <div class="buttonBack"></div>
                 <button class="send-button" onclick="sendMessage()" id="send-button">
                     <i class="fa-solid fa-paper-plane" style="color: #fff;"></i>
                 </button>
@@ -115,7 +116,7 @@
         </div>
 
         <!-- footer -->
-        <div class="footer open-footer" id="footer">
+        <div class="footer " id="footer">
             <div class="footerItem" class="link-content">
                 <a onclick="closePage('singleChat'); closePage('myPage'); backToServer();">
                     <i class="fa-solid fa-server"></i>
