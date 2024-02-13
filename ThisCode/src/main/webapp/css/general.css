@@ -97,6 +97,16 @@ body {
 	padding: 0%;
 }
 
+.chat-field-container {
+    height: 100%;
+  }
+  .chat-scroll-child {
+    background-color: red;
+  }
+  .inputField-child {
+    background-color: blue;
+  }
+
 .row {
 	height: 100%;
 }

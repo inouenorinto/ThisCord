@@ -552,6 +552,8 @@ function handleKeyPress(event) {
 
         // テキストエリアの内容に改行を追加
         textarea.value += '\n';
+        chatFieldSizeAdjustment()();
+        
 	} else if (event.key === "Enter") {
 		event.preventDefault();
 		if (textarea.value && !/^\s*$/.test(textarea.value)) {	//メッセージが空,改行コード,スペースのみの場合にEnterを押しても処理されなくなる
@@ -803,6 +805,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-
+function chatFieldSizeAdjustment() {
+	console.log("textareaSizeAdjustmentうごた");
+    const parent = document.querySelector('.parent');
+    const children = parent.children;
+    const screenHeight = window.innerHeight;
+    const child1Height = screenHeight * 0.3; // 30% of screen height
+    const child2Height = screenHeight * 0.7; // 70% of screen height
+    children[0].style.height = child1Height + 'px';
+    children[1].style.height = child2Height + 'px';
+}
 
 
