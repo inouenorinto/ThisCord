@@ -1,6 +1,7 @@
 .channelList {
     background-color: #2b2d31;
     min-width: 65%;
+	width: 253px;
     border-radius: 15px 5px 0 15px;
     overflow: auto;
     margin-right: 10px;
@@ -87,6 +88,11 @@
 	cursor: pointer;
 	color: #909ba4;
 	width: 100%;
+
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
 }
 
 .text-channels:hover {
@@ -151,7 +157,7 @@
 	position: absolute;
 	height: 85%;
 	width: 100%;
-	background-color: #27282c;
+	background-color: #1e1f22;
 	border-radius: 10px;
 	padding: 10px;
 }
@@ -218,8 +224,7 @@
 .invitation-form {
 	color:#fff;
 	font-size: 20px;
-    padding: 0px 15px 0px 15px;
-/*    position: absolute;*/
+	padding: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -239,11 +244,14 @@
 
 .invitation-input {
     position: absolute;
-    left: 5px;
+    left: 0px;
     border: none;
-    background-color: #1e1f22;
+    background-color: #26262f;
+	border: #323437 1px solid;
+	border-radius: 14px;
     color: #fff;
-    width: 80%;
+    width: 100%;
+	padding: 10px;
 }
 
 .invitation-input:focus {
@@ -253,7 +261,7 @@
 
 .invitation-button {
     position: absolute;
-    right: 4px;
+    right: 10px;
     background-color: #5865f2;
     color: #fff;
     border: none;
@@ -271,12 +279,14 @@
 
 
 #invFriendList {
-	border-radius:15px;
-	margin-top: 20px;
 	height: 100%;
 	overflow-y: scroll;
-	background-color: #2b2d31;
-	padding: 10px 20px;
+
+	/* margin: 20px 16px 16px 16px; */
+	border-radius: 14px;
+	padding: 15px;
+	background-color: #26262f;
+	border: #323437 1px solid;
 }
 
 /*フレンドリスト*/
@@ -731,4 +741,67 @@
 	color: #c7c8cd;
 
 	padding: 15px;
+}
+
+.friendRegisterModal {
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;
+}
+
+.friendRegisterModal.open{
+	top: 0;
+	height: 100%;
+}
+
+.friendRegisterModalContent {
+	bottom: 0;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: #27282c;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+
+
+.membersListModal {
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;
+}
+
+.membersListModal.open{
+	top: 0;
+	height: 100%;
+}
+
+.memberModalContent {
+	bottom: 0;
+	position: absolute;
+	justify-content: center;
+	height: 85%;
+	width: 100%;
+	background-color: #1c1d22;
+}
+
+
+.memberIcon {
+	background-color: #5865f2;
+	text-align: center;
+	align-items: center;
+	width: 50px;
+	height: 50px;
+	color: #c7c8cd;
+	border-radius: 50%;
+	margin-right: 10px;
 }

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./spcss/chatFIeld.css">
     <link rel="stylesheet" href="./spcss/memberList.css">
     <link rel="stylesheet" href="./spcss/singleChat.css">
+    <link rel="stylesheet" href="./spcss/friendRegister.css">
     <!-- icon -->
     <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
 
@@ -26,8 +27,6 @@
         integrity="sha512-Zt7blzhYHCLHjU0c+e4ldn5kGAbwLKTSOTERgqSNyTB50wWSI21z0q6bn/dEIuqf6HiFzKJ6cfj2osRhklb4Og=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- rgbaster -->
-    <script src="https://cdn.jsdelivr.net/npm/rgbaster@2.1.1/dist/rgbaster.umd.min.js"></script>
     <title>Thiscord</title>
 </head>
 
@@ -84,15 +83,17 @@
             </div>
         </div>
 
-        <div class="chatField">
+        <div class="chatField ">
             <div class="fieldWrapper">
                 <div class="chatHeader">
                     <a class="backButton" onclick="toggleChatField();">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
 
-                    <div class="hashtag">#</div>
-                    <div id="channel" style="margin-left: 20px;"></div>
+                    <div style="display: flex;" onclick="modalToggle('membersListModal')">
+                        <div class="hashtag">#</div>
+                        <div id="channel" style="margin-left: 20px;"></div>
+                    </div>
                 </div>
 
                 <div id="chat-scroll" class="chat-scroll">
@@ -101,21 +102,18 @@
             </div>
             <div id="inputField" class="message-form-wrapper">
                 <div id="chat" class="message_div">
-                    <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i>
-                    <input type="text" id="message-input" class="message_input" placeholder="メッセージを送信">
+                    <!-- <i class="fa-solid fa-hashtag" style="color: #fff; font-size: 16px;"></i> -->
+                    <textarea type="text" id="message-input" class="message_input" placeholder="メッセージを送信"></textarea>
                 </div>
+                <div class="buttonBack"></div>
                 <button class="send-button" onclick="sendMessage()" id="send-button">
                     <i class="fa-solid fa-paper-plane" style="color: #fff;"></i>
                 </button>
             </div>
         </div>
 
-        <div class="memberList" id="members-list">
-            <div id="members-lists"></div>
-        </div>
-
         <!-- footer -->
-        <div class="footer open-footer" id="footer">
+        <div class="footer open-footer " id="footer">
             <div class="footerItem" class="link-content">
                 <a onclick="closePage('singleChat'); closePage('myPage'); backToServer();">
                     <i class="fa-solid fa-server"></i>
@@ -142,6 +140,7 @@
         <div class="singleChat" id="singleChat">
             <div class="singleChatHeader">
                 <h2>メッセージ</h2>
+                <a class="friendregiststyle" onclick="modalToggle('friendRegisterModal')">フレンドを追加</a>
             </div>
             <div class="pageBody">
                 <div class="singleChatScroll" id="singleChatFriendList"></div>
@@ -169,13 +168,7 @@
                     <div class="infoWraper">
                         <div class="info-title">自分のフレンド</div>
                         <div style="display: flex; align-items: center;">
-                            <div class="myFriends" id="myFriends">
-                                <img class="myFriendsIcon" src="resource/user_icons/default1.png" alt="">
-                                <img class="myFriendsIcon" src="resource/user_icons/default2.png" alt="">
-                                <img class="myFriendsIcon" src="resource/user_icons/default3.png" alt="">
-                                <img class="myFriendsIcon" src="resource/user_icons/default4.png" alt="">
-                                <img class="myFriendsIcon" src="resource/user_icons/default1.png" alt="">
-                            </div>
+                            <div class="myFriends" id="myFriends"></div>
                             <i class="fa-solid fa-chevron-right"></i>
                         </div>
                     </div>
@@ -188,6 +181,29 @@
                             ログアウトする
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- popupBgCover -->
+        <div class="popupBgCover" id="popupBgCover"></div>
+    </div>
+
+    <div class="membersListModal open" id="membersListModal">
+        <div class="memberModalContent">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('membersListModal')">
+            </div>
+            <div class="modal-body">
+                <div class="info-card" onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <i class="fa-solid fa-user-plus memberIcon" ></i>
+                        <div style="color: #b5bac1; font-weight: 700;">メンバーを招待する</div>
+                    </div>
+                    
+                </div>
+                <div class="info-card">
+                    <div id="members-list"></div>
                 </div>
             </div>
         </div>
@@ -245,7 +261,7 @@
     </div>
 
     <!-- CreateServerModal -->
-    <div class="createServerModal" id="createServerModal">
+    <div class="createServerModal " id="createServerModal">
         <div class="modal-content">
             <div class="create_modal_header">
                 <button id="modalToggle" class="close-button" onclick="modalToggle('createServerModal')">
@@ -311,7 +327,8 @@
     </div>
 
     <!-- createChannelModal -->
-    <div class="createChannelModal" id="createChannelModal">
+    
+    <div class="createChannelModal " id="createChannelModal">
         <div class="create-channel-modal-content">
             <div class="create_modal_header">
                 <button id="modalToggle" class="close-button" onclick="modalToggle('createChannelModal')">
@@ -364,6 +381,25 @@
         </div>
     </div>
 
+    <div class="friendRegisterModal" id="friendRegisterModal">
+        <div class="friendRegisterModalContent">
+            <div class="create_modal_header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('friendRegisterModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2 class="modal-title">フレンドを招待</h2>
+                <div class="friend-form">
+                    <input type="number" name="userId" id="friendId">
+                    <input id="inputServerId" type="hidden" name="serverId">
+                    <input id="formUserId" type="hidden" name="id">
+                    <div>
+                        <button type="submit" onclick="sendFriendRequest();">送信</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="./javascript/createServer.js"></script>
     <script src="./javascript/values.js"></script>
@@ -372,6 +408,7 @@
     <script src="./spjavascript/spFetch.js"></script>
     <script src="./spjavascript/spmulti.js"></script>
     <script src="./spjavascript/spPersonalChatWebSocket.js"></script>
+    <script src="./spjavascript/spFriendRegist.js"></script>
 
 </body>
 

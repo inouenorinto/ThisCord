@@ -12,6 +12,7 @@
 	transition: transform 0.3s ease-in-out;
 }
 
+
 .chatField.active {
 	transform: translateX(0);
 	z-index:2;
@@ -41,7 +42,7 @@
 .chat-scroll {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 90%;
+	height: 93%;
 }
 
 .chat-icon {
@@ -53,6 +54,24 @@
 	margin-right: 15px;
 	top: 20px;
 	left: 9px;
+}
+
+.message-date-section-wrapper{
+	display: flex;
+	margin-top: 20px;
+}
+
+.message-date-section {
+	margin: auto;
+	height: 2px;
+	width: 35%;
+	border-radius: 1px;
+	background-color: #54565f;
+}
+
+.message-date{
+	text-align: center;
+	justify-content: center;
 }
 
 .message-wrapper {
@@ -70,7 +89,7 @@
 
 .message-user-name {
 	color: #fff;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-weight: 500;
 	margin-right: 5px;
 }
@@ -87,10 +106,12 @@
 	display: flex;
 	width: 100%;
 	height: 72px;
-	padding: 10px 16px;
+	max-height: 50%;
+	padding: 13px 16px;
 	border-top: #4c4f56 1px groove;
-	justify-content: center;
-	align-items: center;
+	/* justify-content: center;
+	align-items: center; */
+	background-color: #2b2d31;
 	position: absolute;
 	bottom: 0;
 }
@@ -98,9 +119,10 @@
 .message_div {
 	display: flex;
 	position: relative;
-	border-radius: 50px;
+	border-radius: 20px;
 	background-color: #383a40;
-	height: 44px;
+	/* height: 44px; */
+	height: 100%;
 	padding: 0px 16px 0px 16px;
 	width: 100%;
 	margin-right: 6px;
@@ -111,10 +133,11 @@
 .message_input {
 	background-color: rgba(0, 0, 0, 0);
 	padding: 10px;
-
+	height: 100%;
 	width: 100%;
 	border: none;
 	outline: none;
+	font-size: 1em;
 	color: rgb(219 222 225);
 }
 
@@ -123,6 +146,15 @@
 	outline: none;
 }
 
+.buttonBack {
+	text-align: center;
+	align-items: center;
+	min-height: 44px;
+	min-width: 44px;
+	border-radius: 50%;
+	background-color: rgba(0, 0, 0, 0);
+} 
+
 .send-button {
 	text-align: center;
 	align-items: center;
@@ -130,6 +162,9 @@
 	min-width: 44px;
 	border-radius: 50%;
 	background-color: #383a40;
+	position: absolute;
+	right: 16px;
+	bottom: 13px;
 }
 
 .send-button i {
@@ -138,7 +173,7 @@
 
 
 .message-text {
-	color: #fff;
+	color: #d6d5d5;
 }
 
 
