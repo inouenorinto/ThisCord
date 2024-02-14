@@ -36,6 +36,9 @@ function toggleChannelState(element) {
 function modalToggle(element) {
     const elem = document.getElementById(element);
     elem.classList.toggle('open');
+
+    const bg = document.getElementById('popupBgCover');
+    bg.classList.toggle('open');
 }
 
 function invFriendForm(id) {
@@ -132,6 +135,9 @@ function closePage(element) {
     openPage = false;
     const elem = document.getElementById(element);
     elem.classList.remove('openPage');
+
+    const bg = document.getElementById('popupBgCover');
+    bg.classList.remove('open');
 }
 
 function toggleChatField() {
@@ -186,6 +192,7 @@ window.addEventListener('load', () => {
     })
     
     const textarea = document.getElementById('message-input');
+    const chatScroll = document.getElementById('message-container');
     const sendButton = document.getElementById('send-button');
     const messageFormWrapper = document.querySelector('.message-form-wrapper');
     textarea.addEventListener('keyup', (event) => {
@@ -194,16 +201,23 @@ window.addEventListener('load', () => {
 
         if(line > 2) {
            messageFormWrapper.style.height = `${(line * 24) + 48}px`;
+           let height = chatScroll.style.height;
+           chatScroll.style.height = `${(line * 24) + 48 - height}px`;
         } 
     });
 
     textarea.addEventListener('blur', (event) => {
         let line = textarea.value.split('\n').length;
         messageFormWrapper.style.height = `${(line * 24) + 48}px`;
+        let height = chatScroll.style.height;
+        chatScroll.style.height = `${(line * 24) + 48 - height}px`;
     });
 
     sendButton.addEventListener('click', (event) => {
         messageFormWrapper.style.height = `75px`;
+        chatScroll.scrollTop = chatScroll.scrollHeight;
+    
+
     });
     
 
