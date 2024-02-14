@@ -28,11 +28,16 @@
 .singleChatScroll {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 90%;
+	height: 85%;
 }
 
 .singleChatScroll::-webkit-scrollbar {
 	display: none;
+}
+
+.friendregiststyle {
+	text-align: right;
+	margin: 5px 0px 0px 125px;
 }
 
 .pageBody {

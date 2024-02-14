@@ -543,7 +543,6 @@ function form_clear(formId) {
 	form.submit();
 
 }
-
 function handleKeyPress(event) {
 	var textarea = document.getElementById('message-input');
     if (event.key === "Enter" && event.shiftKey) {
@@ -552,13 +551,32 @@ function handleKeyPress(event) {
 
         // テキストエリアの内容に改行を追加
         textarea.value += '\n';
+		var line = textarea.value.split("\n").length;
+		if (line <= 11) {
+	    	chatFieldSizeAdjustment(line-1);
+		}
 	} else if (event.key === "Enter") {
 		event.preventDefault();
 		if (textarea.value && !/^\s*$/.test(textarea.value)) {	//メッセージが空,改行コード,スペースのみの場合にEnterを押しても処理されなくなる
 			sendMessage();
 		}
+	} else if (event.key === "Backspace") {
+    	//改行したら、比を変える
+		var line = textarea.value.split("\n").length-1;
+		if (line >= 1 && line <= 11) {
+	    	chatFieldSizeAdjustment(line-1);
+		}
+
 	}
 }
+//chat-fieldのサイズをwindowが変更される度にサイズに合わせる
+function resizeWindow(){
+	var textarea = document.getElementById('message-input');
+	var line = textarea.value.split("\n").length;
+    chatFieldSizeAdjustment(line-1);
+}
+window.onresize = resizeWindow;
+
 
 function retryImageLoad(imgElement, maxRetries, retryInterval) {
 	let retries = 0;
@@ -802,7 +820,20 @@ document.addEventListener('DOMContentLoaded', function() {
 	})
 
 });
+//cht-fieldのサイズを改行、windowサイズを踏まえて調整する
+function chatFieldSizeAdjustment(line) {
+	const ratioCS = window.innerHeight - (22.198+48+68) + 0.198;//421
+	const ratioInput = 68;
+	const ratioInputchildren = 44;
+	const fluctuationValue = 24;
+	
+    const parent = document.querySelector('.chat-field');
+    const children = parent.children;
+   
+	children[0].style.height = (ratioCS - fluctuationValue * line) + 'px';
+    children[1].style.height = (ratioInput + fluctuationValue * line) + 'px';
+    children[1].children[0].style.height = (ratioInputchildren + fluctuationValue * line) + 'px';
+}
 
-
-
-
+//ページ表示時に
+resizeWindow();

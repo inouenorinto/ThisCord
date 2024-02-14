@@ -209,6 +209,7 @@ async function getUserInfo() {
 		}
 	} catch (error) {
 		console.error("Error: " + error);
+		location.href = "/ThisCord/login.html";
 	}
 }
 
@@ -303,6 +304,44 @@ function joinChannel(channel_id) {
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
 		convertedText = rep.message.replace(/\n/g, "<br>");
+		console.log(rep);
+		showOnMessage(rep, chat);
+		scrollEnd(500);
+
+
+	};
+
+	chatSocket.onclose = event => {
+		console.log("切断");
+	};
+	const currentElemnt = document.querySelector('#channel-id-' + channel_id);
+	window.globalFunction.toggleChannelState(currentElemnt);
+}
+
+function showOnMessage(rep, chat) {
+	convertedText = rep.message.replace(/\n/g, "<br>");
+
+	let sendDate = rep.date.split(' ');
+	let sendMinute = sendDate[1].split(':')[1];
+	console.log(sendMinute);
+	if (oldDate != sendDate[0]) {
+		chat.innerHTML += `
+			<div class="message-date-section-wrapper">
+				<div class="message-date-section"></div>
+				<div class="message-date">${sendDate[0]}</div>
+				<div class="message-date-section"></div>
+			</div>
+		`;
+	}
+
+	if (oldUserId == rep.userid && oldDate == sendDate[0] && oldMinute == sendMinute) {
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>';
+		oldUserId = rep.userid;
+	} else {
+
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<div>' +
@@ -315,15 +354,11 @@ function joinChannel(channel_id) {
 			'<p class="message-text">' + convertedText + '</p>' +
 			'</div>' +
 			'</div>';
-		scrollEnd(500);
+		oldUserId = rep.userid;
 
-	};
-
-	chatSocket.onclose = event => {
-		console.log("切断");
-	};
-	const currentElemnt = document.querySelector('#channel-id-' + channel_id);
-	window.globalFunction.toggleChannelState(currentElemnt);
+	}
+	oldMinute = sendMinute;
+	oldDate = sendDate[0];
 }
 
 //サーバーの情報を取得する関数
@@ -397,6 +432,7 @@ function sendMessage() {
 			nowChannelName: channelsMap.get(nowChannelId),
 			username: userinfo.user_name,
 			usericon: user_icon,
+			userid: userid,
 			date: getDate(),
 			message: message
 		};
@@ -484,44 +520,8 @@ async function getMessageInfo(channel_id) {
 
 			chat.innerHTML = "";
 
-			let oldDate = null;
-			let oldUserId = null;
-			let oldMinute = null;
 			for (const [key, message] of messages) {
-				convertedText = message.message.replace(/\n/g, "<br>");
-
-				let sendDate = message.send_date.split(' ');
-				let sendMinute = sendDate[1].split(':')[1];
-				console.log(sendMinute);
-				if (oldDate != sendDate[0]) {
-					chat.innerHTML += '<div class="message-date-section"> ------------------------  ' + sendDate[0] + '  ----------------------</div>';
-				}
-
-				if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute) {
-					chat.innerHTML +=
-						'<div class="message-wrapper">' +
-						'<p class="message-text">' + convertedText + '</p>' +
-						'</div>';
-					oldUserId = message.user_id;
-				} else {
-
-					chat.innerHTML +=
-						'<div class="message-wrapper">' +
-						'<div>' +
-						'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
-						'</div>' +
-
-						'<div class="wrapper-item">' +
-						'<span class="message-user-name">' + message.user_name + '</span>' +
-						'<span class="message-date">' + message.send_date + '</span>' +
-						'<p class="message-text">' + convertedText + '</p>' +
-						'</div>' +
-						'</div>';
-					oldUserId = message.user_id;
-
-				}
-				oldMinute = sendMinute;
-				oldDate = sendDate[0];
+				showMessage(message, chat);
 			}
 
 			scrollEndfast()
@@ -533,41 +533,50 @@ async function getMessageInfo(channel_id) {
 	}
 }
 
-function showMessage(message) {
+let oldDate = null;
+let oldUserId = null;
+let oldMinute = null;
+function showMessage(message, chat) {
 	convertedText = message.message.replace(/\n/g, "<br>");
 
-				let sendDate = message.send_date.split(' ');
-				let sendMinute = sendDate[1].split(':')[1];
-				console.log(sendMinute);
-				if (oldDate != sendDate[0]) {
-					chat.innerHTML += '<div class="message-date-section"> ------------------------  ' + sendDate[0] + '  ----------------------</div>';
-				}
+	let sendDate = message.send_date.split(' ');
+	let sendMinute = sendDate[1].split(':')[1];
+	console.log(sendMinute);
+	if (oldDate != sendDate[0]) {
+		chat.innerHTML += `
+			<div class="message-date-section-wrapper">
+				<div class="message-date-section"></div>
+				<div class="message-date">${sendDate[0]}</div>
+				<div class="message-date-section"></div>
+			</div>
+		`;
+	}
 
-				if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute) {
-					chat.innerHTML +=
-						'<div class="message-wrapper">' +
-						'<p class="message-text">' + convertedText + '</p>' +
-						'</div>';
-					oldUserId = message.user_id;
-				} else {
+	if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute) {
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>';
+		oldUserId = message.user_id;
+	} else {
 
-					chat.innerHTML +=
-						'<div class="message-wrapper">' +
-						'<div>' +
-						'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
-						'</div>' +
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<div>' +
+			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
+			'</div>' +
 
-						'<div class="wrapper-item">' +
-						'<span class="message-user-name">' + message.user_name + '</span>' +
-						'<span class="message-date">' + message.send_date + '</span>' +
-						'<p class="message-text">' + convertedText + '</p>' +
-						'</div>' +
-						'</div>';
-					oldUserId = message.user_id;
+			'<div class="wrapper-item">' +
+			'<span class="message-user-name">' + message.user_name + '</span>' +
+			'<span class="message-date">' + message.send_date + '</span>' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>' +
+			'</div>';
+		oldUserId = message.user_id;
 
-				}
-				oldMinute = sendMinute;
-				oldDate = sendDate[0];
+	}
+	oldMinute = sendMinute;
+	oldDate = sendDate[0];
 }
 
 function toggleHome() {

@@ -56,7 +56,20 @@
 	left: 9px;
 }
 
-.message-date-section{
+.message-date-section-wrapper{
+	display: flex;
+	margin-top: 20px;
+}
+
+.message-date-section {
+	margin: auto;
+	height: 2px;
+	width: 35%;
+	border-radius: 1px;
+	background-color: #54565f;
+}
+
+.message-date{
 	text-align: center;
 	justify-content: center;
 }
