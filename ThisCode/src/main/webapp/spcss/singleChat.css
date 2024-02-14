@@ -28,7 +28,7 @@
 .singleChatScroll {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 90%;
+	height: 85%;
 }
 
 .singleChatScroll::-webkit-scrollbar {
