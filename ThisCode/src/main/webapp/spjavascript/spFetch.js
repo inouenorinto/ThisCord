@@ -395,7 +395,7 @@ async function getServerInfo(roomId) {
 			const channels = roominfo.channels;
 			const voice_channels = roominfo.voice_channels;
 			channelsMap = new Map(Object.entries(channels));
-			voiceChannelsMap = new Map(Object.entries(voice_channels))
+			voiceChannelsMap = new Map(Object.entries(voice_channels));
 			createRoomB(roomsMap);
 			createChannelButton(channelsMap);
 			createVoiceChannelButton(voiceChannelsMap);

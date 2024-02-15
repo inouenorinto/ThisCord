@@ -97,7 +97,7 @@
 								<span class="channel-title">フレンド一覧</span>
 							</div>
 							<div class="flex-item">
-								<a href="/ThisCord/createChannel.jsp" class="invitation-link">
+								<a class="invitation-link" data-bs-toggle="modal" data-bs-target="#createChannelModal">
 									<i class="fa-solid fa-plus fa-sm"></i>
 								</a>
 							</div>
@@ -115,7 +115,7 @@
 									class="channel-title">テキストチャンネル</span>
 							</div>
 							<div class="flex-item">
-								<a href="/ThisCord/createChannel.jsp" class="invitation-link">
+								<a class="invitation-link" data-bs-toggle="modal" data-bs-target="#createChannelModal">
 									<i class="fa-solid fa-plus fa-sm"></i>
 								</a>
 							</div>
@@ -130,8 +130,8 @@
 								<i class="fa-solid fa-angle-down fa-xs"></i> <span class="channel-title">ボイスチャンネル</span>
 							</div>
 							<div class="flex-item">
-								<a id="videotest" href="/ThisCord/createChannel.jsp" class="invitation-link"> <i
-										class="fa-solid fa-plus fa-sm"></i>
+								<a id="videotest" class="invitation-link" data-bs-toggle="modal" data-bs-target="#createChannelModal">
+									<i class="fa-solid fa-plus fa-sm"></i>
 								</a>
 							</div>
 						</div>
@@ -355,6 +355,58 @@
 						data-bs-dismiss="modal">閉じる</button>
 					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal"
 						data-bs-dismiss="modal">確定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Channelを作成するモーダル -->
+	<div class="modal fade" id="createChannelModal" tabindex="-1" aria-labelledby="createChannelModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content modal-channel">
+				<div class="center_content">
+					<h1 class="modal-title modal-title2" id="exampleModalLabel">チャンネルをカスタマイズ</h1>
+				</div>
+				<button type="button" class="btn-close btn-close2 ml-5" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+
+				<div class="center_content">
+					<p>新しいサーバーの名前とアイコンを設定して、個性を出しましょう。設定内容は後から変更できません。</p>
+					<!--アイコンのプレビューと編集-->
+
+					<div class="select-icon-container">
+						<img id='preview' class="select-icon-img"
+							src="/ThisCord/resource/user_icons/default2.png">
+						<div class="plus_button_icon">
+							<a data-bs-toggle="modal" data-bs-target="#exampleModal"> <i
+									class="fa-solid fa-plus fa-lg"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!--サーバーの名入力フォーム-->
+				<form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data"
+					onsubmit="return false">
+					<div class="mb-3">
+						<label for="exampleFormControlInput1" class="form-label">サーバー名</label>
+						<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
+					</div>
+					<p>
+						<small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。
+						</small>
+					</p>
+					<input type="hidden" id="editedImageField" name="editedImage">
+					<input type="hidden" id="MakeServerUserId" name="userId">
+					<div class="sub">
+						<button type="button" id="form_submit" class="btn_sub"
+							onclick="form_clear('imageForm')">新規作成</button>
+					</div>
+				</form>
+
+				<div class="con">
+					<div class="back">
+						<div class="back-botan" data-bs-dismiss="modal">戻る</div>
+					</div>
 				</div>
 			</div>
 		</div>

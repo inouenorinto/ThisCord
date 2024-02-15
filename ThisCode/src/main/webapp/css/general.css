@@ -410,6 +410,10 @@ body {
 
 .invitation-link {
 	color: #949ba4;
+	cursor: pointer;
+}
+.invitation-link:hover {
+	color: rgb(219 222 225);
 }
 
 .text-channels {
@@ -916,6 +920,13 @@ body {
 	font-weight: 700;
 	color: #333;
 	margin-bottom: 10px;
+}
+
+.modal-channel {
+	width: 460px;
+	height: 480px;
+	padding: 16px;
+	
 }
 
 .btn-close2 {
