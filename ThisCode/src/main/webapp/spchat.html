@@ -189,19 +189,24 @@
         <div class="popupBgCover" id="popupBgCover"></div>
     </div>
 
-    <div class="membersListModal open" id="membersListModal">
+    <div class="membersListModal" id="membersListModal">
         <div class="memberModalContent">
             <div class="modal-header">
                 <button id="modalToggle" class="close-button" onclick="modalToggle('membersListModal')">
-            </div>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                </div>
             <div class="modal-body">
-                <div class="info-card" onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
+                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
                     <div style="display: flex; text-align: center; align-items: center;">
-                        <i class="fa-solid fa-user-plus memberIcon" ></i>
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
                         <div style="color: #b5bac1; font-weight: 700;">メンバーを招待する</div>
                     </div>
-                    
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
+                <div style="margin-left: 16px; color: #a7a8ae; font-size: 1em; font-weight: 700;">メンバー</div>
                 <div class="info-card">
                     <div id="members-list"></div>
                 </div>
