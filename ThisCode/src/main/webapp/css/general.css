@@ -894,16 +894,16 @@ body {
 }
 
 .input_text {
-	background-color: #caccce;
+	background-color: #1E1F22;
 	border: none;
 	height: 45px;
-	color: #333;
+	color: rgb(219 222 225);
 }
 
 .input_text:focus {
-	background-color: #caccce;
+	background-color: #1E1F22;
 	border-color: #caccce;
-	color: #333;
+	color: rgb(219 222 225);
 	outline: none;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
 }
@@ -923,10 +923,19 @@ body {
 }
 
 .modal-channel {
-	width: 460px;
+	width: 428px;
 	height: 480px;
 	padding: 16px;
-	
+	background-color: rgb(49 51 56);
+}
+.modal-channel h1 {
+	font-size: 20px;
+	color: #f2f3f5;
+	text-align: left;
+	margin: 0px;
+}
+.modal-channel p {
+	text-align:left;
 }
 
 .btn-close2 {
