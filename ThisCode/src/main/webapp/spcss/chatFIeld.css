@@ -8,7 +8,7 @@
 	top: 0;
 	right: 0;
 	/* z-index: 1; */
-	transform: translateX(86%);
+	transform: translateX(335px);
 	transition: transform 0.3s ease-in-out;
 }
 
@@ -18,8 +18,10 @@
 	z-index:2;
 }
 
+
+
 .fieldWrapper {
-	height: 90%;
+	height: 100%;
 	width: 100%;
 }
 
@@ -33,7 +35,10 @@
 	display: flex;
 	padding: 10px;
 	border-bottom: #4c4f56 1px groove;
+	height: 45px;
+}
 
+#channel {
 	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -42,7 +47,7 @@
 .chat-scroll {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 93%;
+	height: calc(100% - 121px);
 }
 
 .chat-icon {

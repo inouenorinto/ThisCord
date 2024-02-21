@@ -257,6 +257,7 @@ async function joinRoom(roomId) {
 	const infoDiv = document.querySelector("#server");
 	infoDiv.innerHTML = roomsMap.get(roomId)[0];
 	createChannelButton(channelsMap);
+	setChannelList(channelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
@@ -364,7 +365,8 @@ function showOnMessage(rep, chat) {
 //サーバーの情報を取得する関数
 async function getServerInfo(roomId) {
 	try {
-		const response = await fetch("/ThisCord/fn/getserverinfo?roomId=" + roomId);
+		const response = await fetch(`/ThisCord/fn/getserverinfo?roomId=${roomId}&id=${userinfo.user_id}`);
+
 		if (response.ok) {
 
 			roominfo = await response.json();
@@ -400,10 +402,11 @@ async function getServerInfo(roomId) {
 			createChannelButton(channelsMap);
 			createVoiceChannelButton(voiceChannelsMap);
 		} else {
-			console.error("Failed to fetch room information");
+			location.href = "/ThisCord/login.html";
 		}
 	} catch (error) {
 		console.error("Error: " + error);
+		location.href = "/ThisCord/login.html";
 	}
 	const currentElement = document.querySelector('#server-id-' + nowRoomId);
 	window.globalFunction.toggleClickedState(currentElement);
@@ -884,3 +887,19 @@ async function getDominantColor(src) {
 	}
 }
 
+
+function setChannelList(channelsMap){
+	const channelsListDiv = document.getElementById("textChannelsList");
+	channelsListDiv.innerHTML = "";
+
+	for (const [channel_id, channel_name] of channelsMap) {
+		channelsListDiv.innerHTML +=
+			'<div class="text-channels noSwipe" id="channel-id-' + channel_id + '">' +
+			'<a class="textIcon" href="javascript:joinChannel(\'' + channel_id + '\')">' +
+			'<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>' +
+			channel_name +
+			'</a>' +
+			'<a class="invitationIcon" onclick="modalToggle(\'invitation-modal\')"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
+			'</div>';
+	}
+}
