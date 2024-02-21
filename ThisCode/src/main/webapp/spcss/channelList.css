@@ -205,12 +205,18 @@
 	white-space: nowrap;
 }
 
+.deleteIcon{
+	color: #ed4245;
+	white-space: nowrap;
+}
+
 .invitationIcon:hover{
 	color: #fff;
 }
 
 .modal-body {
 	height: 100%;
+	overflow: auto;
 }
 
 .invitation-content {
@@ -345,6 +351,14 @@
 	border-radius: 5px;
 	border:1px solid #23a55a;
 	color: #23a55a;
+}
+
+.deleteButton {
+	white-space: nowrap;
+	background-color: #26262f;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-weight: 700;
 }
 
 /*video modal */
