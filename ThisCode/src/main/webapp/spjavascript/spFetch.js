@@ -257,7 +257,7 @@ async function joinRoom(roomId) {
 	const infoDiv = document.querySelector("#server");
 	infoDiv.innerHTML = roomsMap.get(roomId)[0];
 	createChannelButton(channelsMap);
-	setChannelList(channelsMap);
+	setChannelList(channelsMap, voiceChannelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
@@ -888,18 +888,47 @@ async function getDominantColor(src) {
 }
 
 
-function setChannelList(channelsMap){
+function setChannelList(channelsMap, voiceChannelsMap) {
 	const channelsListDiv = document.getElementById("textChannelsList");
 	channelsListDiv.innerHTML = "";
-
 	for (const [channel_id, channel_name] of channelsMap) {
-		channelsListDiv.innerHTML +=
-			'<div class="text-channels noSwipe" id="channel-id-' + channel_id + '">' +
-			'<a class="textIcon" href="javascript:joinChannel(\'' + channel_id + '\')">' +
-			'<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>' +
-			channel_name +
-			'</a>' +
-			'<a class="invitationIcon" onclick="modalToggle(\'invitation-modal\')"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
-			'</div>';
+		channelsListDiv.innerHTML += `
+		<div class="info-items">
+			<div class="text-channels noSwipe" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'text')">
+				<a class="textIcon" href="javascript:joinChannel('${channel_id}')">
+					<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>
+					${channel_name}
+				</a>
+				<button class="deleteButton" onclick="invFriendForm(2)">
+					削除
+				</button>
+			</div>
+		</div>
+			`;
+
 	}
+
+	const voiceChannelsListDiv = document.getElementById("voiceChannelsList");
+	voiceChannelsListDiv.innerHTML = "";
+
+	for (const [channel_id, channel_name] of voiceChannelsMap) {
+		voiceChannelsListDiv.innerHTML += `
+		<div class="info-items">
+			<div class="text-channels" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'voice')">
+				<a class="voice-channel-linc" onclick="modalToggle('video_modal'); joinVoiceChannel('${channel_id}', '${username}', '${user_icon}')">
+				<i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ${channel_name}
+				</a>
+				<button class="deleteButton" value="削除" onclick="invFriendForm(2)">
+					<p>削除</p>
+				</button>
+			</div>
+		</div>
+			`;
+
+	}
+
+}
+
+function deleteChannel(id, type) {
+
 }
