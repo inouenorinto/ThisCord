@@ -366,7 +366,6 @@ function showOnMessage(rep, chat) {
 async function getServerInfo(roomId) {
 	try {
 		const response = await fetch(`/ThisCord/fn/getserverinfo?roomId=${roomId}&id=${userinfo.user_id}`);
-
 		if (response.ok) {
 
 			roominfo = await response.json();
@@ -398,9 +397,9 @@ async function getServerInfo(roomId) {
 			const voice_channels = roominfo.voice_channels;
 			channelsMap = new Map(Object.entries(channels));
 			voiceChannelsMap = new Map(Object.entries(voice_channels))
-			createRoomB(roomsMap);
-			createChannelButton(channelsMap);
-			createVoiceChannelButton(voiceChannelsMap);
+			// createRoomB(roomsMap);
+			// createChannelButton(channelsMap);
+			// createVoiceChannelButton(voiceChannelsMap);
 		} else {
 			location.href = "/ThisCord/login.html";
 		}

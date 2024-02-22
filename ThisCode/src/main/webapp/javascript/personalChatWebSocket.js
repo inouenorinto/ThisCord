@@ -1,4 +1,5 @@
-let nowSelectUserId = null;
+// let nowSelectUserId = null;
+nowSelectUserId = null;
 
 function joinPersonalChat(user_id2, user_name) {
 	console.log("joinPersonalChat_TestMessage");
