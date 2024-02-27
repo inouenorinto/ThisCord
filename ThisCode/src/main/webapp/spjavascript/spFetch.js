@@ -170,7 +170,7 @@ async function setFriendListToSinglePage(element) {
 				elm.innerHTML +=
 					`<a class="friendListItem" href="javascript:joinPersonalChat(${friend.user_id},'${friend.user_name}')" onclick="toggleChatField();">
 						<img class="singleChatIconImage" src="/ThisCord/resource/user_icons/${friend.user_icon}"  />
-						<div style=" padding:4px 0px 4px 8px;">
+						<div style=" padding:4px 0px 4px 8px; text-decoration: none;">
 							<p id="single-user-name">${friend.user_name}</p>
 							<p id="single-user-id">${friend.user_name}-${friend.user_id}</p>
 						</div>
@@ -290,8 +290,7 @@ function joinChannel(channel_id) {
 		const infoDiv = document.querySelector("#channel");
 		infoDiv.innerHTML = channelsMap.get(channel_id);
 	}
-	const infoDiv = document.querySelector("#channel");
-	infoDiv.innerHTML = channelsMap.get(channel_id);
+
 
 	nowChannelId = channel_id;
 	chatSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
@@ -379,9 +378,9 @@ async function getServerInfo(roomId) {
 			membersMap = new Map(Object.entries(members));
 
 			//メンバー一覧に表示する処理
+			const memberListDiv = document.getElementById("members-list");
+			memberListDiv.innerHTML = "";
 			for (const [user_id, user_name] of membersMap) {
-				const memberListDiv = document.getElementById("members-list");
-
 				if (nowRoomHostId == user_id) {
 					memberListDiv.innerHTML +=
 						'<div class="member-wrapper">' +
@@ -766,29 +765,6 @@ function form_clear(formId) {
 }
 
 
-//
-document.addEventListener('DOMContentLoaded', function () {
-	const inviteForm = document.getElementById('inviteForm');
-
-	inviteForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-
-		const inviteUserId = document.getElementById('invitationInput').value;
-		let json =
-		{
-			type: 'invite',
-			serverId: nowRoomId,
-			inviteUserId: inviteUserId
-		};
-
-		console.log(json);
-		noticeSocket.send(JSON.stringify(json));
-
-		inviteForm.submit();
-	})
-
-});
-
 function addOldRoom() {
 
 	if (nowRoomId != null)
@@ -975,8 +951,31 @@ async function deleteServer() {
 		} else {
 			alert("サーバーを削除できませんでした。");
 		}
-		
+
 	} else {
 		return;
+	}
+}
+
+async function invitationFriend() {
+	const invUserId = document.getElementById('invitationInput').value;
+	const response = await fetch(`/ThisCord/fn/invite?serverId=${nowRoomId}&userId=${invUserId}`);
+
+	if (response.ok) {
+		alert("招待を送りました。");
+		modalToggle('invitation-modal');
+		let json =
+		{
+			type: 'invite',
+			serverId: nowRoomId,
+			inviteUserId: invUserId
+		};
+		noticeSocket.send(JSON.stringify(json));
+		await getServerInfo(nowRoomId);
+
+		
+		
+	} else {
+		alert("サーバーに招待できませんでした");
 	}
 }

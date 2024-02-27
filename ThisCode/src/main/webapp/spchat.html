@@ -97,9 +97,9 @@
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
 
-                    <div style="display: flex;" onclick="modalToggle('membersListModal')">
+                    <div style="display: flex; width: 100%" onclick="modalToggle('membersListModal')">
                         <div class="hashtag">#</div>
-                        <div id="channel" style="margin-left: 20px;"></div>
+                        <div id="channel" style="margin-left: 20px; width: 100%;"></div>
                     </div>
                 </div>
 
@@ -147,7 +147,7 @@
         <div class="singleChat" id="singleChat">
             <div class="singleChatHeader">
                 <h2>メッセージ</h2>
-                <a class="friendregiststyle" onclick="modalToggle('friendRegisterModal')">フレンドを追加</a>
+                <a class=" invButton" onclick="modalToggle('friendRegisterModal')">フレンドを追加</a>
             </div>
             <div class="pageBody">
                 <div class="singleChatScroll" id="singleChatFriendList"></div>
@@ -309,14 +309,14 @@
                 <h3 class="modal-title">ユーザーIDを入力してフレンドを招待</h3>
             </div>
             <div class="invitation-body">
-                <form class="invitation-form" action="fn/invite" method="post" id="inviteForm">
+                <div class="invitation-form" id="inviteForm">
                     <div class="invitation-wrapper">
                         <input class="invitation-input" type="text" name="userId" id="invitationInput">
                         <input id="inputServerId" type="hidden" name="serverId">
                         <input id="formUserId" type="hidden" name="id">
-                        <button class="invitation-button" type="submit">送信</button>
+                        <button class="invitation-button" onclick="invitationFriend()">送信</button>
                     </div>
-                </form>
+                </div>
                 <div id="invFriendList"></div>
             </div>
             

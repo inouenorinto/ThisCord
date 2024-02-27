@@ -12,11 +12,13 @@ async function sendFriendRequest() {
 		const response = await fetch(`/ThisCord/fn/friendRequest?userId=${userid}&friendId=${friendId}`);
 
 		if (response.ok) {
-			console.log("ok");
-			document.getElementById("friendId").value = "";
-			friendForm.classList.toggle('ok');
+			alert("フレンドを追加しました");
+			modalToggle('friendRegisterModal');
+			getFriend('invFriendList');
+			getFriend('invFriendList');
+			setFriendListToSinglePage('singleChatFriendList');
 		} else {
-			console.error("Failed to fetch room information");
+			alert("フレンドを追加できませんでした");
 		}
 	} catch (error) {
 		console.error("Error: " + error);

@@ -34,17 +34,16 @@ function toggleChannelState(element) {
 }
 
 function modalToggle(element) {
-    const elem = document.getElementById(element);
-    elem.classList.toggle('open');
+    if(!nowChannelId == -1 && !element == "membersListModal"){
+        const elem = document.getElementById(element);
+        elem.classList.toggle('open');
+    
+        const bg = document.getElementById('popupBgCover');
+        bg.classList.toggle('open');
+    }
 
-    const bg = document.getElementById('popupBgCover');
-    bg.classList.toggle('open');
 }
 
-function invFriendForm(id) {
-    const invitationInput = document.getElementById('invitationInput');
-    invitationInput.value = id;
-}
 
 
 //チャットに人が入ってきたときのレイアウトを変える関数
@@ -147,25 +146,6 @@ function toggleChatField() {
 
 //form関係
 window.addEventListener('load', () => {
-    const invForm = document.getElementById('inviteForm');
-    invForm.addEventListener('submit', (event) => {
-        event.stopPropagation();
-        event.preventDefault();
-
-        const formData = new FormData(form);
-        const options = {
-            method: 'POST',
-            body: formData,
-        }
-        const url = form.getAttribute('action');
-        fetch(url, option)
-        .then(response => {
-            if (response.ok) {
-                form.reset();
-            }
-        })
-    })
-
     const form = document.getElementById('createChannelForm');
 
     form.addEventListener('submit', (event) => {
