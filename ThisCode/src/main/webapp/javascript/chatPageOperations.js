@@ -53,6 +53,16 @@ function toggleChannelState(element) {
     element.classList.add('clicked');
     selectedChannel = element;
 }
+
+function modalToggle(element) {
+    const elem = document.getElementById(element);
+    elem.classList.toggle('open');
+
+    const bg = document.getElementById('popupBgCover');
+    bg.classList.toggle('open');
+}
+
+
 window.addEventListener('load', () => {
 	const form = document.getElementById('createChannelForm');
 
