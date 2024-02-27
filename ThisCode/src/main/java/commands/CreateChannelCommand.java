@@ -5,6 +5,7 @@ import db.dao.VoiceChannelDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 
 public class CreateChannelCommand extends AbstractCommand {
 	String yellow = "\u001b[00;33m";
@@ -13,8 +14,8 @@ public class CreateChannelCommand extends AbstractCommand {
 	
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		String channelName = (String)req.getParameter("channelName")[0];
-		String channelType = (String)req.getParameter("channelType")[0];
+		String channelName = Sanitizer.sanitizing((String)req.getParameter("channelName")[0]);
+		String channelType = Sanitizer.sanitizing((String)req.getParameter("channelType")[0]);
 		int serverId = Integer.parseInt(req.getParameter("createChannelServerId")[0]);
 		System.out.println(yellow+"CreateCannelCommand.java"+ end + "\t\tチャンネル作成 "+ channelName+ " : " + serverId +" : " + channelType);
 		

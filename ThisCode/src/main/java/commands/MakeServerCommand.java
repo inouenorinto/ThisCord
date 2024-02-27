@@ -13,14 +13,15 @@ import db.dao.VoiceChannelDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 
 public class MakeServerCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
 
-		String server_name = req.getParameter("server_name")[0];
-		String server_icon = req.getParameter("editedImage")[0];
+		String server_name = Sanitizer.sanitizing(req.getParameter("server_name")[0]);
+		String server_icon = Sanitizer.sanitizing(req.getParameter("editedImage")[0]);
 		System.out.println("MakeServerCommand.java :\t\t"+server_name);
 		int userid = Integer.parseInt(req.getParameter("userId")[0]);
 		

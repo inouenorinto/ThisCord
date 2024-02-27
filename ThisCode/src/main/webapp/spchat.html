@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./spcss/memberList.css">
     <link rel="stylesheet" href="./spcss/singleChat.css">
     <link rel="stylesheet" href="./spcss/friendRegister.css">
+	<link rel="icon"  type="image/x-icon" href="resource/user_icons/favicon.ico">
     <!-- icon -->
     <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
 
@@ -46,11 +47,16 @@
 
         <div class="channelList">
 
-            <div class="channel-title-nav" style="color: #fff; padding: 0px 15px;">
+            <div class="channel-title-nav" style="color: #fff; padding: 0px 15px; display: flex; justify-content: space-between;">
                 <h3>
                     <div id="server"></div>
                 </h3>
+                <div class="ellipsis">
+                    <i class="fa-solid fa-ellipsis" onclick="modalToggle('serverEditModal')"></i>
+                </div>
+                
             </div>
+
             <div id="channelsWrapper" class="channelsWrapper">
                 <div class="channel-title-nav">
                     <div class="flexbox">
@@ -97,7 +103,7 @@
                 </div>
 
                 <div id="chat-scroll" class="chat-scroll">
-                    <div id="message-container" id="message-container"></div>
+                    <div id="message-container" class="message-container"></div>
                 </div>
             </div>
             <div id="inputField" class="message-form-wrapper">
@@ -189,19 +195,97 @@
         <div class="popupBgCover" id="popupBgCover"></div>
     </div>
 
-    <div class="membersListModal open" id="membersListModal">
+    <!-- serverEditModal -->
+    <div class="serverEditModal" id="serverEditModal">
+        <div class="memberModalContent">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('serverEditModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+                        <div style="color: #b5bac1; font-weight: 700;">メンバーを招待する</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('createChannelModal')">
+                    <div style="display: flex;  align-items: center;">
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-plus" style="display: flex; align-items: center;"></i>
+                        </div>
+                        <div style="color: #b5bac1; font-weight: 700;">チャンネルを作成</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('deleteChannelModal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="redMemberIcon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                        <div style="color: #ff6467; font-weight: 700;">チャンネルを削除</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="redMemberIcon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                        <div style="color: #ff6467;; font-weight: 700;">サーバーを削除</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- deleteChannelModal -->
+    <div class="deleteChannelModal" id="deleteChannelModal">
+        <div class="memberModalContent">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('deleteChannelModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h3 class="modal-title">チャンネル削除</h3>
+            </div>
+            <div class="modal-body">
+                <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">テキストチャンネル</div>
+                <div class="info-card">
+                    <div id="textChannelsList"></div>
+                </div>
+                <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">ボイスチャンネル</div>
+                <div class="info-card">
+                    <div id="voiceChannelsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- membersListModal -->
+    <div class="membersListModal" id="membersListModal">
         <div class="memberModalContent">
             <div class="modal-header">
                 <button id="modalToggle" class="close-button" onclick="modalToggle('membersListModal')">
-            </div>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                </div>
             <div class="modal-body">
-                <div class="info-card" onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
+                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
                     <div style="display: flex; text-align: center; align-items: center;">
-                        <i class="fa-solid fa-user-plus memberIcon" ></i>
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
                         <div style="color: #b5bac1; font-weight: 700;">メンバーを招待する</div>
                     </div>
-                    
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
+                <div style="margin-left: 16px; color: #a7a8ae; font-size: 1em; font-weight: 700;">メンバー</div>
                 <div class="info-card">
                     <div id="members-list"></div>
                 </div>
@@ -326,8 +410,7 @@
         </div>
     </div>
 
-    <!-- createChannelModal -->
-    
+    <!-- createChannelModal -->    
     <div class="createChannelModal " id="createChannelModal">
         <div class="create-channel-modal-content">
             <div class="create_modal_header">

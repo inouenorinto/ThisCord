@@ -1,6 +1,5 @@
 .channelList {
     background-color: #2b2d31;
-    min-width: 65%;
 	width: 253px;
     border-radius: 15px 5px 0 15px;
     overflow: auto;
@@ -26,7 +25,18 @@
 	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+	width: 180px;
 }
+
+.channelsWrapper{
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 87.5%;
+}
+
+.channelsWrapper::-webkit-scrollbar{
+	display: none;
+  }
 
 .channel-list {
 	grid-area: channel-list;
@@ -163,7 +173,7 @@
 }
 .modal-header {
 	color: #fff;
-	height: 50px;
+	height: 60px;
 }
 
 .modal-title {
@@ -180,18 +190,24 @@
 	
 	color: #fff;
 	z-index: 2;
-	font-size: 26px;
+	font-size: 23px;
 	position: absolute;
 	right: 10px;
 	top: 10px;
 	width: 35px;
 	height: 35px;
-	background-color: #313338;
+	background-color: #26262f;
+	border: #323437 1px solid;
 	border-radius: 50%;
 }
 
 .invitationIcon{
 	color: #949ba4;
+	white-space: nowrap;
+}
+
+.deleteIcon{
+	color: #ed4245;
 	white-space: nowrap;
 }
 
@@ -201,6 +217,7 @@
 
 .modal-body {
 	height: 100%;
+	overflow: auto;
 }
 
 .invitation-content {
@@ -335,6 +352,14 @@
 	border-radius: 5px;
 	border:1px solid #23a55a;
 	color: #23a55a;
+}
+
+.deleteButton {
+	white-space: nowrap;
+	background-color: #26262f;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-weight: 700;
 }
 
 /*video modal */
@@ -768,7 +793,43 @@
 	padding: 10px;
 }
 
+.deleteChannelModal{
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;
+}
 
+.deleteChannelModal.open{
+	top: 0;
+	height: 100%;
+}
+
+.serverEditModal {
+	position: fixed;
+	z-index: 100;
+	left: 0;
+	top: 120%;
+	height: 0;
+	width: 100%;
+	transition: 0.3s;
+}
+
+.serverEditModal.open{
+	top: 0;
+	height: 100%;
+}
+.serverEditModalContent {
+	bottom: 0;
+	position: absolute;
+	justify-content: center;
+	height: 85%;
+	width: 100%;
+	background-color: #1c1d22;
+}
 
 .membersListModal {
 	position: fixed;
@@ -797,10 +858,27 @@
 
 .memberIcon {
 	background-color: #5865f2;
-	text-align: center;
+	font-size: 0.9em;
+	display: flex;
+	justify-content: center;
 	align-items: center;
-	width: 50px;
-	height: 50px;
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	color: #c7c8cd;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.redMemberIcon {
+	background-color: #ed4245;
+	font-size: 0.9em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 30px;
+	height: 30px;
 	color: #c7c8cd;
 	border-radius: 50%;
 	margin-right: 10px;

@@ -4,13 +4,14 @@ import db.dao.FriendRelationshipDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 
 public class FriendRequestCommand extends AbstractCommand{
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		int userId = Integer.parseInt(req.getParameter("userId")[0]);
-		int friendId = Integer.parseInt(req.getParameter("friendId")[0]);
+		int userId = Integer.parseInt(Sanitizer.sanitizing(req.getParameter("userId")[0]));
+		int friendId = Integer.parseInt(Sanitizer.sanitizing(req.getParameter("friendId")[0]));
 		
 		FriendRelationshipDAO fdao = FriendRelationshipDAO.getInstance();
 		fdao.insertFriend(userId, friendId);

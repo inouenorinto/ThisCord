@@ -119,6 +119,14 @@ info-wrapper {
 	border: #323437 1px solid;
 }
 
+.info-items {
+	margin: 8px 16px 8px 16px;
+	border-radius: 30px;
+	padding: 8px;
+	background-color: #1c1d22;
+	border: #323437 1px solid;
+}
+
 .info-top{
 	line-height: 2em;
 	

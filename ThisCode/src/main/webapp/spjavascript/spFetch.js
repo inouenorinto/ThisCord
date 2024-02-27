@@ -257,6 +257,7 @@ async function joinRoom(roomId) {
 	const infoDiv = document.querySelector("#server");
 	infoDiv.innerHTML = roomsMap.get(roomId)[0];
 	createChannelButton(channelsMap);
+	setChannelList(channelsMap, voiceChannelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
@@ -302,7 +303,9 @@ function joinChannel(channel_id) {
 	let convertedText = null;
 	chatSocket.onmessage = event => {
 		const chat = document.getElementById("message-container");
+		console.log(event.data);
 		const rep = JSON.parse(event.data);
+		
 		convertedText = rep.message.replace(/\n/g, "<br>");
 		console.log(rep);
 		showOnMessage(rep, chat);
@@ -322,6 +325,7 @@ function showOnMessage(rep, chat) {
 	convertedText = rep.message.replace(/\n/g, "<br>");
 
 	let sendDate = rep.date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
 	let sendMinute = sendDate[1].split(':')[1];
 	console.log(sendMinute);
 	if (oldDate != sendDate[0]) {
@@ -334,7 +338,7 @@ function showOnMessage(rep, chat) {
 		`;
 	}
 
-	if (oldUserId == rep.userid && oldDate == sendDate[0] && oldMinute == sendMinute) {
+	if (oldUserId == rep.userid && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<p class="message-text">' + convertedText + '</p>' +
@@ -358,13 +362,14 @@ function showOnMessage(rep, chat) {
 
 	}
 	oldMinute = sendMinute;
+	oldHour = sendHour;
 	oldDate = sendDate[0];
 }
 
 //サーバーの情報を取得する関数
 async function getServerInfo(roomId) {
 	try {
-		const response = await fetch("/ThisCord/fn/getserverinfo?roomId=" + roomId);
+		const response = await fetch(`/ThisCord/fn/getserverinfo?roomId=${roomId}&id=${userinfo.user_id}`);
 		if (response.ok) {
 
 			roominfo = await response.json();
@@ -395,15 +400,13 @@ async function getServerInfo(roomId) {
 			const channels = roominfo.channels;
 			const voice_channels = roominfo.voice_channels;
 			channelsMap = new Map(Object.entries(channels));
-			voiceChannelsMap = new Map(Object.entries(voice_channels));
-			createRoomB(roomsMap);
-			createChannelButton(channelsMap);
-			createVoiceChannelButton(voiceChannelsMap);
+			voiceChannelsMap = new Map(Object.entries(voice_channels))
 		} else {
-			console.error("Failed to fetch room information");
+			location.href = "/ThisCord/login.html";
 		}
 	} catch (error) {
 		console.error("Error: " + error);
+		location.href = "/ThisCord/login.html";
 	}
 	const currentElement = document.querySelector('#server-id-' + nowRoomId);
 	window.globalFunction.toggleClickedState(currentElement);
@@ -479,7 +482,6 @@ function registerNotice() {
 			alert('招待されました');
 			getUserInfo();
 		}
-		console.log(JSON.stringify(json));
 		createVoiceChannelIcon(member, vcId);
 	};
 
@@ -535,13 +537,15 @@ async function getMessageInfo(channel_id) {
 
 let oldDate = null;
 let oldUserId = null;
+let oldHour = null;
 let oldMinute = null;
+
 function showMessage(message, chat) {
 	convertedText = message.message.replace(/\n/g, "<br>");
 
 	let sendDate = message.send_date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
 	let sendMinute = sendDate[1].split(':')[1];
-	console.log(sendMinute);
 	if (oldDate != sendDate[0]) {
 		chat.innerHTML += `
 			<div class="message-date-section-wrapper">
@@ -552,7 +556,7 @@ function showMessage(message, chat) {
 		`;
 	}
 
-	if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute) {
+	if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<p class="message-text">' + convertedText + '</p>' +
@@ -576,6 +580,7 @@ function showMessage(message, chat) {
 
 	}
 	oldMinute = sendMinute;
+	oldHour = sendHour;
 	oldDate = sendDate[0];
 }
 
@@ -884,3 +889,57 @@ async function getDominantColor(src) {
 	}
 }
 
+
+function setChannelList(channelsMap, voiceChannelsMap) {
+	const channelsListDiv = document.getElementById("textChannelsList");
+	channelsListDiv.innerHTML = "";
+	for (const [channel_id, channel_name] of channelsMap) {
+		channelsListDiv.innerHTML += `
+		<div class="info-items">
+			<div class="text-channels noSwipe" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'text')">
+				<div class="textIcon" href="javascript:joinChannel('${channel_id}')">
+					<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>
+					${channel_name}
+				</div>
+				<button class="deleteButton">
+					削除
+				</button>
+			</div>
+		</div>
+			`;
+	}
+
+	const voiceChannelsListDiv = document.getElementById("voiceChannelsList");
+	voiceChannelsListDiv.innerHTML = "";
+
+	for (const [channel_id, channel_name] of voiceChannelsMap) {
+		voiceChannelsListDiv.innerHTML += `
+		<div class="info-items">
+			<div class="text-channels" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'voice')">
+				<a class="voice-channel-linc" onclick="modalToggle('video_modal'); joinVoiceChannel('${channel_id}', '${username}', '${user_icon}')">
+					<i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ${channel_name}
+				</a>
+				<button class="deleteButton" value="削除" >
+					<p>削除</p>
+				</button>
+			</div>
+		</div>
+			`;
+	}
+
+}
+
+async function deleteChannel(id, type) {
+	if(nowRoomHostId != userid){
+		alert("このチャンネルの管理権限がありません。");
+		return;
+	}
+	const response = await fetch(`/ThisCord/fn/deleteChannel?channel_id=${id}&type=${type}`);
+	if (response.ok) {
+		console.log("ok")
+		getServerInfo(nowRoomId);
+	} else {
+		console.error("ng");
+		alert("チャンネルを削除できませんでした。");
+	}
+}

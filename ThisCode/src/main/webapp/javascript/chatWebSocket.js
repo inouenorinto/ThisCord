@@ -389,7 +389,8 @@ async function joinRoom(roomId) {
 //サーバーの情報を取得する関数
 async function getServerInfo(roomId) {
 	try {
-		const response = await fetch("/ThisCord/fn/getserverinfo?roomId=" + roomId + "&id=" + userinfo.user_id);
+
+		const response = await fetch(`/ThisCord/fn/getserverinfo?roomId=${roomId}&id=${userinfo.user_id}`);
 		if (response.ok) {
 
 			roominfo = await response.json();

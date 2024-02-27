@@ -86,6 +86,8 @@ public class WebResponseContext implements ResponseContext {
 	public void setStatus(String status) {
 		if(status.equals("ok")) {
 			response.setStatus(HttpServletResponse.SC_OK);
+		}else if(status.equals("ng")) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 		 
 	}
