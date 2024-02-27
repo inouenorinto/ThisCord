@@ -447,6 +447,7 @@ VALUES ('1', '5', '2024/1/24 23:11', '明日七時半ね');
 INSERT INTO personal_message (user_id, relation_id, send_date, message)
 VALUES ('6', '5', '2024/1/24 23:12', 'おけ');
 
+
 INSERT INTO message(user_id,channel_id,send_date,message)
 VALUES (1,1,"2024/1/17 13:45","ねぇ");
 
@@ -472,7 +473,13 @@ INSERT INTO message(user_id,channel_id,send_date,message)
 VALUES (2,1,"2024/1/17 15:30","いけなくもないけど、モチベ次第かな");
 
 INSERT INTO message(user_id,channel_id,send_date,message)
-VALUES (3,1,"2024/1/17 15:30","じゃあやめよう");
+VALUES (3,1,"2024/1/18 1:03","じゃあやめよう");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,1,"2024/1/18 1:03","そうだね");
+
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,1,"2024/1/18 1:03","なかったことに");
 
 INSERT INTO message(user_id,channel_id, send_date, message)
 VALUES (1,2,"2024/1/1 11:11", "おはよう");
@@ -516,8 +523,9 @@ VALUES (2,2,"2024/1/1 14:30", "最近、面白いことがあった？");
 INSERT INTO message(user_id,channel_id, send_date, message)
 VALUES (4,2,"2024/1/1 14:45", "ねーよ");
 
+
 INSERT INTO message(user_id,channel_id,send_date,message)
-VALUES (2,3,"2024/1/17 20:22","ねぇ");
+VALUES (2,3,"2024/1/27 20:22","ねぇ");
 
 INSERT INTO message(user_id,channel_id,send_date,message)
 VALUES (1,3,"2024/2/1 20:22","なに");
@@ -542,6 +550,8 @@ VALUES (2,3,"2024/2/1 20:22","教えて");
 
 INSERT INTO message(user_id,channel_id,send_date,message)
 VALUES (1,3,"2024/2/1 20:24","おっけ、ワークの３章だけ 単語のところと、章末まとめの部分やったらいいらしいあと、都道府県");
+INSERT INTO message(user_id,channel_id,send_date,message)
+VALUES (1,3,"2024/2/1 20:24","章末まとめの部分やったらいいらしいあと、都道府県");
 
 INSERT INTO message(user_id,channel_id,send_date,message)
 VALUES (2,3,"2024/2/1 20:24","課題はあった???");
@@ -553,10 +563,10 @@ INSERT INTO message(user_id,channel_id,send_date,message)
 VALUES (2,3,"2024/2/1 20:25","まじか!! やってなかった");
 
 INSERT INTO message(user_id,channel_id,send_date,message)
-VALUES (2,3,"2024/2/1 20:30","答えないから学校で貸してほしい テスト前の自習の時間で終わらすから");
+VALUES (2,3,"2024/2/2 8:15","答えないから学校で貸してほしい テスト前の自習の時間で終わらすから");
 
 INSERT INTO message(user_id,channel_id,send_date,message)
-VALUES (1,3,"2024/2/1 20:30","おっけ");
+VALUES (1,3,"2024/2/2 8:17","おっけ");
 
 
 
