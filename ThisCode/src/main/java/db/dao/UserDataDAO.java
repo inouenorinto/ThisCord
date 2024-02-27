@@ -17,8 +17,6 @@ public class UserDataDAO{
 
     
     private PreparedStatement pstmt = null;
-    private ResultSet rs = null;
-    
     private static UserDataDAO uddao = null;
     
     static {
@@ -44,7 +42,7 @@ public class UserDataDAO{
         	Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(DB_SELECT);
             pstmt.setInt(1, User_Id);
-            rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()) {
             	UserDataBean userDataBean = new UserDataBean();
@@ -71,7 +69,7 @@ public class UserDataDAO{
     		Connection cn = MySqlManager.getConnection();
             pstmt = cn.prepareStatement(DB_SELECT);
             pstmt.setInt(1, user_id);
-            rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()) {
             	userDataBean.setUser_id(rs.getInt("user_id"));
@@ -99,15 +97,15 @@ public class UserDataDAO{
 	    	Connection cn =  MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
 			pstmt.setString(1, email);
-			rs = pstmt.executeQuery();
+			ResultSet rst = pstmt.executeQuery();
 			
-			if(rs != null && rs.next()) {
+			if(rst != null && rst.next()) {
 				
-				bean.setUser_id(rs.getInt("user_id"));
-				bean.setMailaddress(rs.getString("mailaddress"));
-				bean.setPassword(rs.getString("password"));
-				bean.setUser_name(rs.getString("user_name"));
-				bean.setUser_icon(rs.getString("user_icon"));
+				bean.setUser_id(rst.getInt("user_id"));
+				bean.setMailaddress(rst.getString("mailaddress"));
+				bean.setPassword(rst.getString("password"));
+				bean.setUser_name(rst.getString("user_name"));
+				bean.setUser_icon(rst.getString("user_icon"));
 				
 				for(int num : usrdao.getServers(bean.getUser_id())) {
 					
@@ -131,7 +129,7 @@ public class UserDataDAO{
 	    	Connection cn = MySqlManager.getConnection();
 			pstmt = cn.prepareStatement(SQL);
 			pstmt.setInt(1, userId);
-			rs = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs != null && rs.next()) {
 				
@@ -171,7 +169,7 @@ public class UserDataDAO{
 				System.out.println("cn:null");
 			}
 			st = cn.createStatement();
-			rs = st.executeQuery(select);
+			ResultSet rs = st.executeQuery(select);
 			
 			if(rs.next()) {
 				rs = null;

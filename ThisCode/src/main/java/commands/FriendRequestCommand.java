@@ -14,7 +14,15 @@ public class FriendRequestCommand extends AbstractCommand{
 		int friendId = Integer.parseInt(Sanitizer.sanitizing(req.getParameter("friendId")[0]));
 		
 		FriendRelationshipDAO fdao = FriendRelationshipDAO.getInstance();
-		fdao.insertFriend(userId, friendId);
+		
+		if(userId == friendId) {
+			res.setStatus("ng");
+		}else if(0 < fdao.insertFriend(userId, friendId)) {
+			res.setStatus("ok");
+		} else {
+			res.setStatus("ng");
+		}
+		
 		
 		System.out.println("FriendRequestCommand.java: ok");
 	}
