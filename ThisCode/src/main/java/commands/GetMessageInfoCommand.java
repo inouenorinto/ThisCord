@@ -9,12 +9,13 @@ import db.dao.MessageDataDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 
 public class GetMessageInfoCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		int channel_id = Integer.parseInt(req.getParameter("channel_id")[0]);
+		int channel_id = Integer.parseInt(Sanitizer.sanitizing(req.getParameter("channel_id")[0]));
 		
 		String jmessage = null;
 		MessageDataDAO mdd = MessageDataDAO.getInstance();

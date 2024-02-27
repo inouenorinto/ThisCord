@@ -5,14 +5,15 @@ import db.dao.UserDataDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 import util.encrypt.Encryption;
 
 public class LoginCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		String email = req.getParameter("email")[0];
-		String password = req.getParameter("password")[0];
+		String email = Sanitizer.sanitizing(req.getParameter("email")[0]);
+		String password = Sanitizer.sanitizing(req.getParameter("password")[0]);
 		
 		UserDataDAO account = UserDataDAO.getInstance();
 		UserBean userBean = account.getRecord(email);
