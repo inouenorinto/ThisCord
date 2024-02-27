@@ -498,6 +498,9 @@ function initform() {
 	
 	const formUserId = document.getElementById('formUserId');
 	formUserId.value = userid;
+	
+	const createChannelServerId = document.getElementById('createChannelServerId');
+	createChannelServerId.value = nowRoomId;
 
 }
 
@@ -561,6 +564,7 @@ function handleKeyPress(event) {
 		event.preventDefault();
 		if (textarea.value && !/^\s*$/.test(textarea.value)) {	//メッセージが空,改行コード,スペースのみの場合にEnterを押しても処理されなくなる
 			sendMessage();
+			chatFieldSizeAdjustment(0);
 		}
 	} else if (event.key === "Backspace") {
     	//改行したら、比を変える
