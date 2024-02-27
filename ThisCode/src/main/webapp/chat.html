@@ -79,9 +79,11 @@
 		</div>
 
 		<!--*************************************** チャンネルメヘッダー(channel-header)***************************************-->
-		<div class="radius-lefttop text-center channel-header text-color">
+		<div class="radius-lefttop text-center channel-header text-color" style="justify-content: space-between;">
 			<div id="server"></div>
-			<i class="fa-solid fa-angle-down fa-xs"></i>
+			<div class="ellipsis">
+				<i class="fa-solid fa-ellipsis" onclick="modalToggle('serverEditModal')"></i>
+			</div>
 		</div>
 		<!--*************************************** チャンネル一覧 (channel-list)***************************************-->
 		<div class="channel-list">
@@ -98,11 +100,7 @@
 								<i class="fa-solid fa-angle-down fa-xs"></i>
 								<span class="channel-title">フレンド一覧</span>
 							</div>
-							<div class="flex-item">
-								<a class="invitation-link" data-bs-toggle="modal" data-bs-target="#createChannelModal">
-									<i class="fa-solid fa-plus fa-sm"></i>
-								</a>
-							</div>
+
 						</div>
 					</div>
 				</div>
@@ -282,6 +280,8 @@
 			</div>
 		</div>
 
+		<!-- popupBgCover -->
+        <div class="popupBgCover" id="popupBgCover"></div>
 	</div>
 
 	<!-- ****************************************** モーダル群 ****************************************** -->
@@ -291,7 +291,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content modal-content2">
 				<div class="center_content">
-					<h1 class="modal-title modal-title2" id="exampleModalLabel">サーバーをカスタマイズ</h1>
+					<h1 class="modal-title modal-title2" id="exampleModalLabel" style="color: #f2f3f5;">サーバーをカスタマイズ</h1>
 				</div>
 				<button type="button" class="btn-close btn-close2 ml-5" data-bs-dismiss="modal"
 					aria-label="Close"></button>
@@ -313,8 +313,8 @@
 				<!--サーバーの名入力フォーム-->
 				<form id="imageForm" action="fn/makeserver" method="post" enctype="multipart/form-data"
 					onsubmit="return false">
-					<div class="mb-3">
-						<label for="exampleFormControlInput1" class="form-label">サーバー名</label>
+					<div style="margin-bottom: 5px;">
+						<label for="exampleFormControlInput1" class="form-label" style="color: rgb(219 222 225)">サーバー名</label>
 						<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
 					</div>
 					<p>
@@ -331,7 +331,7 @@
 
 				<div class="con">
 					<div class="back">
-						<div class="back-botan" data-bs-dismiss="modal">戻る</div>
+						<div class="back-botan" data-bs-dismiss="modal" style="color: #f2f3f5;">戻る</div>
 					</div>
 				</div>
 			</div>
@@ -449,6 +449,89 @@
 			</div>
 		</div>
 	</div>
+
+
+
+
+
+
+	
+    <!-- serverEditModal -->
+    <div class="serverEditModal slide" id="serverEditModal">
+        <div class="memberModalContent">
+            <div class="modal-header">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('serverEditModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body slide_children" style="margin-top: 40px;">
+
+                <div class="info-card slide_children " data-bs-toggle="modal" data-bs-target="#invitationIconModal" style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+					<div style="display: flex; text-align: center; align-items: center;">
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+                        <div style="color: #b5bac1; font-weight: 700; font-size: 14px;">メンバーを招待する</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card slide_children " data-bs-toggle="modal" data-bs-target="#createChannelModal" style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('createChannelModal')">
+                    <div style="display: flex;  align-items: center;">
+                        <div class="memberIcon">
+                            <i class="fa-solid fa-plus" style="display: flex; align-items: center;"></i>
+                        </div>
+                        <div style="color: #b5bac1; font-weight: 700;">チャンネルを作成</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card slide_children" style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('deleteChannelModal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="redMemberIcon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                        <div style="color: #ff6467; font-weight: 700;">チャンネルを削除</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+                <div class="info-card slide_children" style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+                    <div style="display: flex; text-align: center; align-items: center;">
+                        <div class="redMemberIcon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                        <div style="color: #ff6467;; font-weight: 700;">サーバーを削除</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- deleteChannelModal -->
+    <div class="deleteChannelModal" id="deleteChannelModal" style="height: 450px;">
+        <div class="memberModalContent" style="height: 450px;">
+            <div class="modal-header" style="margin-bottom: 20px;">
+                <button id="modalToggle" class="close-button" onclick="modalToggle('deleteChannelModal')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h3 class="modal-title" style="font-size: 20px; margin: 8px 0 0 15px">チャンネル削除</h3>
+            </div>
+            <div class="modal-body" style="height: 100%;">
+                <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">テキストチャンネル</div>
+                <div class="info-card" style="height: 30%">
+                    <div id="textChannelsList" style="overflow-y: auto; height: 100%;"></div>
+                </div>
+                <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">ボイスチャンネル</div>
+                <div class="info-card" style="height: 30%">
+                    <div id="voiceChannelsList" style="overflow-y: auto; height: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+
+
 
 	<script src="./javascript/values.js"></script>
 	<script src="./javascript/chatWebSocket.js"></script>

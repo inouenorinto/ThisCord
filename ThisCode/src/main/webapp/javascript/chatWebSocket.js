@@ -263,7 +263,6 @@ async function createRoomB(roomInfo) {
 		} else {
 			roomListDiv.innerHTML += '<div class="server-list-item"><a class="server-icon" id="server-id-' + roomId + '" onclick=" joinRoom(\'' + roomId + '\');"  ><img id="retryImage" src="/ThisCord/' + src + '" onerror="retryImageLoad(this, 10, 1000)"></img></a></div>';
 		}
-
 	}
 }
 
@@ -273,13 +272,13 @@ function createChannelButton(channelInfo) {
 	channelsListDiv.innerHTML = "";
 
 	for (const [channel_id, channel_name] of channelInfo) {
+		console.log(channel_name);
 		channelsListDiv.innerHTML +=
 			'<div class="text-channels" id="channel-id-' + channel_id + '">' +
 			'<a class="textIcon" href="javascript:joinChannel(\'' + channel_id + '\')">' +
 			'<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>' +
 			channel_name +
 			'</a>' +
-			'<a class="invitationIcon"  data-bs-toggle="modal" data-bs-target="#invitationIconModal"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
 			'</div>';
 	}
 }
@@ -312,6 +311,8 @@ function joinChannel(channel_id) {
 	chatSocket.onopen = event => {
 		console.log("接続開始");
 		getMessageInfo(channel_id);
+		const createChannelServerId = document.getElementById('createChannelServerId');
+		createChannelServerId.value = nowRoomId;
 	};
 	
 	var convertedText = "";
@@ -364,6 +365,7 @@ async function joinRoom(roomId) {
 	const infoDiv = document.querySelector("#server");
 	infoDiv.innerHTML = roomsMap.get(roomId)[0];
 	createChannelButton(channelsMap);
+	setChannelList(channelsMap, voiceChannelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
@@ -389,7 +391,6 @@ async function joinRoom(roomId) {
 //サーバーの情報を取得する関数
 async function getServerInfo(roomId) {
 	try {
-
 		const response = await fetch(`/ThisCord/fn/getserverinfo?roomId=${roomId}&id=${userinfo.user_id}`);
 		if (response.ok) {
 
@@ -399,9 +400,10 @@ async function getServerInfo(roomId) {
 			membersMap = new Map(Object.entries(members));
 
 			//メンバー一覧に表示する処理
+			const memberListDiv = document.getElementById("members-list");
+			memberListDiv.innerHTML = "";
 			for (const [user_id, user_name] of membersMap) {
-				const memberListDiv = document.getElementById("members-list");
-
+				
 				if (nowRoomHostId == user_id) {
 					memberListDiv.innerHTML +=
 						'<div class="member-wrapper">' +
@@ -499,10 +501,6 @@ function initform() {
 	
 	const formUserId = document.getElementById('formUserId');
 	formUserId.value = userid;
-	
-	const createChannelServerId = document.getElementById('createChannelServerId');
-	createChannelServerId.value = nowRoomId;
-
 }
 
 //フレンド追加モーダルにフレンドリストを表示する関数
@@ -840,6 +838,62 @@ function chatFieldSizeAdjustment(line) {
 	children[0].style.height = (ratioCS - fluctuationValue * line) + 'px';
     children[1].style.height = (ratioInput + fluctuationValue * line) + 'px';
     children[1].children[0].style.height = (ratioInputchildren + fluctuationValue * line) + 'px';
+}
+
+function setChannelList(channelsMap, voiceChannelsMap) {
+	const channelsListDiv = document.getElementById("textChannelsList");
+	channelsListDiv.innerHTML = "";
+	for (const [channel_id, channel_name] of channelsMap) {
+		channelsListDiv.innerHTML += `
+		<div class="info-items">
+			<div class="text-channels noSwipe" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'text')">
+				<div class="textIcon">
+					<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>
+					${channel_name}
+				</div>
+				<button class="deleteButton">
+					削除
+				</button>
+			</div>
+		</div>
+			`;
+	}
+
+	const voiceChannelsListDiv = document.getElementById("voiceChannelsList");
+	voiceChannelsListDiv.innerHTML = "";
+
+	for (const [channel_id, channel_name] of voiceChannelsMap) {
+		voiceChannelsListDiv.innerHTML += `
+		<div class="info-items">
+			<div class="text-channels" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'voice')">
+				<a class="voice-channel-linc" onclick="modalToggle('video_modal');>
+					<i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ${channel_name}
+				</a>
+				<button class="deleteButton" value="削除" >
+					削除
+				</button>
+			</div>
+		</div>
+			`;
+	}
+
+}
+
+async function deleteChannel(id, type) {
+	if(nowRoomHostId != userid){
+		alert("このチャンネルの管理権限がありません。");
+		return;
+	}
+	const response = await fetch(`/ThisCord/fn/deleteChannel?channel_id=${id}&type=${type}`);
+	if (response.ok) {
+		console.log("ok")
+		await getServerInfo(nowRoomId);
+		createChannelButton(channelsMap);
+		setChannelList(channelsMap, voiceChannelsMap);
+	} else {
+		console.error("ng");
+		alert("チャンネルを削除できませんでした。");
+	}
 }
 
 //ページ表示時に

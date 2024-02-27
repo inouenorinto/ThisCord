@@ -852,6 +852,94 @@ body {
 }
 
 
+
+
+.close-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	color: #fff;
+	z-index: 2;
+	font-size: 12px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 20px;
+	height: 20px;
+	background-color: #26262f;
+	border: #323437 1px solid;
+	border-radius: 50%;
+}
+
+.deleteButton {
+	white-space: nowrap;
+	background-color: #26262f;
+	padding: 4px 10px;
+	border-radius: 20px;
+	font-weight: 700;
+}
+
+.textIcon {
+	width: 100%;
+	text-decoration: none;
+	color: #949ba4;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.serverEditModal {
+	position: fixed;
+	z-index: 100;
+	left: 82px;
+	top: 120%;
+	height: 0;
+	width: 220px;
+	margin: 0 auto;
+	background-color: #000;
+	display: none;
+	border-radius: 20px;
+}
+
+.serverEditModal.open{
+	top: 80px;
+	height: 350px;
+	display: inline;
+}
+.serverEditModalContent {
+	bottom: 0;
+	position: absolute;
+	justify-content: center;
+	height: 85%;
+	width: 100%;
+	background-color: #1c1d22;
+}
+
+
+.deleteChannelModal{
+	position: fixed;
+	z-index: 100;
+	left: 80px;
+	top: 120%;
+	height: 0;
+	width: 300px;
+	margin: 0 auto;
+	background-color: #000;
+	display: none;
+	border-radius: 20px;
+}
+
+.deleteChannelModal.open{
+	top: 80px;
+	height: 350px;
+	display: inline;
+}
+
+
+
+
+
 /*cardのcss*/
 .register_card {
 	color: #70737C;
@@ -895,16 +983,16 @@ body {
 }
 
 .input_text {
-	background-color: #caccce;
+	background-color: #1E1F22;
 	border: none;
 	height: 45px;
-	color: #333;
+	color: rgb(219 222 225);
 }
 
 .input_text:focus {
-	background-color: #caccce;
-	border-color: #caccce;
-	color: #333;
+	background-color: #1E1F22;
+	border-color: #1E1F22;
+	color: rgb(219 222 225);
 	outline: none;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
 }
@@ -917,7 +1005,7 @@ body {
 
 .channel_input_text:focus {
 	background-color: #1E1F22;
-	border-color: #caccce;
+	border-color: #1E1F22;
 	color: rgb(219 222 225);
 	outline: none;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
@@ -926,8 +1014,8 @@ body {
 .modal-content2 {
 	border-radius: 6px;
 	padding: 2em;
-	min-height: 550px;
-	background: linear-gradient(to top, rgb(228, 230, 233) 0%, rgb(228, 230, 233) 13%, #fff 13%, #fff 100%);
+	min-height: 500px;
+	background: linear-gradient(to top, rgb(49, 51, 56) 0%, rgb(49, 51, 56) 30%, #313338 30%, #313338 100%);
 }
 
 .modal-title2 {
@@ -937,7 +1025,38 @@ body {
 	margin-bottom: 10px;
 }
 
-
+.slide {
+	animation-duration: 0.5s;
+	animation-name: slidein;
+  }
+  
+  @keyframes slidein {
+	from {
+	  margin-bottom: 100%;
+	  height: 0%;
+	}
+  
+	to {
+	  margin-bottom: 0%;
+	  height: 350px;
+	}
+  }
+.slide_children {
+	animation-duration: 0.5s;
+	animation-name: slideinc;
+  }
+  
+  @keyframes slideinc {
+	from {
+	  margin-bottom: 100%;
+	  height: 0%;
+	}
+  
+	to {
+	  margin-bottom: 0%;
+	  height: 100%;
+	}
+  }
 .modal-channel {
 	width: 428px;
 	height: 480px;
