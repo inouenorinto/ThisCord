@@ -20,6 +20,7 @@ let userinfo = null;
 let user_icon = null;
 let friendCount = 0;
 let friendIcons = [];
+let roomIds = [];
 
 const ip = constIp;
 const port = constPort;
@@ -134,12 +135,13 @@ async function getFriend(element) {
 					`<div class="fland-box">
 					  <div class="inv-friend-button">
 					    <div class="icon-name-wrapper">
+						<div style="display: flex; align-items: center;">
 					      <img class="fland_icon_img" src="/ThisCord/resource/user_icons/${friend.user_icon}" />
-					      <div style="line-height: 17px; padding:4px 0px 4px 8px;">
-					        <p id="user-name">${friend.user_name}</p>
-					        <p id="user-id">${friend.user_name}-${friend.user_id}</p>
-					      </div>
-						  <button class="inv-button" value="招待" onclick="invFriendForm(${friend.user_id})">
+					      
+					        <p style="margin-left:10px; color: #fff; font-weight: 700; font-size: 16px;">${friend.user_name}</p>
+					      
+						</div>
+						  <button class="invButton" value="招待" onclick="invFriendForm(${friend.user_id})">
 							<p>招待</p>
 						</button>
 					    </div>
@@ -168,7 +170,7 @@ async function setFriendListToSinglePage(element) {
 				elm.innerHTML +=
 					`<a class="friendListItem" href="javascript:joinPersonalChat(${friend.user_id},'${friend.user_name}')" onclick="toggleChatField();">
 						<img class="singleChatIconImage" src="/ThisCord/resource/user_icons/${friend.user_icon}"  />
-						<div style=" padding:4px 0px 4px 8px;">
+						<div style=" padding:4px 0px 4px 8px; text-decoration: none;">
 							<p id="single-user-name">${friend.user_name}</p>
 							<p id="single-user-id">${friend.user_name}-${friend.user_id}</p>
 						</div>
@@ -238,7 +240,6 @@ function createChannelButton(channelInfo) {
 			'<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>' +
 			channel_name +
 			'</a>' +
-			'<a class="invitationIcon" onclick="modalToggle(\'invitation-modal\')"><i class="fa-solid fa-user-plus fa-xs"></i></a>	' +
 			'</div>';
 	}
 }
@@ -289,8 +290,7 @@ function joinChannel(channel_id) {
 		const infoDiv = document.querySelector("#channel");
 		infoDiv.innerHTML = channelsMap.get(channel_id);
 	}
-	const infoDiv = document.querySelector("#channel");
-	infoDiv.innerHTML = channelsMap.get(channel_id);
+
 
 	nowChannelId = channel_id;
 	chatSocket = new WebSocket(`ws://${ip}:${port}/ThisCord/chat/${nowRoomId}/${nowChannelId}/${userinfo.user_id}`);
@@ -305,7 +305,7 @@ function joinChannel(channel_id) {
 		const chat = document.getElementById("message-container");
 		console.log(event.data);
 		const rep = JSON.parse(event.data);
-		
+
 		convertedText = rep.message.replace(/\n/g, "<br>");
 		console.log(rep);
 		showOnMessage(rep, chat);
@@ -378,9 +378,9 @@ async function getServerInfo(roomId) {
 			membersMap = new Map(Object.entries(members));
 
 			//メンバー一覧に表示する処理
+			const memberListDiv = document.getElementById("members-list");
+			memberListDiv.innerHTML = "";
 			for (const [user_id, user_name] of membersMap) {
-				const memberListDiv = document.getElementById("members-list");
-
 				if (nowRoomHostId == user_id) {
 					memberListDiv.innerHTML +=
 						'<div class="member-wrapper">' +
@@ -765,29 +765,6 @@ function form_clear(formId) {
 }
 
 
-//
-document.addEventListener('DOMContentLoaded', function () {
-	const inviteForm = document.getElementById('inviteForm');
-
-	inviteForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-
-		const inviteUserId = document.getElementById('invitationInput').value;
-		let json =
-		{
-			type: 'invite',
-			serverId: nowRoomId,
-			inviteUserId: inviteUserId
-		};
-
-		console.log(json);
-		noticeSocket.send(JSON.stringify(json));
-
-		inviteForm.submit();
-	})
-
-});
-
 function addOldRoom() {
 
 	if (nowRoomId != null)
@@ -896,8 +873,8 @@ function setChannelList(channelsMap, voiceChannelsMap) {
 	for (const [channel_id, channel_name] of channelsMap) {
 		channelsListDiv.innerHTML += `
 		<div class="info-items">
-			<div class="text-channels noSwipe" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'text')">
-				<div class="textIcon" href="javascript:joinChannel('${channel_id}')">
+			<div class="delete-channels" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'text')">
+				<div class="textIcon">
 					<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>
 					${channel_name}
 				</div>
@@ -915,10 +892,10 @@ function setChannelList(channelsMap, voiceChannelsMap) {
 	for (const [channel_id, channel_name] of voiceChannelsMap) {
 		voiceChannelsListDiv.innerHTML += `
 		<div class="info-items">
-			<div class="text-channels" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'voice')">
-				<a class="voice-channel-linc" onclick="modalToggle('video_modal'); joinVoiceChannel('${channel_id}', '${username}', '${user_icon}')">
+			<div class="delete-channels" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'voice')">
+				<div class="voice-channel-linc">
 					<i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ${channel_name}
-				</a>
+				</div>
 				<button class="deleteButton" value="削除" >
 					<p>削除</p>
 				</button>
@@ -930,16 +907,75 @@ function setChannelList(channelsMap, voiceChannelsMap) {
 }
 
 async function deleteChannel(id, type) {
-	if(nowRoomHostId != userid){
+	if (nowRoomHostId != userid) {
 		alert("このチャンネルの管理権限がありません。");
 		return;
 	}
-	const response = await fetch(`/ThisCord/fn/deleteChannel?channel_id=${id}&type=${type}`);
-	if (response.ok) {
-		console.log("ok")
-		getServerInfo(nowRoomId);
+	if (window.confirm(`本当に${type}チャンネルを削除してもよろしいですか？`)) {
+		const response = await fetch(`/ThisCord/fn/deleteChannel?channel_id=${id}&type=${type}`);
+		if (response.ok) {
+			console.log("ok");
+			joinRoom(nowRoomId);
+			modalToggle('deleteChannelModal');
+		} else {
+			console.error("ng");
+			alert("チャンネルを削除できませんでした。");
+		}
 	} else {
-		console.error("ng");
-		alert("チャンネルを削除できませんでした。");
+		return;
+	}
+
+}
+
+async function deleteServer() {
+	if (nowRoomHostId != userid) {
+		alert("このサーバーの管理権限がありません。");
+		return;
+	}
+	if (window.confirm(`本当にサーバーを削除してもよろしいですか？`)) {
+		const response = await fetch(`/ThisCord/fn/deleteServer?server_id=${nowRoomId}`);
+
+		if (response.ok) {
+			modalToggle('serverEditModal');
+
+			await getUserInfo();
+
+			const firstServer = roomsMap.entries().next().value;
+			let firstServerId = null;
+
+			if (firstServer != null) {
+				firstServerId = firstServer[0];
+				await joinRoom(firstServerId);
+			}
+
+		} else {
+			alert("サーバーを削除できませんでした。");
+		}
+
+	} else {
+		return;
+	}
+}
+
+async function invitationFriend() {
+	const invUserId = document.getElementById('invitationInput').value;
+	const response = await fetch(`/ThisCord/fn/invite?serverId=${nowRoomId}&userId=${invUserId}`);
+
+	if (response.ok) {
+		alert("招待を送りました。");
+		modalToggle('invitation-modal');
+		let json =
+		{
+			type: 'invite',
+			serverId: nowRoomId,
+			inviteUserId: invUserId
+		};
+		noticeSocket.send(JSON.stringify(json));
+		await getServerInfo(nowRoomId);
+
+		
+		
+	} else {
+		alert("サーバーに招待できませんでした");
 	}
 }

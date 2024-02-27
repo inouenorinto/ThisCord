@@ -14,7 +14,7 @@ public class ServerDataDAO { //server表
     private static final String DB_SELECT = "SELECT * FROM server";
     private static final String DB_RECORD = "SELECT * FROM server WHERE server_id = ?";
     private static final String INSERT_NEW_SERVER ="INSERT INTO server (server_name, user_id, server_icon) VALUES (?, ?, ?)";
-
+    private static final String DELETE_SERVER ="DELETE FROM server WHERE server_id = ? ";
     //private Connection cn = null;
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
@@ -137,5 +137,20 @@ public class ServerDataDAO { //server表
 		}
 		
 	}
+    
+    public int deleteServer(int serverId) {
+    	int result = -1;
+        try{
+        	Connection con = MySqlManager.getConnection();
+        	PreparedStatement pstmt = con.prepareStatement(DELETE_SERVER);
+            pstmt.setInt(1, serverId);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            MySqlManager.close();
+        }
+        return result;
+    }
 
 }

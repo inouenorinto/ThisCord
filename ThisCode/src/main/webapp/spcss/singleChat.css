@@ -15,7 +15,7 @@
 }
 .singleChatHeader {
     display: flex;
-
+	justify-content: space-between;
     padding: 20px 10px 10px 20px;
     border-bottom: #4c4f56 1px groove;
     color: #fff;
@@ -50,6 +50,7 @@
 .friendListItem {
     display: flex;
     width: 100%;
+	text-decoration: none;
     padding: 5px 0px 5px 0px;
 }
 
@@ -60,11 +61,13 @@
 }
 
 #single-user-name{
+	text-decoration: none;
     font-weight: 700;
     color: #fff;
 }
 
 #single-user-id{
+	text-decoration: none;
     font-weight: 500;
 
 }

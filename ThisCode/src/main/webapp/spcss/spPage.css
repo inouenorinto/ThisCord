@@ -139,6 +139,14 @@ html body {
     background-color: #404249;
 }
 
+.invButton{
+	white-space: nowrap;
+	background-color: #3a3a45;
+	padding: 4px 15px;
+	border-radius: 20px;
+    color: #fff;
+}
+
 #invFriendList {
     margin-top: 20px;
     height: 200px;
