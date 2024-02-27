@@ -53,6 +53,32 @@ function toggleChannelState(element) {
     element.classList.add('clicked');
     selectedChannel = element;
 }
+window.addEventListener('load', () => {
+	const form = document.getElementById('createChannelForm');
+
+    form.addEventListener('submit', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+
+        const url = form.getAttribute('action');
+        fetch(url, options)
+        .then(response => {
+            if (response.ok) {
+                joinRoom(nowRoomId);
+                form.reset();
+                modalToggle('createChannelModal')
+            } else {
+                throw new Error('ネットワークエラー');
+            }
+        });
+    })
+})
 
 
 window.globalFunction = {};

@@ -410,6 +410,10 @@ body {
 
 .invitation-link {
 	color: #949ba4;
+	cursor: pointer;
+}
+.invitation-link:hover {
+	color: rgb(219 222 225);
 }
 
 .text-channels {
@@ -904,6 +908,20 @@ body {
 	outline: none;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
 }
+.channel_input_text {
+	background-color: #1E1F22;
+	border: none;
+	height: 45px;
+	color: rgb(219 222 225);
+}
+
+.channel_input_text:focus {
+	background-color: #1E1F22;
+	border-color: #caccce;
+	color: rgb(219 222 225);
+	outline: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+}
 
 .modal-content2 {
 	border-radius: 6px;
@@ -917,6 +935,24 @@ body {
 	font-weight: 700;
 	color: #333;
 	margin-bottom: 10px;
+}
+
+
+.modal-channel {
+	width: 428px;
+	height: 480px;
+	margin: auto;
+	padding: 16px;
+	background-color: rgb(49 51 56);
+}
+.modal-channel h1 {
+	font-size: 20px;
+	color: #f2f3f5;
+	text-align: left;
+	margin: 0px;
+}
+.modal-channel p {
+	text-align:left;
 }
 
 .btn-close2 {
