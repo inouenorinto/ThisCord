@@ -15,6 +15,7 @@ public class UserServerRelationshipDAO {
 	private static final String FINDRECORD = "select * from us_relationship where user_id = ? and server_id = ?";
 	private static final String SELECT_PARTICIPATING_SERVER ="select * from us_relationship where user_id = ?";
 	private static final String updateSQL ="INSERT INTO us_relationship (user_id, server_id) VALUES (?, ?);";
+	private static final String DELETE_RELATIONSHIP_ALL ="delete from us_relationship where server_id = ?";
 	
 	Connection cn = null;
 	PreparedStatement pstmt = null;
@@ -169,5 +170,20 @@ public class UserServerRelationshipDAO {
 			e.printStackTrace();
 		}
 	}
+	
+    public int deleteRelationshipAll(int serverId) {
+    	int result = -1;
+        try{
+        	Connection con = MySqlManager.getConnection();
+        	PreparedStatement pstmt = con.prepareStatement(DELETE_RELATIONSHIP_ALL);
+            pstmt.setInt(1, serverId);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            MySqlManager.close();
+        }
+        return result;
+    }
 	
 }

@@ -17,7 +17,7 @@ public  class TextChannelDataDAO {
 	private static final String SELECT_CHANNELS ="SELECT * FROM text_channel WHERE server_id = ?";
 	private static final String INSERT_TEXT_CHANNEL = "INSERT INTO text_channel (channel_name, server_id) VALUES (?, ?);";
 	private static final String DELETE_TEXT_CHANNEL ="delete from text_channel where channel_id = ?;";
-	
+	private static final String DELETE_TEXT_CHANNEL_ALL = "DELETE FROM text_channel WHERE server_id = ?";
 	private Connection cn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
@@ -107,6 +107,7 @@ public  class TextChannelDataDAO {
             e.printStackTrace();
         } 
 	}
+
 	
     public int deleteTextChannel(int channelId) {
     	int result = -1;
@@ -123,6 +124,24 @@ public  class TextChannelDataDAO {
         }
         return result;
     }
+    
+    public int deleteTextChannelAll(int server) {
+    	int result = -1;
+        try{
+        	Connection con = MySqlManager.getConnection();
+            pstmt = con.prepareStatement(DELETE_TEXT_CHANNEL_ALL);
+            pstmt.setInt(1, server);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+        	
+            MySqlManager.close();
+        }
+        return result;
+    }
+    
+    
 	
 
 

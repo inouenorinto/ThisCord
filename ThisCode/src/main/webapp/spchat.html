@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./spcss/memberList.css">
     <link rel="stylesheet" href="./spcss/singleChat.css">
     <link rel="stylesheet" href="./spcss/friendRegister.css">
-	<link rel="icon"  type="image/x-icon" href="resource/user_icons/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="resource/user_icons/favicon.ico">
     <!-- icon -->
     <script src="https://kit.fontawesome.com/c82cac4dcf.js" crossorigin="anonymous"></script>
 
@@ -47,14 +47,15 @@
 
         <div class="channelList">
 
-            <div class="channel-title-nav" style="color: #fff; padding: 0px 15px; display: flex; justify-content: space-between;">
+            <div class="channel-title-nav"
+                style="color: #fff; padding: 0px 15px; display: flex; justify-content: space-between;">
                 <h3>
                     <div id="server"></div>
                 </h3>
                 <div class="ellipsis">
                     <i class="fa-solid fa-ellipsis" onclick="modalToggle('serverEditModal')"></i>
                 </div>
-                
+
             </div>
 
             <div id="channelsWrapper" class="channelsWrapper">
@@ -205,7 +206,8 @@
             </div>
 
             <div class="modal-body">
-                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
                     <div style="display: flex; text-align: center; align-items: center;">
                         <div class="memberIcon">
                             <i class="fa-solid fa-user-group"></i>
@@ -214,7 +216,8 @@
                     </div>
                     <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
-                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('createChannelModal')">
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('serverEditModal'); modalToggle('createChannelModal')">
                     <div style="display: flex;  align-items: center;">
                         <div class="memberIcon">
                             <i class="fa-solid fa-plus" style="display: flex; align-items: center;"></i>
@@ -223,7 +226,8 @@
                     </div>
                     <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
-                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('deleteChannelModal')">
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('serverEditModal'); modalToggle('deleteChannelModal')">
                     <div style="display: flex; text-align: center; align-items: center;">
                         <div class="redMemberIcon">
                             <i class="fa-solid fa-trash-can"></i>
@@ -232,7 +236,8 @@
                     </div>
                     <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
-                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="deleteServer()">
                     <div style="display: flex; text-align: center; align-items: center;">
                         <div class="redMemberIcon">
                             <i class="fa-solid fa-trash-can"></i>
@@ -254,7 +259,7 @@
                 </button>
                 <h3 class="modal-title">チャンネル削除</h3>
             </div>
-            <div class="modal-body">
+            <div class="delete-modal-body">
                 <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">テキストチャンネル</div>
                 <div class="info-card">
                     <div id="textChannelsList"></div>
@@ -274,9 +279,10 @@
                 <button id="modalToggle" class="close-button" onclick="modalToggle('membersListModal')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-                </div>
+            </div>
             <div class="modal-body">
-                <div class="info-card"style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
+                <div class="info-card" style="display: flex; align-items: center; justify-content: space-between"
+                    onclick="modalToggle('membersListModal'); modalToggle('invitation-modal')">
                     <div style="display: flex; text-align: center; align-items: center;">
                         <div class="memberIcon">
                             <i class="fa-solid fa-user-group"></i>
@@ -302,19 +308,18 @@
                 </button>
                 <h3 class="modal-title">ユーザーIDを入力してフレンドを招待</h3>
             </div>
-            <div class="modal-body invitation-body">
-                <div class="invitation-form">
-                    <form class="invitation-form" action="fn/invite" method="post" id="inviteForm">
-                        <div class="invitation-wrapper">
-                            <input class="invitation-input" type="text" name="userId" id="invitationInput">
-                            <input id="inputServerId" type="hidden" name="serverId">
-                            <input id="formUserId" type="hidden" name="id">
-                            <button class="invitation-button" type="submit">送信</button>
-                        </div>
-                    </form>
-                    <div id="invFriendList"></div>
-                </div>
+            <div class="invitation-body">
+                <form class="invitation-form" action="fn/invite" method="post" id="inviteForm">
+                    <div class="invitation-wrapper">
+                        <input class="invitation-input" type="text" name="userId" id="invitationInput">
+                        <input id="inputServerId" type="hidden" name="serverId">
+                        <input id="formUserId" type="hidden" name="id">
+                        <button class="invitation-button" type="submit">送信</button>
+                    </div>
+                </form>
+                <div id="invFriendList"></div>
             </div>
+            
         </div>
     </div>
 
@@ -410,7 +415,7 @@
         </div>
     </div>
 
-    <!-- createChannelModal -->    
+    <!-- createChannelModal -->
     <div class="createChannelModal " id="createChannelModal">
         <div class="create-channel-modal-content">
             <div class="create_modal_header">
