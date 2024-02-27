@@ -99,7 +99,7 @@
 								<span class="channel-title">フレンド一覧</span>
 							</div>
 							<div class="flex-item">
-								<a href="/ThisCord/createChannel.jsp" class="invitation-link">
+								<a class="invitation-link" data-bs-toggle="modal" data-bs-target="#createChannelModal">
 									<i class="fa-solid fa-plus fa-sm"></i>
 								</a>
 							</div>
@@ -117,7 +117,7 @@
 									class="channel-title">テキストチャンネル</span>
 							</div>
 							<div class="flex-item">
-								<a href="/ThisCord/createChannel.jsp" class="invitation-link">
+								<a class="invitation-link" data-bs-toggle="modal" data-bs-target="#createChannelModal">
 									<i class="fa-solid fa-plus fa-sm"></i>
 								</a>
 							</div>
@@ -132,8 +132,8 @@
 								<i class="fa-solid fa-angle-down fa-xs"></i> <span class="channel-title">ボイスチャンネル</span>
 							</div>
 							<div class="flex-item">
-								<a id="videotest" href="/ThisCord/createChannel.jsp" class="invitation-link"> <i
-										class="fa-solid fa-plus fa-sm"></i>
+								<a id="videotest" class="invitation-link" data-bs-toggle="modal" data-bs-target="#createChannelModal">
+									<i class="fa-solid fa-plus fa-sm"></i>
 								</a>
 							</div>
 						</div>
@@ -357,6 +357,66 @@
 						data-bs-dismiss="modal">閉じる</button>
 					<button type="button" id="cropButton" class="btn btn-primary" data-bs-toggle="modal"
 						data-bs-dismiss="modal">確定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Channelを作成するモーダル -->
+	<div class="modal fade" id="createChannelModal" tabindex="-1" aria-labelledby="createChannelModal" aria-hidden="true">
+		<div class="modal-dialog modal-channel-size">
+			<div class="modal-content modal-channel">
+				<div class="center_content">
+					<h1 class="modal-title modal-title2" id="exampleModalLabel">チャンネルを作成</h1>
+					<p>テキストチャンネル内</p>
+				</div>
+				<button type="button" class="btn-close btn-close2 ml-5" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+
+				<div class="center_content">
+					<form class="createChannelForm" action="fn/createchannel" method="post" id="createChannelForm">
+						<div class="formItems">
+							<div style="color: #a7a8ae; text-align: left;">チャンネル名</div>
+							<input type="text" name="channelName" class="form-control channel_input_text" id="channelName" maxlength="20" required>
+						</div>
+						<div class="formItems">
+							<div style="color: #a7a8ae; text-align: left;">チャンネルの種類</div>
+							<fieldset class="radioWrapper">
+								<div class="radioItems" style="height: 50px;">
+									<label for="text" class="radioItemsLabel" style="height: 100%; float: left;">
+										<i class="fa-solid fa-hashtag radioItemsIcon" style="font-size: 1.6em; float: left; margin: 12.2px 0;"></i>
+										<div style="line-height: 1.3em; float: right; margin-left: 5px">
+											<div style="color: #c7c8cd ; font-weight: 700; text-align: left;">Text</div>
+											<div>メッセージ、絵文字、意見、ダジャレを送れます</div>
+										</div>
+									</label>
+									<input class="createChannelRadio" type="radio" id="text" name="channelType" value="text" style="margin: 18.5px 0; float: right;" checked />
+								</div>
+								<div class="radioItems" style="height: 50px;">
+									<label for="voice" class="radioItemsLabel" style="height: 100%; float: left;">
+										<i class="fa-solid fa-volume-low radioItemsIcon" style="font-size: 1.6em; float: left; margin: 12.2px 0;"></i>
+										<div style="line-height: 1.3em; float: right; margin-left: 5px;">
+											<div style="color: #c7c8cd; font-weight: 700; text-align: left;">Voice</div>
+											<div>ボイス、ビデオを楽しめます</div>
+										</div>
+									</label>
+									<input class="createChannelRadio" type="radio" id="voice" name="channelType" value="voice" style="margin: 18.5px 0; float: right;" />
+								</div>
+							</fieldset>
+						</div>
+						<input type="hidden" id="createChannelServerId" name="createChannelServerId">
+						<div class="sub">
+							<button id="createChannelSubmitButton" type="submit" class="btn_sub" data-bs-dismiss="modal"
+							aria-label="Close">新規作成</button>
+						</div>
+
+					</form>
+				</div>
+
+				<div class="con">
+					<div class="back">
+						<div class="back-botan" data-bs-dismiss="modal">戻る</div>
+					</div>
 				</div>
 			</div>
 		</div>

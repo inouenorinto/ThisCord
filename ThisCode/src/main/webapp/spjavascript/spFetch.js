@@ -401,9 +401,6 @@ async function getServerInfo(roomId) {
 			const voice_channels = roominfo.voice_channels;
 			channelsMap = new Map(Object.entries(channels));
 			voiceChannelsMap = new Map(Object.entries(voice_channels))
-			// createRoomB(roomsMap);
-			// createChannelButton(channelsMap);
-			// createVoiceChannelButton(voiceChannelsMap);
 		} else {
 			location.href = "/ThisCord/login.html";
 		}

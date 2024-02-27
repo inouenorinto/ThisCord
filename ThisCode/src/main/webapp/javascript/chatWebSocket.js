@@ -70,6 +70,7 @@ async function getUserInfo() {
 		}
 	} catch (error) {
 		console.error("Error: " + error);
+		location.href = "/ThisCord/login.html";
 	}
 	const infoDiv = document.querySelector("#user");
 	infoDiv.innerHTML =
@@ -388,6 +389,7 @@ async function joinRoom(roomId) {
 //サーバーの情報を取得する関数
 async function getServerInfo(roomId) {
 	try {
+
 		const response = await fetch(`/ThisCord/fn/getserverinfo?roomId=${roomId}&id=${userinfo.user_id}`);
 		if (response.ok) {
 
@@ -428,6 +430,7 @@ async function getServerInfo(roomId) {
 		}
 	} catch (error) {
 		console.error("Error: " + error);
+		location.href = "/ThisCord/login.html";
 	}
 	const currentElement = document.querySelector('#server-id-' + nowRoomId);
 	window.globalFunction.toggleClickedState(currentElement);
@@ -496,6 +499,9 @@ function initform() {
 	
 	const formUserId = document.getElementById('formUserId');
 	formUserId.value = userid;
+	
+	const createChannelServerId = document.getElementById('createChannelServerId');
+	createChannelServerId.value = nowRoomId;
 
 }
 
@@ -559,6 +565,7 @@ function handleKeyPress(event) {
 		event.preventDefault();
 		if (textarea.value && !/^\s*$/.test(textarea.value)) {	//メッセージが空,改行コード,スペースのみの場合にEnterを押しても処理されなくなる
 			sendMessage();
+			chatFieldSizeAdjustment(0);
 		}
 	} else if (event.key === "Backspace") {
     	//改行したら、比を変える
