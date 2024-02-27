@@ -8,6 +8,7 @@ import db.mysql.MySqlManager;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 
 public class InvitationCommand extends AbstractCommand {
 	String yellow = "\u001b[00;33m";
@@ -15,8 +16,8 @@ public class InvitationCommand extends AbstractCommand {
 	
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		int user_id = Integer.parseInt(req.getParameter("userId")[0]);
-		int server_id = Integer.parseInt(req.getParameter("serverId")[0]);
+		int user_id = Integer.parseInt(Sanitizer.sanitizing(req.getParameter("userId")[0]));
+		int server_id = Integer.parseInt(Sanitizer.sanitizing(req.getParameter("serverId")[0]));
 		int id = Integer.parseInt(req.getParameter("id")[0]);
 		System.out.println(yellow+"InvitationCommnd.java "+ end +": ユーザID:"+ user_id + "が、サーバID" + server_id+"に招待されました。");
 		invaite(server_id, user_id);

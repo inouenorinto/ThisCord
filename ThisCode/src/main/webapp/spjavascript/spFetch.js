@@ -303,7 +303,9 @@ function joinChannel(channel_id) {
 	let convertedText = null;
 	chatSocket.onmessage = event => {
 		const chat = document.getElementById("message-container");
+		console.log(event.data);
 		const rep = JSON.parse(event.data);
+		
 		convertedText = rep.message.replace(/\n/g, "<br>");
 		console.log(rep);
 		showOnMessage(rep, chat);
@@ -323,6 +325,7 @@ function showOnMessage(rep, chat) {
 	convertedText = rep.message.replace(/\n/g, "<br>");
 
 	let sendDate = rep.date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
 	let sendMinute = sendDate[1].split(':')[1];
 	console.log(sendMinute);
 	if (oldDate != sendDate[0]) {
@@ -335,7 +338,7 @@ function showOnMessage(rep, chat) {
 		`;
 	}
 
-	if (oldUserId == rep.userid && oldDate == sendDate[0] && oldMinute == sendMinute) {
+	if (oldUserId == rep.userid && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<p class="message-text">' + convertedText + '</p>' +
@@ -359,6 +362,7 @@ function showOnMessage(rep, chat) {
 
 	}
 	oldMinute = sendMinute;
+	oldHour = sendHour;
 	oldDate = sendDate[0];
 }
 
@@ -481,7 +485,6 @@ function registerNotice() {
 			alert('招待されました');
 			getUserInfo();
 		}
-		console.log(JSON.stringify(json));
 		createVoiceChannelIcon(member, vcId);
 	};
 
@@ -537,13 +540,15 @@ async function getMessageInfo(channel_id) {
 
 let oldDate = null;
 let oldUserId = null;
+let oldHour = null;
 let oldMinute = null;
+
 function showMessage(message, chat) {
 	convertedText = message.message.replace(/\n/g, "<br>");
 
 	let sendDate = message.send_date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
 	let sendMinute = sendDate[1].split(':')[1];
-	console.log(sendMinute);
 	if (oldDate != sendDate[0]) {
 		chat.innerHTML += `
 			<div class="message-date-section-wrapper">
@@ -554,7 +559,7 @@ function showMessage(message, chat) {
 		`;
 	}
 
-	if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute) {
+	if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
 		chat.innerHTML +=
 			'<div class="message-wrapper">' +
 			'<p class="message-text">' + convertedText + '</p>' +
@@ -578,6 +583,7 @@ function showMessage(message, chat) {
 
 	}
 	oldMinute = sendMinute;
+	oldHour = sendHour;
 	oldDate = sendDate[0];
 }
 
@@ -894,17 +900,16 @@ function setChannelList(channelsMap, voiceChannelsMap) {
 		channelsListDiv.innerHTML += `
 		<div class="info-items">
 			<div class="text-channels noSwipe" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'text')">
-				<a class="textIcon" href="javascript:joinChannel('${channel_id}')">
+				<div class="textIcon" href="javascript:joinChannel('${channel_id}')">
 					<i class="fa-solid fa-hashtag fa-sm mx-r-5" style="margin-right: 5px;"></i>
 					${channel_name}
-				</a>
-				<button class="deleteButton" onclick="invFriendForm(2)">
+				</div>
+				<button class="deleteButton">
 					削除
 				</button>
 			</div>
 		</div>
 			`;
-
 	}
 
 	const voiceChannelsListDiv = document.getElementById("voiceChannelsList");
@@ -915,19 +920,29 @@ function setChannelList(channelsMap, voiceChannelsMap) {
 		<div class="info-items">
 			<div class="text-channels" id="channel-id-${channel_id}" onclick="deleteChannel('${channel_id}', 'voice')">
 				<a class="voice-channel-linc" onclick="modalToggle('video_modal'); joinVoiceChannel('${channel_id}', '${username}', '${user_icon}')">
-				<i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ${channel_name}
+					<i class="fa-solid fa-volume-low fa-sm" style="margin-right: 5px;"></i> ${channel_name}
 				</a>
-				<button class="deleteButton" value="削除" onclick="invFriendForm(2)">
+				<button class="deleteButton" value="削除" >
 					<p>削除</p>
 				</button>
 			</div>
 		</div>
 			`;
-
 	}
 
 }
 
-function deleteChannel(id, type) {
-
+async function deleteChannel(id, type) {
+	if(nowRoomHostId != userid){
+		alert("このチャンネルの管理権限がありません。");
+		return;
+	}
+	const response = await fetch(`/ThisCord/fn/deleteChannel?channel_id=${id}&type=${type}`);
+	if (response.ok) {
+		console.log("ok")
+		getServerInfo(nowRoomId);
+	} else {
+		console.error("ng");
+		alert("チャンネルを削除できませんでした。");
+	}
 }

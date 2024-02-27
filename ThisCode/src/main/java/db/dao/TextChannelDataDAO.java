@@ -108,17 +108,20 @@ public  class TextChannelDataDAO {
         } 
 	}
 	
-    public void deleteTextChannel(int channelId) {
+    public int deleteTextChannel(int channelId) {
+    	int result = -1;
         try{
         	Connection con = MySqlManager.getConnection();
             pstmt = con.prepareStatement(DELETE_TEXT_CHANNEL);
             pstmt.setInt(1, channelId);
-            pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
+        	
             MySqlManager.close();
         }
+        return result;
     }
 	
 

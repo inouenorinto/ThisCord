@@ -7,6 +7,7 @@ import db.dao.UserDataDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 
 public class GetUaserInfoCommand extends AbstractCommand {
 	String yellow = "\u001b[00;33m";
@@ -14,7 +15,7 @@ public class GetUaserInfoCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		int userId = Integer.parseInt(req.getParameter("id")[0]);
+		int userId = Integer.parseInt(Sanitizer.sanitizing(req.getParameter("id")[0]));
 		UserBean bean = (UserBean)req.getAttributeInSession("bean"+userId);
 		if(bean != null) {
 			UserDataDAO account = UserDataDAO.getInstance();

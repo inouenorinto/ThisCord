@@ -56,16 +56,18 @@ public class VoiceChannelDAO {
         } 
 	}
 	
-	public void deleteVoiceChannel(int channelId) {
+	public int deleteVoiceChannel(int channelId) {
+		int result = -1;
         try{
         	Connection con = MySqlManager.getConnection();
         	PreparedStatement pstmt = con.prepareStatement(DELETE_VOICE_CHANNEL);
             pstmt.setInt(1, channelId);
-            pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
             MySqlManager.close();
         }
+        return result;
     }
 }

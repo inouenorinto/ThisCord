@@ -10,16 +10,17 @@ import db.dao.UserDataDAO;
 import framework.command.AbstractCommand;
 import framework.context.RequestContext;
 import framework.context.ResponseContext;
+import util.Sanitizer;
 import util.encrypt.Encryption;
 
 public class RegisterCommand extends AbstractCommand {
 
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
-		String editedImageData = req.getParameter("editedImage")[0];
-        String username = req.getParameter("username")[0];
-        String password = req.getParameter("password")[0];
-        String email = req.getParameter("email")[0];
+		String editedImageData = Sanitizer.sanitizing(req.getParameter("editedImage")[0]);
+        String username = Sanitizer.sanitizing(req.getParameter("username")[0]);
+        String password = Sanitizer.sanitizing(req.getParameter("password")[0]);
+        String email = Sanitizer.sanitizing(req.getParameter("email")[0]);
         String hashedPassword = Encryption.hash(password);	//パスワードのハッシュ化
         
         RegisterUserDTO dto = new RegisterUserDTO();

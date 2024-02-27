@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import bean.MessageBean;
 import db.dao.MessageDataDAO;
 import db.dao.PersonalMessageDAO;
+import util.Sanitizer;
 
 @ServerEndpoint("/chat/{server_id}/{channel_id}/{user_id}")
 public class ChatServer {
@@ -49,7 +50,9 @@ public class ChatServer {
         
         addMessageToDB(user_id, message);
         
-        broadcast(server_id, channel_id, message);
+        
+        System.out.println(escape(user_id, message));
+        broadcast(server_id, channel_id, escape(user_id, message));
     }
 
     @OnClose
@@ -71,22 +74,17 @@ public class ChatServer {
         }
     }
     public void addMessageToDB(int user_id, String jmessage) {
-    	System.out.println("addMessageToDB"+ jmessage);
+    	
     	Gson gson = new Gson();
-
         HashMap message = gson.fromJson(jmessage, HashMap.class);
         
         MessageBean mb = new MessageBean();
-        
         mb.setUser_id(user_id);
         mb.setChannel_id(Integer.parseInt((String)message.get("nowChannelId")));
         mb.setSend_date((String)message.get("date"));
-        mb.setMessage((String)message.get("message"));
+        mb.setMessage(Sanitizer.sanitizing((String)message.get("message")));
 		
         //nowRoomIdが-1なら、個人チャット(personal_message表)に書き込む
-        
-        System.out.println(message.get("nowRoomId") instanceof Double);
-        System.out.println(message.get("nowRoomId").getClass());
         
         if (message.get("nowRoomId") instanceof Double) {
         	if (-1.0 == (double)message.get("nowRoomId")) {
@@ -97,6 +95,13 @@ public class ChatServer {
     	    MessageDataDAO mdd = MessageDataDAO.getInstance();
     		mdd.insertRecord(mb);
         }
+    }
+    private static String escape(int user_id, String mess) {
+    	Gson gson = new Gson();
+        HashMap message = gson.fromJson(mess, HashMap.class);
+        
+        message.put("message",Sanitizer.sanitizing((String)message.get("message")));
+        return gson.toJson(message);
     }
 }
 
