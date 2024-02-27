@@ -896,5 +896,36 @@ async function deleteChannel(id, type) {
 	}
 }
 
+async function deleteServer() {
+	if (nowRoomHostId != userid) {
+		alert("このサーバーの管理権限がありません。");
+		return;
+	}
+	if (window.confirm(`本当にサーバーを削除してもよろしいですか？`)) {
+		const response = await fetch(`/ThisCord/fn/deleteServer?server_id=${nowRoomId}`);
+
+		if (response.ok) {
+			modalToggle('serverEditModal');
+
+			await getUserInfo();
+
+			const firstServer = roomsMap.entries().next().value;
+			let firstServerId = null;
+
+			if (firstServer != null) {
+				firstServerId = firstServer[0];
+				await joinRoom(firstServerId);
+			}
+
+		} else {
+			alert("サーバーを削除できませんでした。");
+		}
+
+	} else {
+		return;
+	}
+}
+
+
 //ページ表示時に
 resizeWindow();
