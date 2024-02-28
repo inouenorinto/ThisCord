@@ -31,7 +31,8 @@ function joinPersonalChatView() {
 	friendFormWarper.classList.add('none');
 	friendListWarpe.classList.add('none');
 	
-	homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 729px) 417px";
+	// homeContainerFluid.style.gridTemplateColumns = "72px 240px calc(100% - 729px) 417px";
+	homeContainerFluid.classList.add('homepageGrid');
 }
 //チャット相手とのrelation_idを取得
 //(userId1は接続者ID, userId2はチャット相手のID)

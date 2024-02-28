@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 //ログインしたらデフォルトで一番上のサーバーを表示する
 async function init() {
+	homeContainerFluid.classList.remove('homepageGrid');
 	await getUserInfo();
 
 	const firstServer = roomsMap.entries().next().value;
