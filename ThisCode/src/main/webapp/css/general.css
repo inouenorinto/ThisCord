@@ -1014,7 +1014,7 @@ body {
 .modal-content2 {
 	border-radius: 6px;
 	padding: 2em;
-	min-height: 500px;
+	height: 450px;
 	background: linear-gradient(to top, rgb(49, 51, 56) 0%, rgb(49, 51, 56) 30%, #313338 30%, #313338 100%);
 }
 
@@ -1375,7 +1375,9 @@ body {
 }
 
 
-
+#santen {
+	cursor:pointer;
+}
 
 
 

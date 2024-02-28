@@ -421,6 +421,8 @@ function showOnMessage(rep, chat) {
 	oldDate = sendDate[0];
 }
 
+const santen = document.getElementById('santen');
+
 //サーバーに参加する関数
 async function joinRoom(roomId) {
 	if (chatSocket) {
@@ -458,6 +460,7 @@ async function joinRoom(roomId) {
 	noticeSocket.send(JSON.stringify(json));
 	joinChannel(firstTextChannelId);
 	toggleHome();
+	santen.innerHTML = '<i class="fa-solid fa-ellipsis" onclick="modalToggle(&#39;serverEditModal&#39;)"></i>';
 }
 
 //サーバーの情報を取得する関数
@@ -751,6 +754,8 @@ function joinHome() {
 	}
 	getFriendList();
 	showInfo();
+
+	santen.innerHTML = "";
 }
 function toggleHome() {
 	channelsWrapper.classList.remove('none');
