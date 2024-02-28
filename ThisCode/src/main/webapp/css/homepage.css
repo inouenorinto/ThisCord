@@ -141,11 +141,11 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1px 0px;
-	margin-left: 8px;
+	padding: 5px 0px;
+	margin: 2px 0px 2px 8px;
 	border-radius: 5px;
-	width: 210px;
-	height: 42px;
+	width: 95%;
+	height: 98%;
 }
 .fland-channels:hover {
 	
