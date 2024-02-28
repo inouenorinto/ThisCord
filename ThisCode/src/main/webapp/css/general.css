@@ -422,7 +422,7 @@ body {
 	font-size: 1em;
 	font-weight: 500;
 	height: 34px;
-	width: 220px;
+	width: 215px;
 	align-items: center;
 	padding: 6px 8px 6px 8px;
 
@@ -803,7 +803,7 @@ body {
 }
 
 .text-box {
-	padding: 0px;
+	padding: 0px 10px 0px 10px;
 	text-align: left;
 }
 
@@ -897,9 +897,9 @@ body {
 	height: 0;
 	width: 220px;
 	margin: 0 auto;
-	background-color: #000;
+	background-color: #1e1f22;
 	display: none;
-	border-radius: 20px;
+	border-radius: 5px;
 }
 
 .serverEditModal.open{
@@ -925,7 +925,7 @@ body {
 	height: 0;
 	width: 300px;
 	margin: 0 auto;
-	background-color: #000;
+	background-color: #1e1f22;
 	display: none;
 	border-radius: 20px;
 }
@@ -1361,7 +1361,18 @@ body {
 	overflow-wrap: break-word;
 }
 
+.message-date-section-wrapper{
+	display: flex;
+	margin-top: 20px;
+}
 
+.message-date-section {
+	margin: auto;
+	height: 2px;
+	width: 35%;
+	border-radius: 1px;
+	background-color: #54565f;
+}
 
 
 

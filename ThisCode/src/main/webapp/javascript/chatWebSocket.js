@@ -66,10 +66,9 @@ async function getUserInfo() {
 			createRoomB(roomsMap);
 			console.log('rooms-------------'+roomsMap);
 		} else {
-			console.error("Failed to fetch room information");
+			location.href = "/ThisCord/login.html";
 		}
 	} catch (error) {
-		console.error("Error: " + error);
 		location.href = "/ThisCord/login.html";
 	}
 	const infoDiv = document.querySelector("#user");
@@ -226,19 +225,7 @@ async function getMessageInfo(channel_id) {
 			var convertedText = "";
 
 			for (const [key, message] of messages) {
-				convertedText = message.message.replace(/\n/g, "<br>");
-				chat.innerHTML +=
-					'<div class="message-wrapper">' +
-					'<div>' +
-					'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
-					'</div>' +
-
-					'<div class="wrapper-item">' +
-					'<span class="message-user-name">' + message.user_name + '</span>' +
-					'<span class="message-date">' + message.send_date + '</span>' +
-					'<p class="message-text">' + convertedText + '</p>' +
-					'</div>' +
-					'</div>';
+				showMessage(message, chat);
 			}
 
 			scrollEndfast()
@@ -248,6 +235,55 @@ async function getMessageInfo(channel_id) {
 	} catch (error) {
 		console.error("Error: " + error);
 	}
+}
+
+let oldDate = null;
+let oldUserId = null;
+let oldHour = null;
+let oldMinute = null;
+
+function showMessage(message, chat) {
+	convertedText = message.message.replace(/\n/g, "<br>");
+
+	let sendDate = message.send_date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
+	let sendMinute = sendDate[1].split(':')[1];
+	if (oldDate != sendDate[0]) {
+		chat.innerHTML += `
+			<div class="message-date-section-wrapper">
+				<div class="message-date-section"></div>
+				<div class="message-date">${sendDate[0]}</div>
+				<div class="message-date-section"></div>
+			</div>
+		`;
+	}
+
+	if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>';
+		oldUserId = message.user_id;
+	} else {
+
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<div>' +
+			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
+			'</div>' +
+
+			'<div class="wrapper-item">' +
+			'<span class="message-user-name">' + message.user_name + '</span>' +
+			'<span class="message-date">' + message.send_date + '</span>' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>' +
+			'</div>';
+		oldUserId = message.user_id;
+
+	}
+	oldMinute = sendMinute;
+	oldHour = sendHour;
+	oldDate = sendDate[0];
 }
 
 
@@ -321,19 +357,7 @@ function joinChannel(channel_id) {
 		console.log("Received message: " + event.data);
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
-		convertedText =  rep.message.replace(/\n/g, "<br>");
-		chat.innerHTML +=
-			'<div class="message-wrapper">' +
-			'<div>' +
-			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + rep.usericon + '" >' +
-			'</div>' +
-
-			'<div class="wrapper-item">' +
-			'<span class="message-user-name">' + rep.username + '</span>' +
-			'<span class="message-date">' + rep.date + '</span>' +
-			'<p class="message-text">' + convertedText + '</p>' +
-			'</div>' +
-			'</div>';
+		showOnMessage(rep, chat);
 		scrollEnd(500);
 
 	};
@@ -351,6 +375,50 @@ function joinChannel(channel_id) {
 	}
 }
 
+function showOnMessage(rep, chat) {
+	convertedText = rep.message.replace(/\n/g, "<br>");
+
+	let sendDate = rep.date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
+	let sendMinute = sendDate[1].split(':')[1];
+	console.log(sendMinute);
+	if (oldDate != sendDate[0]) {
+		chat.innerHTML += `
+			<div class="message-date-section-wrapper">
+				<div class="message-date-section"></div>
+				<div class="message-date">${sendDate[0]}</div>
+				<div class="message-date-section"></div>
+			</div>
+		`;
+	}
+
+	if (oldUserId == rep.userid && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>';
+		oldUserId = rep.userid;
+	} else {
+
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<div>' +
+			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + rep.usericon + '" >' +
+			'</div>' +
+
+			'<div class="wrapper-item">' +
+			'<span class="message-user-name">' + rep.username + '</span>' +
+			'<span class="message-date">' + rep.date + '</span>' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>' +
+			'</div>';
+		oldUserId = rep.userid;
+
+	}
+	oldMinute = sendMinute;
+	oldHour = sendHour;
+	oldDate = sendDate[0];
+}
 
 //サーバーに参加する関数
 async function joinRoom(roomId) {
@@ -367,6 +435,9 @@ async function joinRoom(roomId) {
 	createChannelButton(channelsMap);
 	setChannelList(channelsMap, voiceChannelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
+
+	homeContainerFluid.classList.remove('homepageGrid');
+
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
 
@@ -700,11 +771,13 @@ function toggleHome() {
 }
 
 //ホームページでユーザ情報を表示する
-function showInfo() {
+async function showInfo() {
 	
 	const infoElement = document.getElementById('info-wrapper');
+	const color = await getDominantColor("resource/user_icons/" + user_icon);
+	console.log(color);
 	const htmlCode = `
-    <div class="info-header"></div>
+    <div class="info-header" style="background-color: rgb(${color})"></div>
     <img class="info-icon-user-img" src="/ThisCord/resource/user_icons/${user_icon}">'
     <div class="info-card">
       <div class="info-top">
@@ -725,7 +798,6 @@ function showInfo() {
       </div>
     </div>
   `;
-
 	infoElement.innerHTML = htmlCode;
 }
 
@@ -896,5 +968,97 @@ async function deleteChannel(id, type) {
 	}
 }
 
+async function deleteServer() {
+	if (nowRoomHostId != userid) {
+		alert("このサーバーの管理権限がありません。");
+		return;
+	}
+	if (window.confirm(`本当にサーバーを削除してもよろしいですか？`)) {
+		const response = await fetch(`/ThisCord/fn/deleteServer?server_id=${nowRoomId}`);
+
+		if (response.ok) {
+			modalToggle('serverEditModal');
+
+			await getUserInfo();
+
+			const firstServer = roomsMap.entries().next().value;
+			let firstServerId = null;
+
+			if (firstServer != null) {
+				firstServerId = firstServer[0];
+				await joinRoom(firstServerId);
+			}
+
+		} else {
+			alert("サーバーを削除できませんでした。");
+		}
+
+	} else {
+		return;
+	}
+}
+
+
 //ページ表示時に
 resizeWindow();
+
+
+async function getDominantColor(src) {
+	try {
+		const dominantColor = async function (src) {
+			return new Promise((resolve, reject) => {
+				var img = new Image();
+				img.crossOrigin = 'Anonymous';
+
+				img.onload = function () {
+					var canvas = document.createElement('canvas');
+					canvas.width = img.width;
+					canvas.height = img.height;
+
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(img, 0, 0);
+
+					var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+					var pixels = imageData.data;
+
+					var colorCount = {};
+
+					for (var i = 0; i < pixels.length; i += 4) {
+						var rgb = pixels.slice(i, i + 3).join(',');
+
+						if (colorCount[rgb]) {
+							colorCount[rgb]++;
+						} else {
+							colorCount[rgb] = 1;
+						}
+					}
+
+					var maxCount = 0;
+					var dominantColor = '';
+					for (var color in colorCount) {
+						if (colorCount[color] > maxCount) {
+							maxCount = colorCount[color];
+							dominantColor = color;
+						}
+					}
+
+					//ここで色を返す
+					resolve(dominantColor);
+				};
+
+				img.onerror = function () {
+					reject('Error loading the image.');
+				};
+
+				img.src = src;
+
+				if (img.complete || img.width + img.height > 0) {
+					img.onload();
+				}
+			});
+		};
+		return await dominantColor(src);
+	} catch (error) {
+		console.error(error);
+	}
+}
