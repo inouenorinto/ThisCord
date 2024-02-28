@@ -81,7 +81,7 @@
 		<!--*************************************** チャンネルメヘッダー(channel-header)***************************************-->
 		<div class="radius-lefttop text-center channel-header text-color" style="justify-content: space-between;">
 			<div id="server"></div>
-			<div class="ellipsis">
+			<div class="ellipsis" id="santen">
 				<i class="fa-solid fa-ellipsis" onclick="modalToggle('serverEditModal')"></i>
 			</div>
 		</div>
@@ -90,7 +90,7 @@
 			<!-- 一覧 -->
 			<div class="channel-scroll text-box">
 				<div id="flendListWrapper" class="none">
-					<div class="channel-list-friend clicked" onclick="joinHome();">
+					<div class="channel-list-friend clicked" style="margin-top: 5px;" onclick="joinHome();">
 						<i class="fa-solid fa-user-group fa-sm"></i>
 						<label>フレンド</label>
 					</div>
@@ -315,7 +315,7 @@
 					onsubmit="return false">
 					<div style="margin-bottom: 5px;">
 						<label for="exampleFormControlInput1" class="form-label" style="color: rgb(219 222 225)">サーバー名</label>
-						<input type="text" name="server_name" class="form-control input_text" id="server_name" required>
+						<input type="text" name="server_name" class="form-control input_text" id="server_name" required maxlength="20">
 					</div>
 					<p>
 						<small>サーバーを作成すると、Thiscordの<a href="">コミュニティガイドライン</a>に同意したことになります。
@@ -467,7 +467,7 @@
 
             <div class="modal-body slide_children" style="margin-top: 40px;">
 
-                <div class="info-card slide_children " data-bs-toggle="modal" data-bs-target="#invitationIconModal" style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
+                <div class="info-card slide_children " data-bs-toggle="modal" data-bs-target="#invitationIconModal" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="modalToggle('serverEditModal'); modalToggle('invitation-modal')">
 					<div style="display: flex; text-align: center; align-items: center;">
                         <div class="memberIcon">
                             <i class="fa-solid fa-user-group"></i>
@@ -476,7 +476,7 @@
                     </div>
                     <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
-                <div class="info-card slide_children " data-bs-toggle="modal" data-bs-target="#createChannelModal" style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('createChannelModal')">
+                <div class="info-card slide_children " data-bs-toggle="modal" data-bs-target="#createChannelModal" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="modalToggle('serverEditModal'); modalToggle('createChannelModal')">
                     <div style="display: flex;  align-items: center;">
                         <div class="memberIcon">
                             <i class="fa-solid fa-plus" style="display: flex; align-items: center;"></i>
@@ -485,7 +485,7 @@
                     </div>
                     <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
-                <div class="info-card slide_children" style="display: flex; align-items: center; justify-content: space-between" onclick="modalToggle('serverEditModal'); modalToggle('deleteChannelModal')">
+                <div class="info-card slide_children" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="modalToggle('serverEditModal'); modalToggle('deleteChannelModal')">
                     <div style="display: flex; text-align: center; align-items: center;">
                         <div class="redMemberIcon">
                             <i class="fa-solid fa-trash-can"></i>
@@ -494,7 +494,7 @@
                     </div>
                     <i class="fa-solid fa-chevron-right" style="color: #a7a8ae;"></i>
                 </div>
-                <div class="info-card slide_children" style="display: flex; align-items: center; justify-content: space-between" onclick="deleteServer()">
+                <div class="info-card slide_children" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="deleteServer()">
                     <div style="display: flex; text-align: center; align-items: center;">
                         <div class="redMemberIcon">
                             <i class="fa-solid fa-trash-can"></i>
@@ -518,11 +518,11 @@
             </div>
             <div class="modal-body" style="height: 100%;">
                 <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">テキストチャンネル</div>
-                <div class="info-card" style="height: 30%">
+                <div class="info-card" style="height: 30%;">
                     <div id="textChannelsList" style="overflow-y: auto; height: 100%;"></div>
                 </div>
                 <div style="color: #b5bac1; font-weight: 700; margin-left: 16px;">ボイスチャンネル</div>
-                <div class="info-card" style="height: 30%">
+                <div class="info-card" style="height: 30%;">
                     <div id="voiceChannelsList" style="overflow-y: auto; height: 100%;"></div>
                 </div>
             </div>

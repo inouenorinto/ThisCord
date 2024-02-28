@@ -240,6 +240,17 @@
 	padding: 10px 0px;
 }
 
+#server {
+	font-weight: 700;
+	font-size: 15px;
+	color: #fff;
+	margin-left: 10px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	width: 180px;
+	text-align: left;
+}
 
 
 
