@@ -66,10 +66,9 @@ async function getUserInfo() {
 			createRoomB(roomsMap);
 			console.log('rooms-------------'+roomsMap);
 		} else {
-			console.error("Failed to fetch room information");
+			location.href = "/ThisCord/login.html";
 		}
 	} catch (error) {
-		console.error("Error: " + error);
 		location.href = "/ThisCord/login.html";
 	}
 	const infoDiv = document.querySelector("#user");
@@ -436,6 +435,9 @@ async function joinRoom(roomId) {
 	createChannelButton(channelsMap);
 	setChannelList(channelsMap, voiceChannelsMap);
 	createVoiceChannelButton(voiceChannelsMap);
+
+	homeContainerFluid.classList.remove('homepageGrid');
+
 	const firstTextChannel = channelsMap.entries().next().value;
 	const firstTextChannelId = firstTextChannel[0];
 
@@ -769,11 +771,13 @@ function toggleHome() {
 }
 
 //ホームページでユーザ情報を表示する
-function showInfo() {
+async function showInfo() {
 	
 	const infoElement = document.getElementById('info-wrapper');
+	const color = await getDominantColor("resource/user_icons/" + user_icon);
+	console.log(color);
 	const htmlCode = `
-    <div class="info-header"></div>
+    <div class="info-header" style="background-color: rgb(${color})"></div>
     <img class="info-icon-user-img" src="/ThisCord/resource/user_icons/${user_icon}">'
     <div class="info-card">
       <div class="info-top">
@@ -794,7 +798,6 @@ function showInfo() {
       </div>
     </div>
   `;
-
 	infoElement.innerHTML = htmlCode;
 }
 
@@ -998,3 +1001,64 @@ async function deleteServer() {
 
 //ページ表示時に
 resizeWindow();
+
+
+async function getDominantColor(src) {
+	try {
+		const dominantColor = async function (src) {
+			return new Promise((resolve, reject) => {
+				var img = new Image();
+				img.crossOrigin = 'Anonymous';
+
+				img.onload = function () {
+					var canvas = document.createElement('canvas');
+					canvas.width = img.width;
+					canvas.height = img.height;
+
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(img, 0, 0);
+
+					var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+					var pixels = imageData.data;
+
+					var colorCount = {};
+
+					for (var i = 0; i < pixels.length; i += 4) {
+						var rgb = pixels.slice(i, i + 3).join(',');
+
+						if (colorCount[rgb]) {
+							colorCount[rgb]++;
+						} else {
+							colorCount[rgb] = 1;
+						}
+					}
+
+					var maxCount = 0;
+					var dominantColor = '';
+					for (var color in colorCount) {
+						if (colorCount[color] > maxCount) {
+							maxCount = colorCount[color];
+							dominantColor = color;
+						}
+					}
+
+					//ここで色を返す
+					resolve(dominantColor);
+				};
+
+				img.onerror = function () {
+					reject('Error loading the image.');
+				};
+
+				img.src = src;
+
+				if (img.complete || img.width + img.height > 0) {
+					img.onload();
+				}
+			});
+		};
+		return await dominantColor(src);
+	} catch (error) {
+		console.error(error);
+	}
+}
