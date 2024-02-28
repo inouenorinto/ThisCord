@@ -226,19 +226,7 @@ async function getMessageInfo(channel_id) {
 			var convertedText = "";
 
 			for (const [key, message] of messages) {
-				convertedText = message.message.replace(/\n/g, "<br>");
-				chat.innerHTML +=
-					'<div class="message-wrapper">' +
-					'<div>' +
-					'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
-					'</div>' +
-
-					'<div class="wrapper-item">' +
-					'<span class="message-user-name">' + message.user_name + '</span>' +
-					'<span class="message-date">' + message.send_date + '</span>' +
-					'<p class="message-text">' + convertedText + '</p>' +
-					'</div>' +
-					'</div>';
+				showMessage(message, chat);
 			}
 
 			scrollEndfast()
@@ -248,6 +236,55 @@ async function getMessageInfo(channel_id) {
 	} catch (error) {
 		console.error("Error: " + error);
 	}
+}
+
+let oldDate = null;
+let oldUserId = null;
+let oldHour = null;
+let oldMinute = null;
+
+function showMessage(message, chat) {
+	convertedText = message.message.replace(/\n/g, "<br>");
+
+	let sendDate = message.send_date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
+	let sendMinute = sendDate[1].split(':')[1];
+	if (oldDate != sendDate[0]) {
+		chat.innerHTML += `
+			<div class="message-date-section-wrapper">
+				<div class="message-date-section"></div>
+				<div class="message-date">${sendDate[0]}</div>
+				<div class="message-date-section"></div>
+			</div>
+		`;
+	}
+
+	if (oldUserId == message.user_id && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>';
+		oldUserId = message.user_id;
+	} else {
+
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<div>' +
+			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + message.user_icon + '" >' +
+			'</div>' +
+
+			'<div class="wrapper-item">' +
+			'<span class="message-user-name">' + message.user_name + '</span>' +
+			'<span class="message-date">' + message.send_date + '</span>' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>' +
+			'</div>';
+		oldUserId = message.user_id;
+
+	}
+	oldMinute = sendMinute;
+	oldHour = sendHour;
+	oldDate = sendDate[0];
 }
 
 
@@ -321,19 +358,7 @@ function joinChannel(channel_id) {
 		console.log("Received message: " + event.data);
 		const chat = document.getElementById("message-container");
 		const rep = JSON.parse(event.data);
-		convertedText =  rep.message.replace(/\n/g, "<br>");
-		chat.innerHTML +=
-			'<div class="message-wrapper">' +
-			'<div>' +
-			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + rep.usericon + '" >' +
-			'</div>' +
-
-			'<div class="wrapper-item">' +
-			'<span class="message-user-name">' + rep.username + '</span>' +
-			'<span class="message-date">' + rep.date + '</span>' +
-			'<p class="message-text">' + convertedText + '</p>' +
-			'</div>' +
-			'</div>';
+		showOnMessage(rep, chat);
 		scrollEnd(500);
 
 	};
@@ -351,6 +376,50 @@ function joinChannel(channel_id) {
 	}
 }
 
+function showOnMessage(rep, chat) {
+	convertedText = rep.message.replace(/\n/g, "<br>");
+
+	let sendDate = rep.date.split(' ');
+	let sendHour = sendDate[1].split(':')[0];
+	let sendMinute = sendDate[1].split(':')[1];
+	console.log(sendMinute);
+	if (oldDate != sendDate[0]) {
+		chat.innerHTML += `
+			<div class="message-date-section-wrapper">
+				<div class="message-date-section"></div>
+				<div class="message-date">${sendDate[0]}</div>
+				<div class="message-date-section"></div>
+			</div>
+		`;
+	}
+
+	if (oldUserId == rep.userid && oldDate == sendDate[0] && oldMinute == sendMinute && oldHour == sendHour) {
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>';
+		oldUserId = rep.userid;
+	} else {
+
+		chat.innerHTML +=
+			'<div class="message-wrapper">' +
+			'<div>' +
+			'<img class=" chat-icon" src="/ThisCord/resource/user_icons/' + rep.usericon + '" >' +
+			'</div>' +
+
+			'<div class="wrapper-item">' +
+			'<span class="message-user-name">' + rep.username + '</span>' +
+			'<span class="message-date">' + rep.date + '</span>' +
+			'<p class="message-text">' + convertedText + '</p>' +
+			'</div>' +
+			'</div>';
+		oldUserId = rep.userid;
+
+	}
+	oldMinute = sendMinute;
+	oldHour = sendHour;
+	oldDate = sendDate[0];
+}
 
 //サーバーに参加する関数
 async function joinRoom(roomId) {
