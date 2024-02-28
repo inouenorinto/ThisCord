@@ -34,7 +34,7 @@ function toggleChannelState(element) {
 }
 
 function modalToggle(element) {
-    if(!nowChannelId == -1 && !element == "membersListModal"){
+    if(!(nowChannelId == -1 && element == "membersListModal")){
         const elem = document.getElementById(element);
         elem.classList.toggle('open');
     

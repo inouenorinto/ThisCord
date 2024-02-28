@@ -112,6 +112,9 @@ public  class TextChannelDataDAO {
     public int deleteTextChannel(int channelId) {
     	int result = -1;
         try{
+        	MessageDataDAO dao = MessageDataDAO.getInstance();
+        	dao.deleteChannel(channelId);
+        	
         	Connection con = MySqlManager.getConnection();
             pstmt = con.prepareStatement(DELETE_TEXT_CHANNEL);
             pstmt.setInt(1, channelId);

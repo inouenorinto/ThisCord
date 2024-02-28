@@ -19,6 +19,7 @@ public class MessageDataDAO{
             + "WHERE server_id = ? AND channel_id = ?";
     private static final String INSERT_MESSAGE = "INSERT INTO message (user_id, channel_id, send_date, message) "
     		+ "VALUES(?, ?, ?, ?)";
+    private static final String DELETE_CHANNEL ="delete from message where channel_id = ?";
 
     PreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -99,6 +100,23 @@ public class MessageDataDAO{
 	    	pstmt.setString(3, mb.getSend_date());
 	    	pstmt.setString(4, mb.getMessage());
 	    	
+	    	pstmt.executeUpdate();
+	    	
+	    	cn.commit();
+    	} catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+			MySqlManager.close();
+		}
+    }
+    
+    public void deleteChannel(int channelId) {
+    	try {
+    		Connection cn = MySqlManager.getConnection();
+            cn.setAutoCommit(false);
+	    	pstmt = cn.prepareStatement(DELETE_CHANNEL);
+	    	
+	    	pstmt.setInt(1, channelId);
 	    	pstmt.executeUpdate();
 	    	
 	    	cn.commit();
