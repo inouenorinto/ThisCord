@@ -96,7 +96,15 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-
+.none {
+	display: none;
+  }
+  
+.mis {
+	color: #ff7676;
+	position: relative;
+}
+  
 
 
 

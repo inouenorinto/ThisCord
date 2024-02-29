@@ -47,6 +47,7 @@
 		<form id="imageForm" action="fn/register" method="post" enctype="multipart/form-data">
 		  <div class="mb-3">
 		    <label for="exampleInputEmail1" class="form-label mt-3">メールアドレス</label>
+			<span id="miss" class="none mis">- メールアドレスは登録済みです。</span>
 		    <input type="email" name="email" class="form-control input_text" id="exampleInputEmail1" aria-describedby="emailHelp" required>
 		  </div>
 		  <div class="mb-3">
@@ -102,5 +103,14 @@
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
 </body>
+<script>
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has('miss')) {
+		document.getElementById('miss').classList.remove('none');
+		document.getElementById('misss').classList.remove('none');
+		document.getElementById('color').classList.add('mis');
+		document.getElementById('colors').classList.add('mis');
+    }
+</script>
 
 </html>
