@@ -14,7 +14,7 @@ import util.Sanitizer;
 import util.encrypt.Encryption;
 
 public class RegisterCommand extends AbstractCommand {
-
+	private boolean errorChecker = false;
 	@Override
 	public void execute(RequestContext req, ResponseContext res) {
 		String editedImageData = Sanitizer.sanitizing(req.getParameter("editedImage")[0]);
@@ -35,14 +35,19 @@ public class RegisterCommand extends AbstractCommand {
         	System.out.println("not null");
         }
         userRegister(dto);
-        res.setTarget("fn/login");
-        
+        if(errorChecker == false) {
+        	res.setTarget("fn/login");
+    	} else {
+			res.setRedirect("/regist.jsp?miss");
+			errorChecker = false;
+			System.out.println(errorChecker);
+		}
 	}
 	
 	private void userRegister(RegisterUserDTO dto) {
 		UserDataDAO dao = UserDataDAO.getInstance();
 		int flag = dao.insertUser(dto.getUser_name(), dto.getPassword(), dto.getEmail());
-		
+		errorChecker = dao.errorChecker;
 		if(flag != -1) {
 			String path = flag+".jpg";
 	        if(!dto.getUser_icon().equals("default")) {

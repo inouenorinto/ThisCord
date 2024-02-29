@@ -18,6 +18,7 @@ public class UserDataDAO{
     
     private PreparedStatement pstmt = null;
     private static UserDataDAO uddao = null;
+    public static boolean errorChecker = false;
     
     static {
     	uddao = new UserDataDAO();
@@ -161,6 +162,7 @@ public class UserDataDAO{
 		String select_id ="select user_id from account where mailaddress=?"; 
 		Connection cn = MySqlManager.getConnection();
 		int flag = -1;
+		errorChecker = false;
 		Statement st = null;
 		try {
 			
@@ -190,6 +192,8 @@ public class UserDataDAO{
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			errorChecker = true;
+			
 		} finally {
 			MySqlManager.close();
 		}

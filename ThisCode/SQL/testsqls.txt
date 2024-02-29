@@ -34,12 +34,11 @@ drop table server;
 drop table personal_message;
 drop table friend_relationship;
 drop table account;
-drop table friend_relationship;
 
 -- ユーザーの情報
 CREATE TABLE account (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
-    mailaddress VARCHAR(200),
+    mailaddress VARCHAR(200) UNIQUE,
     password VARCHAR(60),
     user_name VARCHAR(50),
     user_icon VARCHAR(500)
@@ -240,50 +239,6 @@ VALUES (1, 6, true);
 
 INSERT INTO friend_relationship (user_id1, user_id2, flag) 
 VALUES (1, 7, true);
-
-INSERT INTO friend_relationship (user_id1, user_id2, flag)
-VALUES 
-  (1, 7, true),
-  (1, 8, true),
-  (1, 9, true),
-  (1, 10, true),
-  (1, 11, true),
-  (1, 12, true),
-  (1, 13, true),
-  (1, 14, true),
-  (1, 15, true),
-  (1, 16, true),
-  (1, 17, true),
-  (1, 22, true),
-  (1, 23, true),
-  (1, 24, true),
-  (1, 25, true),
-  (1, 26, true),
-  (1, 27, true),
-  (1, 28, true),
-  (1, 29, true),
-  (1, 30, true),
-  (1, 31, true),
-  (1, 32, true),
-  (1, 33, true),
-  (1, 34, true),
-  (1, 35, true),
-  (1, 36, true),
-  (1, 37, true),
-  (1, 38, true),
-  (1, 39, true),
-  (1, 40, true),
-  (1, 41, true),
-  (1, 42, true),
-  (1, 43, true),
-  (1, 44, true),
-  (1, 45, true),
-  (1, 46, true),
-  (1, 47, true),
-  (1, 48, true),
-  (1, 49, true),
-  (1, 50, true);
-
 
 INSERT INTO friend_relationship (user_id1, user_id2, flag) 
 VALUES (3, 2, true);
@@ -618,6 +573,47 @@ VALUES (2,3,"2024/2/2 8:15","答えないから学校で貸してほしい テ�
 INSERT INTO message(user_id,channel_id,send_date,message)
 VALUES (1,3,"2024/2/2 8:17","おっけ");
 
+INSERT INTO friend_relationship (user_id1, user_id2, flag)
+VALUES
+  (1, 8, true),
+  (1, 9, true),
+  (1, 10, true),
+  (1, 11, true),
+  (1, 12, true),
+  (1, 13, true),
+  (1, 14, true),
+  (1, 15, true),
+  (1, 16, true),
+  (1, 17, true),
+  (1, 18, true),
+  (1, 19, true),
+  (1, 20, true),
+  (1, 21, true),
+  (1, 22, true),
+  (1, 23, true),
+  (1, 24, true),
+  (1, 25, true),
+  (1, 26, true),
+  (1, 27, true),
+  (1, 28, true),
+  (1, 29, true),
+  (1, 30, true),
+  (1, 31, true),
+  (1, 32, true),
+  (1, 33, true),
+  (1, 34, true),
+  (1, 35, true),
+  (1, 36, true),
+  (1, 37, true),
+  (1, 38, true),
+  (1, 39, true),
+  (1, 40, true),
+  (1, 41, true),
+  (1, 42, true),
+  (1, 43, true),
+  (1, 44, true),
+  (1, 45, true),
+  (1, 46, true);
 
 
 commit;
