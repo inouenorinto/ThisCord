@@ -586,7 +586,7 @@ async function getFriend(element) {
 		const response = await fetch('/ThisCord/fn/getfriendList?userId=' + userid);
 		if (response.ok) {
 			const json = await response.json();
-
+			friendCounter = 0;
 			for (let friend of json.friendList) {
 				
 				friendCounter++;
@@ -778,7 +778,6 @@ function toggleHome() {
 
 //ホームページでユーザ情報を表示する
 async function showInfo() {
-	
 	const infoElement = document.getElementById('info-wrapper');
 	const color = await getDominantColor("resource/user_icons/" + user_icon);
 	console.log(color);
@@ -792,7 +791,7 @@ async function showInfo() {
       </div>
       <div class="info-friend-count">
         <div style="font-size:14px; font-waight: 700;">Thiscordフレンド数</div>
-        <div style="color: #b5bac1; font-size: 12px;">${friendCounter}人</div>
+        <div id="friendCounter" style="color: #b5bac1; font-size: 12px;">${friendCounter}人</div>
       </div>
       <div class="info-logout">
         <a>
@@ -807,6 +806,10 @@ async function showInfo() {
 	infoElement.innerHTML = htmlCode;
 }
 
+function plusFriendCounter() {
+	document.getElementById("friendCounter").innerHTML=friendCounter+"人";
+}
+
 
 //フレンド申請を送信する
 async function sendFriendRequest() {
@@ -818,9 +821,11 @@ async function sendFriendRequest() {
 
 		if (response.ok) {
 			console.log("ok");
-			getFriendList();
+			await getFriendList();
 			document.getElementById("friendId").value = "";
 			friendForm.classList.toggle('ok');
+			plusFriendCounter();
+			
 		} else {
 			console.error("Failed to fetch room information");
 		}
@@ -847,8 +852,10 @@ async function getFriendList() {
 		if (response.ok) {
 			const json = await response.json();
 			
+			friendCounter = 0;
+			
 			for (let friend of json.friendList) {
-				
+				friendCounter++;
 				friendListDiv.innerHTML +=
 					'<div class="fland-box">' +
 					'<div class="icon-name-wrapper">' +
