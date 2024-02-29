@@ -8,6 +8,8 @@
 <title>画像クロップとアップロード</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+	
+	<link rel="icon"  type="image/x-icon" href="resource/user_icons/favicon.ico">
 
 <!-- Required meta tags -->
 <meta charset="utf-8">
