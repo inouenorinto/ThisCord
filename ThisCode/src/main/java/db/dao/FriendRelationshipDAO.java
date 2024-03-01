@@ -55,7 +55,7 @@ public class FriendRelationshipDAO {
 	public int insertFriend(int userId, int friendId) {
 		int result = -1;
 		ArrayList<Integer> friendList = getFriendList(userId);
-		if (!friendList.contains(friendList)) {
+		if (!friendList.contains(friendId)) {
 			try (Connection cn = MySqlManager.getConnection();
 					PreparedStatement ps = cn.prepareStatement(INSERT_FRIEND);) {
 
