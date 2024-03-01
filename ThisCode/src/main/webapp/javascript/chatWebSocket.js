@@ -941,9 +941,7 @@ async function deleteChannel(id, type) {
 		alert("このチャンネルの管理権限がありません。");
 		return;
 	}
-	console.log(channelsMap.entries().next().value[0]+"deleteChannel"+id);
-	console.log(channelsMap);
-	if (channelMap.entries().next().value[0] == id) {
+	if ((channelsMap.entries().next().value[0] == id) || (voiceChannelsMap.entries().next().value[0] == id)) {
 		alert("初期サーバーは削除できません。");
 		return;
 	}
@@ -952,6 +950,7 @@ async function deleteChannel(id, type) {
 		console.log("ok")
 		await getServerInfo(nowRoomId);
 		createChannelButton(channelsMap);
+		createVoiceChannelButton(voiceChannelsMap);
 		setChannelList(channelsMap, voiceChannelsMap);
 	} else {
 		console.error("ng");
