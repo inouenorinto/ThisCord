@@ -370,8 +370,7 @@
 					<h1 class="modal-title modal-title2" id="exampleModalLabel">チャンネルを作成</h1>
 					<p>テキストチャンネル内</p>
 				</div>
-				<button type="button" class="btn-close btn-close2 ml-5" data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="btn-close btn-close2 ml-5" data-bs-dismiss="modal" aria-label="Close"></button>
 
 				<div class="center_content">
 					<form class="createChannelForm" action="fn/createchannel" method="post" id="createChannelForm">
@@ -423,28 +422,26 @@
 	</div>
 
 	<!-- Modal -->
-	<div class="modal fade" id="invitationIconModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="invitationIconModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content invitation-content">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">フレンドをサーバーに招待する</h1>
-					<button type="button" data-bs-dismiss="modal" aria-label="Close" class="close"><i
-							class="fa-solid fa-xmark"></i></button>
+				
 				</div>
+				<button type="button" data-bs-dismiss="modal" aria-label="Close" class="close"><i class="btn-close btn-close2 ml-5"></i></button>
+				
 				<div class="modal-body invitation-body">
-					<div class="invitation-form">
-						<form class="invitation-form" action="fn/invite" method="post" id="inviteForm">
-							<label>ユーザーIDを入力してフレンドを追加</label>
-							<div class="invitation-wrapper">
-								<input class="invitation-input" type="text" name="userId" id="invitationInput">
-								<input id="inputServerId" type="hidden" name="serverId">
-								<input id="formUserId" type="hidden" name="id">
-								<button class="invitation-button" type="submit">送信</button>
-							</div>
-						</form>
-						<div id="invFriendList"></div>
-					</div>
+					<form class="invitation-form" action="fn/invite" method="post" id="inviteForm">
+						<label>ユーザーIDを入力してフレンドを追加</label>
+						<div class="invitation-wrapper">
+							<input class="invitation-input" type="text" name="userId" id="invitationInput">
+							<input id="inputServerId" type="hidden" name="serverId">
+							<input id="formUserId" type="hidden" name="id">
+							<button class="invitation-button" type="submit" data-bs-dismiss="modal" aria-label="Close">送信</button>
+						</div>
+					</form>
+					<div id="invFriendList"></div>
 				</div>
 			</div>
 		</div>

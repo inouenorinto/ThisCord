@@ -882,27 +882,6 @@ async function getFriendList() {
 	}
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-	const inviteForm = document.getElementById('inviteForm');
-
-	inviteForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-		
-		const inviteUserId = document.getElementById('invitationInput').value;
-		let json =
-		{
-			type: 'invite',
-			serverId: nowRoomId,
-			inviteUserId: inviteUserId
-		};
-	
-		console.log(json);
-		noticeSocket.send(JSON.stringify(json));
-	
-		inviteForm.submit();
-	})
-
-});
 //cht-fieldのサイズを改行、windowサイズを踏まえて調整する
 function chatFieldSizeAdjustment(line) {
 	const ratioCS = window.innerHeight - (22.198+48+68) + 0.198;//421
@@ -960,6 +939,12 @@ function setChannelList(channelsMap, voiceChannelsMap) {
 async function deleteChannel(id, type) {
 	if(nowRoomHostId != userid){
 		alert("このチャンネルの管理権限がありません。");
+		return;
+	}
+	console.log(channelsMap.entries().next().value[0]+"deleteChannel"+id);
+	console.log(channelsMap);
+	if (channelMap.entries().next().value[0] == id) {
+		alert("初期サーバーは削除できません。");
 		return;
 	}
 	const response = await fetch(`/ThisCord/fn/deleteChannel?channel_id=${id}&type=${type}`);
