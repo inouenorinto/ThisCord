@@ -64,25 +64,53 @@ function modalToggle(element) {
 
 
 window.addEventListener('load', () => {
-	const form = document.getElementById('createChannelForm');
+	const createChannelForm = document.getElementById('createChannelForm');
 
-    form.addEventListener('submit', (event) => {
+
+    createChannelForm.addEventListener('submit', (event) => {
         event.stopPropagation();
         event.preventDefault();
 
-        const formData = new FormData(form);
+        const formData = new FormData(createChannelForm);
         const options = {
             method: 'POST',
             body: formData,
         }
 
-        const url = form.getAttribute('action');
+        const url = createChannelForm.getAttribute('action');
         fetch(url, options)
         .then(response => {
             if (response.ok) {
                 joinRoom(nowRoomId);
-                form.reset();
+                createChannelForm.reset();
                 modalToggle('createChannelModal')
+            } else {
+                throw new Error('ネットワークエラー');
+            }
+        });
+    })
+
+})
+
+window.addEventListener('load', () => {
+    const inviteForm = document.getElementById('inviteForm');
+
+    inviteForm.addEventListener('submit', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const formData = new FormData(inviteForm);
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+
+        const url = inviteForm.getAttribute('action');
+        fetch(url, options)
+        .then(response => {
+            if (response.ok) {
+                joinRoom(nowRoomId);
+                inviteForm.reset();
             } else {
                 throw new Error('ネットワークエラー');
             }
