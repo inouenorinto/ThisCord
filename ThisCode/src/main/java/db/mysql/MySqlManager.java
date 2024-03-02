@@ -22,8 +22,8 @@ public class MySqlManager {
 		Properties prop = new Properties();
 		
 		try {
-//			prop.load(new FileInputStream("C:\\ThisLocal\\ThisCode\\src\\properties\\mysql.properties"));
-			prop.load(new FileInputStream("/usr/local/tomcat8.5/webapps/TestProject/mysql.properties"));
+			prop.load(new FileInputStream("C:\\ThisLocal\\ThisCode\\src\\properties\\mysql.properties"));
+//			prop.load(new FileInputStream("/usr/local/tomcat8.5/webapps/TestProject/mysql.properties"));
 			DATABASE_NAME = prop.getProperty("databaseName");
 			PROPERTIES = prop.getProperty("properties");
 			URL = prop.getProperty("url");
