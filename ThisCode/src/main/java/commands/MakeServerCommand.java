@@ -72,7 +72,7 @@ public class MakeServerCommand extends AbstractCommand {
 	}
 	
 	private void saveBase64Image(String base64Data, String fileName) {
-        String savePath = "C:/ThisLocal/ThisCode/src/main/webapp/resource/server_icons/" + fileName;
+        String savePath = "/usr/local/tomcat8.5/webapps/ThisCord/resource/server_icons/" + fileName;
         try (OutputStream out = new FileOutputStream(savePath)) {
             byte[] imageBytes = java.util.Base64.getDecoder().decode(base64Data.split(",")[1]);
             out.write(imageBytes);

@@ -13,7 +13,8 @@ public class CommandFactory {
 		Properties prop = new Properties();
 		
 		try {
-			prop.load(new FileInputStream("C:\\ThisLocal\\ThisCode\\src\\properties\\commands.properties"));
+//			prop.load(new FileInputStream("C:\\ThisLocal\\ThisCode\\src\\properties\\commands.properties"));
+			prop.load(new FileInputStream("/usr/local/tomcat8.5/webapps/TestProject/commands.properties"));
 			String name = prop.getProperty(rc.getCommandPath());
 			Class<?> c = Class.forName(name);
 			command = (AbstractCommand) c.newInstance();
